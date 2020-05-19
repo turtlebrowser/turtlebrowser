@@ -16,6 +16,7 @@ class ConanDependencies(ConanFile):
         "qt:qtwebview": True,
         "qt:with_fontconfig": True,
         "qt:with_freetype": True,
+        "qt:config": "--webengine-jumbo-build=4",
         "fontconfig:shared": True,
         "libxscrnsaver:shared": True,
     }
