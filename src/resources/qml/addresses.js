@@ -1,3 +1,3 @@
-var speedDial = "https://www.youtube.com"
-var speedDialTitle = "YouTube"
-var search = "https://www.google.com/search?q="
+var speedDial = "https://www.google.com";
+var speedDialTitle = "Google";
+var search = "https://www.google.com/search?q=";
