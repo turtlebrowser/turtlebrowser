@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Layouts 1.3
 
 import "theme.js" as Theme
 
@@ -138,6 +138,17 @@ Rectangle {
                     }
                 }
             }
+        }
+        BrowserMenu {
+            Layout.preferredHeight: displaybox.itemHeight
+            Layout.preferredWidth: displaybox.buttonWidth
+            Layout.rightMargin: root.barPadding
+            spacing: 0
+            padding: 2
+
+            highlightColor: root.highlightColor
+            backgroundColor: root.addressBarColor
+            textColor: root.textColor
         }
     }
 }

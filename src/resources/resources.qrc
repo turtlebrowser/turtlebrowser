@@ -1,9 +1,13 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/tray-icon.png</file>
         <file>qml/main.qml</file>
         <file>qml/AddressBackground.qml</file>
         <file>qml/AddressBar.qml</file>
+        <file>qml/BrowserMenu.qml</file>
+        <file>qml/FramelessTopLevelWindow.qml</file>
         <file>qml/NavigationButton.qml</file>
+        <file>qml/StyledMenu.qml</file>
         <file>qml/TabToolbar.qml</file>
         <file>qml/TopLevelWindow.qml</file>
         <file>qml/WebPage.qml</file>

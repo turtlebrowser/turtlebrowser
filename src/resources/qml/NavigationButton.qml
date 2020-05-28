@@ -4,6 +4,10 @@ import QtQuick.Layouts 1.0
 
 import "theme.js" as Theme
 
+// Possibly use text?
+// ToolButton { text: "←" }
+// ToolButton { text: "→" }
+// ToolButton { text: "↻" }
 Button {
     id: root
 

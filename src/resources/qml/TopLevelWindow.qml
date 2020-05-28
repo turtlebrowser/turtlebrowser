@@ -1,10 +1,11 @@
 import QtQml 2.0
 import QtQml.Models 2.11
-import QtQuick 2.11
+import QtQuick 2.12
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.0
-import QtQuick.Layouts 1.11
-import QtQuick.Window 2.11
+import QtQuick.Layouts 1.3
+import QtQuick.Shapes 1.12
+import QtQuick.Window 2.3
 import QtWebEngine 1.7
 
 import "addresses.js" as Addesses
@@ -12,16 +13,13 @@ import "loading.js" as Loading
 import "theme.js" as Theme
 import "url.js" as URL
 
-Window {
-    id: root
+FramelessTopLevelWindow {
+    id: window
+
     property QtObject globalContext
     property Item currentPage: pagesStack.currentPage
     property QtObject windowProfile
     property bool windowOffTheRecord: windowProfile ? windowProfile.offTheRecord : false
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
-
-    visible: true
 
     onWindowProfileChanged: {
         if (windowProfile) {
@@ -43,13 +41,14 @@ Window {
     ColumnLayout {
 
         anchors.fill: parent
+        anchors.margins: window.visibility === Window.Windowed ? window.windowMargin : 0
         spacing: 0
 
         TabToolbar {
             id: tabBar
             currentIndex: pagesStack.currentIndex
             model: tabModel
-            offTheRecord: root.windowOffTheRecord
+            offTheRecord: window.windowOffTheRecord
         }
 
         StackLayout {
@@ -75,8 +74,8 @@ Window {
 
                 WebPage {
                     id: page
-                    windowProfile: root.windowProfile
-                    offTheRecord: root.windowOffTheRecord
+                    windowProfile: window.windowProfile
+                    offTheRecord: window.windowOffTheRecord
                     Component.onCompleted: address = tabUrl
 
                     onTitleChanged: tabTitle = page.title
@@ -99,10 +98,10 @@ Window {
     Action {
         shortcut: "F11"
         onTriggered: {
-            if (root.visibility == Window.FullScreen) {
-                root.visibility = Window.Maximized
+            if (window.visibility == Window.FullScreen) {
+                window.visibility = Window.Maximized
             } else {
-                root.visibility = Window.FullScreen
+                window.visibility = Window.FullScreen
             }
         }
     }
