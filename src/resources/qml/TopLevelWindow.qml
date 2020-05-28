@@ -25,16 +25,16 @@ Window {
 
     onWindowProfileChanged: {
         if (windowProfile) {
-            tabBar.makeNewTab();
+            tabBar.makeNewTab()
         }
     }
 
     function getTitle(currentIndex) {
-        var current = tabModel.get(currentIndex);
-        return current ? current.tabTitle + " - " : "";
+        var current = tabModel.get(currentIndex)
+        return current ? current.tabTitle + " - " : ""
     }
 
-    title: getTitle(tabBar.currentIndex) + "TurtleBrowser";
+    title: getTitle(tabBar.currentIndex) + "TurtleBrowser"
 
     ListModel {
         id: tabModel
@@ -46,7 +46,7 @@ Window {
         spacing: 0
 
         TabToolbar {
-            id : tabBar
+            id: tabBar
             currentIndex: pagesStack.currentIndex
             model: tabModel
             offTheRecord: root.windowOffTheRecord
@@ -56,10 +56,10 @@ Window {
             id: pagesStack
             currentIndex: tabBar.currentIndex
 
-            property Item currentPage;
+            property Item currentPage
 
             onCurrentIndexChanged: {
-                var currentItem = pages.itemAt(currentIndex);
+                var currentItem = pages.itemAt(currentIndex)
                 if (currentItem)
                     currentPage = currentItem.view
                 else
@@ -88,12 +88,12 @@ Window {
 
     Action {
         shortcut: "Ctrl+T"
-        onTriggered: tabBar.makeNewTab();
+        onTriggered: tabBar.makeNewTab()
     }
 
     Action {
         shortcut: "Ctrl+W"
-        onTriggered: tabBar.closeCurrentTab();
+        onTriggered: tabBar.closeCurrentTab()
     }
 
     Action {
@@ -109,16 +109,16 @@ Window {
 
     Action {
         shortcut: "Ctrl+Q"
-        onTriggered: Qt.quit();
+        onTriggered: Qt.quit()
     }
 
     Action {
         shortcut: "Ctrl+N"
-        onTriggered: globalContext.createPublicWindow();
+        onTriggered: globalContext.createPublicWindow()
     }
 
     Action {
         shortcut: "Ctrl+Shift+N"
-        onTriggered: globalContext.createPrivateWindow();
+        onTriggered: globalContext.createPrivateWindow()
     }
 }
