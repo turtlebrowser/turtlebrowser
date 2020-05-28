@@ -25,16 +25,16 @@ ColumnLayout {
 
     AddressBar {
         id: bar
-        Layout.preferredHeight:30
+        Layout.preferredHeight: 30
         Layout.fillWidth: true
 
         url: webView.url
         offTheRecord: root.offTheRecord
 
-        onReload: webView.reload();
-        onBack: webView.goBack();
-        onForward: webView.goForward();
-        onGoToAddress: webView.typedText = address;
+        onReload: webView.reload()
+        onBack: webView.goBack()
+        onForward: webView.goForward()
+        onGoToAddress: webView.typedText = address
     }
 
     WebEngineView {
@@ -47,7 +47,7 @@ ColumnLayout {
 
         profile: root.windowProfile
         onTypedTextChanged: webView.url = URL.construct(typedText)
-        onLoadingChanged: function(loadRequest) {
+        onLoadingChanged: function (loadRequest) {
             Loading.process(loadRequest)
         }
     }
@@ -55,7 +55,7 @@ ColumnLayout {
     Action {
         shortcut: "Escape"
         onTriggered: {
-            console.log("Unfocus Address Field");
+            console.log("Unfocus Address Field")
             bar.unfocusAddressField()
         }
     }
@@ -63,8 +63,8 @@ ColumnLayout {
     Action {
         shortcut: "F8"
         onTriggered: {
-            console.log("Focus Address Field");
-            bar.focusAddressField();
+            console.log("Focus Address Field")
+            bar.focusAddressField()
         }
     }
 }

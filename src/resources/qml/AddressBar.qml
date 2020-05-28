@@ -10,13 +10,12 @@ Rectangle {
     property bool offTheRecord: false
 
     signal goToAddress(string address)
-    signal back()
-    signal forward()
-    signal reload()
+    signal back
+    signal forward
+    signal reload
 
     property int barPadding: 4
     property int barRadius: 2
-
 
     property string highlightColor: offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
     property string addressBarColor: offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
@@ -25,12 +24,12 @@ Rectangle {
 
     function focusAddressField() {
         console.log("Focus Address Field: Set label visible to false")
-        label.visible = false;
+        label.visible = false
     }
 
     function unfocusAddressField() {
         console.log("Unfocus Address Field: Set label visible to true")
-        label.visible = true;
+        label.visible = true
     }
 
     RowLayout {
@@ -38,7 +37,7 @@ Rectangle {
         anchors.fill: parent
         spacing: root.barPadding
 
-        property int itemHeight: root.height - (2*root.barPadding)
+        property int itemHeight: root.height - (2 * root.barPadding)
         property int buttonWidth: itemHeight
         property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
 
@@ -52,7 +51,7 @@ Rectangle {
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
             buttonName: qsTr("Back")
-            onClicked: root.back();
+            onClicked: root.back()
         }
 
         NavigationButton {
@@ -64,7 +63,7 @@ Rectangle {
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
             buttonName: qsTr("Forward")
-            onClicked: root.forward();
+            onClicked: root.forward()
         }
 
         NavigationButton {
@@ -76,7 +75,7 @@ Rectangle {
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
             buttonName: qsTr("Reload")
-            onClicked: root.reload();
+            onClicked: root.reload()
         }
 
         Item {
@@ -100,7 +99,7 @@ Rectangle {
                     anchors.fill: label
                     hoverEnabled: true
                     cursorShape: Qt.IBeamCursor
-                    onClicked: root.focusAddressField();
+                    onClicked: root.focusAddressField()
                 }
             }
 
@@ -124,17 +123,17 @@ Rectangle {
 
                     onActiveFocusChanged: {
                         if (activeFocus) {
-                            inputField.text = labelText.text;
-                            root.focusAddressField();
-                            inputField.selectAll();
+                            inputField.text = labelText.text
+                            root.focusAddressField()
+                            inputField.selectAll()
                         } else {
-                            root.unfocusAddressField();
+                            root.unfocusAddressField()
                         }
                     }
 
                     onAccepted: {
-                        root.goToAddress(inputField.text);
-                        root.unfocusAddressField();
+                        root.goToAddress(inputField.text)
+                        root.unfocusAddressField()
                     }
                 }
             }

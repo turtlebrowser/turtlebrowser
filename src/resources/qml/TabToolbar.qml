@@ -23,8 +23,8 @@ RowLayout {
     function makeNewTab() {
         console.log("Make new tab")
         tabModel.append({
-                            tabUrl: Addesses.speedDial,
-                            tabTitle: Addesses.speedDialTitle
+                            "tabUrl": Addesses.speedDial,
+                            "tabTitle": Addesses.speedDialTitle
                         })
         tabs.currentIndex = (tabModel.count - 1)
     }
@@ -33,7 +33,7 @@ RowLayout {
         console.log("Close tab : " + tabIndex)
         tabModel.remove(tabIndex)
         if (tabModel.count === 0) {
-            makeNewTab();
+            makeNewTab()
         }
     }
 
@@ -73,7 +73,7 @@ RowLayout {
 
                     text: tab.text
                     font: tab.font
-                    color: root.offTheRecord? Theme.offTheRecordTextColor : Theme.textColor
+                    color: root.offTheRecord ? Theme.offTheRecordTextColor : Theme.textColor
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -89,7 +89,7 @@ RowLayout {
                         spacing: 0
                         padding: 0
 
-                        onClicked: closeTabByIndex(index);
+                        onClicked: closeTabByIndex(index)
 
                         icon.source: Theme.closeTabIcon
                         property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
@@ -101,7 +101,8 @@ RowLayout {
                         background: Rectangle {
                             color: tab.hovered ? root.buttonColor : "transparent"
                             border.color: tabBackground.color
-                            border.width: tab.hovered && closeTab.hovered ? (closeTab.down? 1 : 0) : 1
+                            border.width: tab.hovered
+                                          && closeTab.hovered ? (closeTab.down ? 1 : 0) : 1
                             radius: 2
                         }
                     }
@@ -118,15 +119,15 @@ RowLayout {
         }
     }
 
-   // Possibly use text? ToolButton { text: "+" }
+    // Possibly use text? ToolButton { text: "+" }
     Button {
         id: newTab
-        Layout.preferredHeight:12
-        Layout.preferredWidth:12
+        Layout.preferredHeight: 12
+        Layout.preferredWidth: 12
         Layout.alignment: Qt.AlignVCenter
         Layout.leftMargin: 2
 
-        onClicked: makeNewTab();
+        onClicked: makeNewTab()
 
         background: Rectangle {
             color: newTab.hovered ? root.buttonHightlightColor : root.buttonColor
