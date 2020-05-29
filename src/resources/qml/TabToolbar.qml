@@ -146,7 +146,26 @@ RowLayout {
         color: "transparent"
         MouseArea {
             anchors.fill: parent
+
+            property point pressedPosition
+            property bool isMovable: !(window.visibility === Window.Maximized)
+
             onDoubleClicked: toggleMaximized()
+
+            onPressed: {
+                if (isMovable) {
+                    pressedPosition = Qt.point(mouse.x, mouse.y)
+                }
+            }
+
+            onPositionChanged: {
+                if (isMovable) {
+                    var delta = Qt.point(mouse.x - pressedPosition.x,
+                                         mouse.y - pressedPosition.y)
+                    window.x += delta.x
+                    window.y += delta.y
+                }
+            }
         }
     }
 
