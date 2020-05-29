@@ -35,3 +35,7 @@ var closeTabIcon = "outline-close-24px.svg";
 var backIcon = "outline-arrow_back_ios-24px.svg";
 var forwardIcon = "outline-arrow_forward_ios-24px.svg";
 var reloadIcon = "outline-refresh-24px.svg";
+var minimizeIcon = "horizontal_rule-24px.svg";
+var maximizeIcon = "check_box_outline_blank-24px.svg";
+var restoreIcon = "filter_none-24px.svg";
+var checkIcon = "check_box-24px.svg";

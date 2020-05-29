@@ -5,20 +5,26 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.3
 import QtGraphicalEffects 1.15
 
+import "theme.js" as Theme
+
 Menu {
-    id: menu
+    id: root
 
     property int menuWidth: 200
     property int menuLineHeight: 30
+    property string highlightColor
+    property string backgroundColor
+    property string textColor
+    property int cornerRadius
 
     topPadding: 2
     bottomPadding: 2
 
     background: Rectangle {
         id: menuBackground
-        implicitWidth: menu.menuWidth
-        implicitHeight: menu.menuLineHeight
-        color: root.highlightColor
+        implicitWidth: root.menuWidth
+        implicitHeight: root.menuLineHeight
+        color: root.backgroundColor
         border.color: root.backgroundColor
         radius: root.cornerRadius
 
@@ -42,38 +48,32 @@ Menu {
 
     delegate: MenuItem {
         id: menuItem
-        implicitWidth: menu.menuWidth
-        implicitHeight: menu.menuLineHeight
+        implicitWidth: root.menuWidth
+        implicitHeight: root.menuLineHeight
 
-        arrow: Item {
-            width: 40
-            height: menu.menuLineHeight
+        arrow: Button {
+            implicitWidth: 40
+            implicitHeight: root.menuLineHeight
             visible: menuItem.subMenu
-            Label {
-                anchors.centerIn: parent
-                text: "<"
-                color: root.textColor
+            enabled: false
+            icon.source: Theme.backIcon
+            icon.color: root.textColor
+
+            background: Rectangle {
+                color: "transparent"
             }
         }
 
-        indicator: Item {
+        indicator: Button {
             implicitWidth: 40
-            implicitHeight: menu.menuLineHeight
-            Rectangle {
-                width: 18
-                height: 18
-                anchors.centerIn: parent
-                visible: menuItem.checkable
-                border.color: root.backgroundColor
-                radius: 3
-                Rectangle {
-                    width: 10
-                    height: 10
-                    anchors.centerIn: parent
-                    visible: menuItem.checked
-                    color: root.backgroundColor
-                    radius: root.cornerRadius
-                }
+            implicitHeight: root.menuLineHeight
+            visible: menuItem.checkable
+            enabled: false
+            icon.source: menuItem.checked ? Theme.checkIcon : Theme.maximizeIcon
+            icon.color: root.textColor
+
+            background: Rectangle {
+                color: "transparent"
             }
         }
 
@@ -90,10 +90,10 @@ Menu {
         }
 
         background: Rectangle {
-            implicitWidth: menu.menuWidth
-            implicitHeight: menu.menuLineHeight
+            implicitWidth: root.menuWidth
+            implicitHeight: root.menuLineHeight
             opacity: enabled ? 1 : 0.3
-            color: menuItem.highlighted ? root.backgroundColor : "transparent"
+            color: menuItem.highlighted ? root.highlightColor : root.backgroundColor
         }
     }
 }

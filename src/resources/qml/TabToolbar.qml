@@ -50,11 +50,13 @@ RowLayout {
                           toggleMaximized()
             gesturePolicy: TapHandler.DragThreshold
         }
+
         DragHandler {
             grabPermissions: TapHandler.CanTakeOverFromAnything
-            onActiveChanged: if (active) {
-                                 window.startSystemMove()
-                             }
+            onActiveChanged: {
+                if (active)
+                    window.startSystemMove()
+            }
         }
 
         Repeater {
@@ -137,32 +139,88 @@ RowLayout {
         }
     }
 
-    Item {
+    Rectangle {
+        id: barSpacer
         Layout.fillWidth: true
+        Layout.preferredHeight: root.height
+        color: "transparent"
+        MouseArea {
+            anchors.fill: parent
+            onDoubleClicked: toggleMaximized()
+        }
     }
-    ToolButton {
+
+    Button {
         id: minimizeWindow
-        text: "🗕"
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: Theme.minimizeIcon
+        icon.color: Theme.textColor
+        icon.height: 30
+        icon.width: 30
+        icon.name: qsTr("Minimize Window")
+
         onClicked: window.showMinimized()
 
         background: Rectangle {
             color: minimizeWindow.hovered ? root.buttonHightlightColor : "transparent"
+            radius: 0
         }
     }
-    ToolButton {
+
+    Button {
         id: restoreToggleWindow
-        text: window.visibility === Window.Maximized ? "🗗" : "🗖"
+
+        property bool isMaximized: (window.visibility === Window.Maximized)
+
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: isMaximized ? Theme.restoreIcon : Theme.maximizeIcon
+        icon.color: Theme.textColor
+        icon.height: 30
+        icon.width: 30
+        icon.name: isMaximized ? qsTr("Restore Window") : qsTr(
+                                     "Maximize Window")
+
         onClicked: window.toggleMaximized()
+
         background: Rectangle {
             color: restoreToggleWindow.hovered ? root.buttonHightlightColor : "transparent"
+            radius: 0
         }
     }
-    ToolButton {
+
+    Button {
         id: closeWindow
-        text: "🗙"
+
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: Theme.closeTabIcon
+        icon.color: Theme.textColor
+        icon.height: 30
+        icon.width: 30
+        icon.name: qsTr("Close Window")
+
         onClicked: window.close()
+
         background: Rectangle {
             color: closeWindow.hovered ? "#F44336" : "transparent"
+            radius: 0
         }
     }
 }

@@ -23,8 +23,10 @@ ToolButton {
     StyledMenu {
         id: menu
 
-        menuWidth: 200
-        menuLineHeight: 30
+        highlightColor: root.highlightColor
+        backgroundColor: root.backgroundColor
+        textColor: root.textColor
+        cornerRadius: root.cornerRadius
 
         Action {
             text: qsTr("First")
@@ -38,15 +40,13 @@ ToolButton {
             checked: true
         }
 
-        MenuSeparator {
-            contentItem: Rectangle {
-                implicitWidth: menu.menuWidth
-                implicitHeight: 1
-                color: root.backgroundColor
-            }
-        }
-
         StyledMenu {
+
+            highlightColor: root.highlightColor
+            backgroundColor: root.backgroundColor
+            textColor: root.textColor
+            cornerRadius: root.cornerRadius
+
             title: qsTr("Help")
             Action {
                 text: qsTr("About")

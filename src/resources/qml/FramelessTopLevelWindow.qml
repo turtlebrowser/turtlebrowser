@@ -56,68 +56,26 @@ Window {
         id: resizeHandler
         grabPermissions: TapHandler.TakeOverForbidden
         target: null
-        onActiveChanged: if (active) {
-                             const p = resizeHandler.centroid.position
-                             const b = root.windowMargin + 10
-                             // Increase the corner size slightly
-                             let e = 0
-                             if (p.x < b) {
-                                 e |= Qt.LeftEdge
-                             }
-                             if (p.x >= width - b) {
-                                 e |= Qt.RightEdge
-                             }
-                             if (p.y < b) {
-                                 e |= Qt.TopEdge
-                             }
-                             if (p.y >= height - b) {
-                                 e |= Qt.BottomEdge
-                             }
-                             root.startSystemResize(e)
-                         }
-    }
-
-    SystemTrayIcon {
-        visible: true
-        iconSource: "qrc:/tray-icon.png"
-
-        menu: Menu {
-            MenuItem {
-                text: qsTr("Restore Window")
-                onTriggered: console.log("restore window")
-            }
-            MenuItem {
-                text: qsTr("Quit")
-                onTriggered: Qt.quit()
+        onActiveChanged: {
+            if (active) {
+                const p = resizeHandler.centroid.position
+                const b = root.windowMargin + 10
+                // Increase the corner size slightly
+                let e = 0
+                if (p.x < b) {
+                    e |= Qt.LeftEdge
+                }
+                if (p.x >= width - b) {
+                    e |= Qt.RightEdge
+                }
+                if (p.y < b) {
+                    e |= Qt.TopEdge
+                }
+                if (p.y >= height - b) {
+                    e |= Qt.BottomEdge
+                }
+                root.startSystemResize(e)
             }
         }
-    }
-
-    // https://doc.qt.io/qt-5/qml-qt-labs-platform-systemtrayicon.html
-    SystemTrayIcon {
-        id: trayIcon
-
-        visible: true
-        icon.source: "qrc:/images/tray-icon.png"
-        icon.mask: true
-        icon.name: "TurtleBrowser"
-
-        onActivated: {
-            root.show()
-            root.raise()
-            root.requestActivate()
-        }
-
-        menu: Menu {
-            MenuItem {
-                text: qsTr("Quit")
-                onTriggered: Qt.quit()
-            }
-        }
-
-        onMessageClicked: console.log("Notification clicked")
-        Component.onCompleted: trayIcon.showMessage(
-                                   "TurtleBrowser Test",
-                                   "This is a test notification")
     }
 }
