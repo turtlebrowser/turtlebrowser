@@ -11,14 +11,14 @@
         <file>qml/loading.js</file>
         <file>qml/theme.js</file>
         <file>qml/url.js</file>
-        <file>qml/add-24px.svg</file>
-        <file>qml/check_box-24px.svg</file>
-        <file>qml/check_box_outline_blank-24px.svg</file>
-        <file>qml/filter_none-24px.svg</file>
-        <file>qml/horizontal_rule-24px.svg</file>
-        <file>qml/outline-arrow_back_ios-24px.svg</file>
-        <file>qml/outline-arrow_forward_ios-24px.svg</file>
-        <file>qml/outline-refresh-24px.svg</file>
-        <file>qml/outline-close-24px.svg</file>
+        <file>icons/add-24px.svg</file>
+        <file>icons/check_box-24px.svg</file>
+        <file>icons/check_box_outline_blank-24px.svg</file>
+        <file>icons/filter_none-24px.svg</file>
+        <file>icons/horizontal_rule-24px.svg</file>
+        <file>icons/outline-arrow_back_ios-24px.svg</file>
+        <file>icons/outline-arrow_forward_ios-24px.svg</file>
+        <file>icons/outline-refresh-24px.svg</file>
+        <file>icons/outline-close-24px.svg</file>
     </qresource>
 </RCC>
