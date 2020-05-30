@@ -42,7 +42,7 @@ RowLayout {
     TabBar {
         id: tabs
         position: TabBar.Header
-        Layout.maximumWidth: window.width - 150
+        Layout.maximumWidth: window.width - (root.height * 5)
 
         TapHandler {
             onTapped: if (tapCount === 2)
@@ -69,8 +69,8 @@ RowLayout {
                 Button {
                     id: closeTab
 
-                    width: icon.width
-                    height: icon.height
+                    width: tab.height
+                    height: tab.height
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -78,8 +78,6 @@ RowLayout {
                     padding: 0
 
                     icon.source: Theme.closeTabIcon
-                    icon.height: 20
-                    icon.width: 20
                     icon.name: qsTr("Close Tab")
 
                     onClicked: closeTabByIndex(index)
@@ -88,7 +86,7 @@ RowLayout {
         }
     }
 
-    Button {
+    ToolButton {
         id: newTab
         Layout.preferredHeight: root.height
         Layout.preferredWidth: root.height
@@ -98,8 +96,6 @@ RowLayout {
         padding: 2
 
         icon.source: Theme.newTabIcon
-        icon.height: 20
-        icon.width: 20
         icon.name: qsTr("New Tab")
 
         onClicked: makeNewTab()
@@ -136,56 +132,50 @@ RowLayout {
         }
     }
 
-    Button {
+    ToolButton {
         id: minimizeWindow
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: icon.width + 4
+        Layout.preferredWidth: root.height
 
         display: AbstractButton.IconOnly
         spacing: 0
         padding: 2
 
         icon.source: Theme.minimizeIcon
-        icon.height: 20
-        icon.width: 20
         icon.name: qsTr("Minimize Window")
 
         onClicked: window.showMinimized()
     }
 
-    Button {
+    ToolButton {
         id: restoreToggleWindow
 
         property bool isMaximized: (window.visibility === Window.Maximized)
 
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: icon.width + 4
+        Layout.preferredWidth: root.height
 
         display: AbstractButton.IconOnly
         spacing: 0
         padding: 2
 
         icon.source: isMaximized ? Theme.restoreIcon : Theme.maximizeIcon
-        icon.height: 20
-        icon.width: 20
         icon.name: isMaximized ? qsTr("Restore Window") : qsTr("Maximize Window")
 
         onClicked: window.toggleMaximized()
     }
 
-    Button {
+    ToolButton {
         id: closeWindow
 
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: icon.width + 4
+        Layout.preferredWidth: root.height
 
         display: AbstractButton.IconOnly
         spacing: 0
         padding: 2
 
         icon.source: Theme.closeTabIcon
-        icon.height: 20
-        icon.width: 20
         icon.name: qsTr("Close Window")
 
         onClicked: window.close()

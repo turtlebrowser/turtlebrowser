@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import "theme.js" as Theme
 
-Rectangle {
+ToolBar {
     id: root
 
     property alias url: labelText.text
@@ -37,7 +37,7 @@ Rectangle {
         property int buttonWidth: itemHeight
         property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
 
-        Button {
+        ToolButton {
             id: backButton
             Layout.leftMargin: root.barPadding
             Layout.preferredHeight: displaybox.itemHeight
@@ -48,14 +48,12 @@ Rectangle {
             padding: 2
 
             icon.source: Theme.backIcon
-            icon.height: 30
-            icon.width: 30
             icon.name: qsTr("Back")
 
             onClicked: root.back()
         }
 
-        Button {
+        ToolButton {
             id: forwardButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
@@ -65,14 +63,12 @@ Rectangle {
             padding: 2
 
             icon.source: Theme.forwardIcon
-            icon.height: 30
-            icon.width: 30
             icon.name: qsTr("Forward")
 
             onClicked: root.forward()
         }
 
-        Button {
+        ToolButton {
             id: reloadButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
@@ -82,8 +78,6 @@ Rectangle {
             padding: 2
 
             icon.source: Theme.reloadIcon
-            icon.height: 30
-            icon.width: 30
             icon.name: qsTr("Reload")
 
             onClicked: root.reload()
@@ -159,7 +153,10 @@ Rectangle {
             spacing: 0
             padding: 2
 
-            text: "\u2630"
+            display: AbstractButton.IconOnly
+            icon.source: Theme.menuIcon
+            icon.name: qsTr("Open Browser Menu")
+
             onClicked: menu.popup((settingsButton.width - menu.width),
                                   settingsButton.height)
 
