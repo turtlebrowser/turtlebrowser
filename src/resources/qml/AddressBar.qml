@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 
 import "theme.js" as Theme
@@ -16,11 +17,6 @@ Rectangle {
 
     property int barPadding: 4
     property int barRadius: 2
-
-    property string highlightColor: offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
-    property string addressBarColor: offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
-    property string textColor: offTheRecord ? Theme.offTheRecordTextColor : Theme.textColor
-    color: addressBarColor
 
     function focusAddressField() {
         console.log("Focus Address Field: Set label visible to false")
@@ -41,40 +37,55 @@ Rectangle {
         property int buttonWidth: itemHeight
         property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
 
-        NavigationButton {
+        Button {
             id: backButton
             Layout.leftMargin: root.barPadding
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
-            buttonIcon: Theme.backIcon
-            buttonIconColor: displaybox.iconColor
-            buttonColor: root.addressBarColor
-            buttonHighlightColor: root.highlightColor
-            buttonName: qsTr("Back")
+
+            display: AbstractButton.IconOnly
+            spacing: 0
+            padding: 2
+
+            icon.source: Theme.backIcon
+            icon.height: 30
+            icon.width: 30
+            icon.name: qsTr("Back")
+
             onClicked: root.back()
         }
 
-        NavigationButton {
+        Button {
             id: forwardButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
-            buttonIcon: Theme.forwardIcon
-            buttonIconColor: displaybox.iconColor
-            buttonColor: root.addressBarColor
-            buttonHighlightColor: root.highlightColor
-            buttonName: qsTr("Forward")
+
+            display: AbstractButton.IconOnly
+            spacing: 0
+            padding: 2
+
+            icon.source: Theme.forwardIcon
+            icon.height: 30
+            icon.width: 30
+            icon.name: qsTr("Forward")
+
             onClicked: root.forward()
         }
 
-        NavigationButton {
+        Button {
             id: reloadButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
-            buttonIcon: Theme.reloadIcon
-            buttonIconColor: displaybox.iconColor
-            buttonColor: root.addressBarColor
-            buttonHighlightColor: root.highlightColor
-            buttonName: qsTr("Reload")
+
+            display: AbstractButton.IconOnly
+            spacing: 0
+            padding: 2
+
+            icon.source: Theme.reloadIcon
+            icon.height: 30
+            icon.width: 30
+            icon.name: qsTr("Reload")
+
             onClicked: root.reload()
         }
 
@@ -83,9 +94,10 @@ Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: displaybox.itemHeight
 
-            AddressBackground {
+            Rectangle {
                 id: label
                 anchors.fill: parent
+                radius: 4
 
                 Text {
                     id: labelText
@@ -103,9 +115,10 @@ Rectangle {
                 }
             }
 
-            AddressBackground {
+            Rectangle {
                 id: field
                 anchors.fill: parent
+                radius: 4
 
                 visible: !label.visible
 
@@ -138,16 +151,41 @@ Rectangle {
                 }
             }
         }
-        BrowserMenu {
+        ToolButton {
+            id: settingsButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
             Layout.rightMargin: root.barPadding
             spacing: 0
             padding: 2
 
-            highlightColor: root.highlightColor
-            backgroundColor: root.addressBarColor
-            textColor: root.textColor
+            text: "\u2630"
+            onClicked: menu.popup((settingsButton.width - menu.width),
+                                  settingsButton.height)
+
+            Menu {
+                id: menu
+
+                Action {
+                    text: qsTr("First")
+                }
+                Action {
+                    text: qsTr("Second")
+                }
+                Action {
+                    text: qsTr("Third")
+                    checkable: true
+                    checked: true
+                }
+
+                Menu {
+
+                    title: qsTr("Help")
+                    Action {
+                        text: qsTr("About")
+                    }
+                }
+            }
         }
     }
 }

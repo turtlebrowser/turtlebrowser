@@ -25,7 +25,7 @@ ColumnLayout {
 
     AddressBar {
         id: bar
-        Layout.preferredHeight: 30
+        Layout.preferredHeight: 40
         Layout.fillWidth: true
 
         url: webView.url
