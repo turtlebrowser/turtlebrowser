@@ -17,9 +17,6 @@ RowLayout {
     property alias currentIndex: tabs.currentIndex
     property alias model: tabsRepeater.model
 
-    property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
-    property string buttonHightlightColor: root.offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
-
     function makeNewTab() {
         console.log("Make new tab")
         tabModel.append({
@@ -44,6 +41,8 @@ RowLayout {
 
     TabBar {
         id: tabs
+        position: TabBar.Header
+        Layout.maximumWidth: window.width - 150
 
         TapHandler {
             onTapped: if (tapCount === 2)
@@ -65,56 +64,25 @@ RowLayout {
             TabButton {
                 id: tab
                 text: tabTitle
+                implicitWidth: 240
 
-                property bool currentTab: (index == tabs.currentIndex)
+                Button {
+                    id: closeTab
 
-                width: 120
+                    width: icon.width
+                    height: icon.height
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
 
-                contentItem: Text {
-                    id: tabLabel
+                    display: AbstractButton.IconOnly
+                    padding: 0
 
-                    text: tab.text
-                    font: tab.font
-                    color: root.offTheRecord ? Theme.offTheRecordTextColor : Theme.textColor
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
+                    icon.source: Theme.closeTabIcon
+                    icon.height: 20
+                    icon.width: 20
+                    icon.name: qsTr("Close Tab")
 
-                    Button {
-                        id: closeTab
-
-                        height: 12
-                        width: 12
-                        anchors.right: tabLabel.right
-                        anchors.verticalCenter: tabLabel.verticalCenter
-                        spacing: 0
-                        padding: 0
-
-                        onClicked: closeTabByIndex(index)
-
-                        icon.source: Theme.closeTabIcon
-                        property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
-                        icon.color: tab.hovered ? iconColor : tabBackground.color
-                        icon.height: 12
-                        icon.width: 12
-                        icon.name: qsTr("Close Tab")
-
-                        background: Rectangle {
-                            color: tab.hovered ? root.buttonColor : "transparent"
-                            border.color: tabBackground.color
-                            border.width: tab.hovered
-                                          && closeTab.hovered ? (closeTab.down ? 1 : 0) : 1
-                            radius: 2
-                        }
-                    }
-                }
-
-                background: Rectangle {
-                    id: tabBackground
-                    property string offTheRecordColor: tab.hovered ? Theme.offTheRecordHightlight : (tab.currentTab ? Theme.offTheRecordColor : Theme.offTheRecordLowlight)
-                    property string onTheRecordColor: tab.hovered ? Theme.addressBarHighlight : (tab.currentTab ? Theme.addressBarColor : Theme.addressBarLowlight)
-
-                    color: root.offTheRecord ? offTheRecordColor : onTheRecordColor
+                    onClicked: closeTabByIndex(index)
                 }
             }
         }
@@ -122,25 +90,26 @@ RowLayout {
 
     Button {
         id: newTab
-        Layout.preferredHeight: 12
-        Layout.preferredWidth: 12
-        Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 2
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: Theme.newTabIcon
+        icon.height: 20
+        icon.width: 20
+        icon.name: qsTr("New Tab")
 
         onClicked: makeNewTab()
-
-        background: Rectangle {
-            color: newTab.hovered ? root.buttonHightlightColor : root.buttonColor
-            border.color: Theme.tabBarBackground
-            border.width: newTab.hovered ? 0 : 1
-            radius: 2
-        }
     }
 
     Rectangle {
         id: barSpacer
         Layout.fillWidth: true
         Layout.preferredHeight: root.height
+        Layout.minimumWidth: 20
         color: "transparent"
         MouseArea {
             anchors.fill: parent
@@ -170,24 +139,18 @@ RowLayout {
     Button {
         id: minimizeWindow
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: root.height
+        Layout.preferredWidth: icon.width + 4
 
         display: AbstractButton.IconOnly
         spacing: 0
         padding: 2
 
         icon.source: Theme.minimizeIcon
-        icon.color: Theme.textColor
-        icon.height: 30
-        icon.width: 30
+        icon.height: 20
+        icon.width: 20
         icon.name: qsTr("Minimize Window")
 
         onClicked: window.showMinimized()
-
-        background: Rectangle {
-            color: minimizeWindow.hovered ? root.buttonHightlightColor : "transparent"
-            radius: 0
-        }
     }
 
     Button {
@@ -196,48 +159,35 @@ RowLayout {
         property bool isMaximized: (window.visibility === Window.Maximized)
 
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: root.height
+        Layout.preferredWidth: icon.width + 4
 
         display: AbstractButton.IconOnly
         spacing: 0
         padding: 2
 
         icon.source: isMaximized ? Theme.restoreIcon : Theme.maximizeIcon
-        icon.color: Theme.textColor
-        icon.height: 30
-        icon.width: 30
-        icon.name: isMaximized ? qsTr("Restore Window") : qsTr(
-                                     "Maximize Window")
+        icon.height: 20
+        icon.width: 20
+        icon.name: isMaximized ? qsTr("Restore Window") : qsTr("Maximize Window")
 
         onClicked: window.toggleMaximized()
-
-        background: Rectangle {
-            color: restoreToggleWindow.hovered ? root.buttonHightlightColor : "transparent"
-            radius: 0
-        }
     }
 
     Button {
         id: closeWindow
 
         Layout.preferredHeight: root.height
-        Layout.preferredWidth: root.height
+        Layout.preferredWidth: icon.width + 4
 
         display: AbstractButton.IconOnly
         spacing: 0
         padding: 2
 
         icon.source: Theme.closeTabIcon
-        icon.color: Theme.textColor
-        icon.height: 30
-        icon.width: 30
+        icon.height: 20
+        icon.width: 20
         icon.name: qsTr("Close Window")
 
         onClicked: window.close()
-
-        background: Rectangle {
-            color: closeWindow.hovered ? "#F44336" : "transparent"
-            radius: 0
-        }
     }
 }
