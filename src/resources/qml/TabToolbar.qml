@@ -43,6 +43,7 @@ RowLayout {
         id: tabs
         position: TabBar.Header
         Layout.maximumWidth: window.width - (root.height * 5)
+        Layout.maximumHeight: root.height
 
         TapHandler {
             onTapped: if (tapCount === 2)
@@ -66,13 +67,14 @@ RowLayout {
                 text: tabTitle
                 implicitWidth: 240
 
-                Button {
+                RoundButton {
                     id: closeTab
 
-                    width: tab.height
-                    height: tab.height
+                    width: tab.height * 0.45
+                    height: tab.height * 0.45
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.rightMargin: tab.width * 0.05
 
                     display: AbstractButton.IconOnly
                     padding: 0
@@ -86,10 +88,12 @@ RowLayout {
         }
     }
 
-    ToolButton {
+    RoundButton {
         id: newTab
-        Layout.preferredHeight: root.height
-        Layout.preferredWidth: root.height
+        Layout.leftMargin: root.height * 0.15
+        Layout.preferredWidth: root.height * 0.55
+        Layout.preferredHeight: root.height * 0.55
+        Layout.alignment: Qt.AlignVCenter
 
         display: AbstractButton.IconOnly
         spacing: 0

@@ -47,6 +47,7 @@ FramelessTopLevelWindow {
         TabToolbar {
             id: tabBar
             Layout.maximumWidth: window.width
+            height: 40
             currentIndex: pagesStack.currentIndex
             model: tabModel
             offTheRecord: window.windowOffTheRecord
