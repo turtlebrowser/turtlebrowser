@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtWebEngine 1.7
+import QtQuick 2.15
+import QtWebEngine 1.10
 
 QtObject {
     id: root

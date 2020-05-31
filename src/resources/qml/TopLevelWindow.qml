@@ -1,12 +1,12 @@
-import QtQml 2.0
-import QtQml.Models 2.11
-import QtQuick 2.12
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Material 2.0
-import QtQuick.Layouts 1.3
-import QtQuick.Shapes 1.12
-import QtQuick.Window 2.3
-import QtWebEngine 1.7
+import QtQml 2.15
+import QtQml.Models 2.15
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.12
+import QtQuick.Layouts 1.15
+import QtQuick.Shapes 1.15
+import QtQuick.Window 2.15
+import QtWebEngine 1.10
 
 import "addresses.js" as Addesses
 import "loading.js" as Loading
