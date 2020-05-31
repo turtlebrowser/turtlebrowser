@@ -50,7 +50,6 @@ ColumnLayout {
     Action {
         shortcut: "Escape"
         onTriggered: {
-            console.log("Unfocus Address Field")
             bar.unfocusAddressField()
         }
     }
@@ -58,7 +57,6 @@ ColumnLayout {
     Action {
         shortcut: "F8"
         onTriggered: {
-            console.log("Focus Address Field")
             bar.focusAddressField()
         }
     }

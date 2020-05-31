@@ -19,12 +19,10 @@ ToolBar {
     property int barRadius: 2
 
     function focusAddressField() {
-        console.log("Focus Address Field: Set label visible to false")
         label.visible = false
     }
 
     function unfocusAddressField() {
-        console.log("Unfocus Address Field: Set label visible to true")
         label.visible = true
     }
 

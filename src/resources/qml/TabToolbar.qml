@@ -17,7 +17,6 @@ RowLayout {
     property alias model: tabsRepeater.model
 
     function makeNewTab() {
-        console.log("Make new tab")
         tabModel.append({
                             tabUrl: Addesses.speedDial,
                             tabTitle: Addesses.speedDialTitle
@@ -26,7 +25,6 @@ RowLayout {
     }
 
     function closeTabByIndex(tabIndex) {
-        console.log("Close tab : " + tabIndex)
         tabModel.remove(tabIndex)
         if (tabModel.count === 0) {
             makeNewTab()
@@ -34,7 +32,6 @@ RowLayout {
     }
 
     function closeCurrentTab() {
-        console.log("Close current tab")
         closeTabByIndex(tabs.currentIndex)
     }
 
