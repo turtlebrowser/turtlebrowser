@@ -1,13 +1,8 @@
 import QtQml 2.15
-import QtQml.Models 2.15
-import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.15
-import QtQuick.Window 2.15
 import QtWebEngine 1.10
 
-import "addresses.js" as Addesses
 import "loading.js" as Loading
 import "url.js" as URL
 
