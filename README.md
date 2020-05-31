@@ -177,3 +177,12 @@ sudo apt-get install libxcb-xinput0
 ```
 conan export /path/to/conan-qt qt/5.14.2@user/channel
 ```
+
+## Style
+
+* Options for [palette](https://doc.qt.io/qt-5/qml-palette.html#qtquickcontrols2-palette), [syntax](https://doc.qt.io/qt-5/qtquickcontrols2-configuration.html#palette-configuration)
+* Options for [font](https://doc.qt.io/qt-5/qtquickcontrols2-configuration.html#font-configuration)
+* QT_QUICK_CONTROLS_IMAGINE_PATH=imagine-assets
+* Command line: ./app -style material
+* Environment: QT_QUICK_CONTROLS_STYLE=universal ./app
+* [Icon Themes](https://doc.qt.io/qt-5/qtquickcontrols2-icons.html#icon-themes)
