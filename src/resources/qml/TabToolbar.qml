@@ -67,6 +67,11 @@ RowLayout {
                 text: tabTitle
                 implicitWidth: 240
 
+                TapHandler {
+                    acceptedButtons: Qt.MiddleButton
+                    onTapped: closeTabByIndex(index)
+                }
+
                 RoundButton {
                     id: closeTab
 
