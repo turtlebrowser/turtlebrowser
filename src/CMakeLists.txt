@@ -58,7 +58,7 @@ target_link_libraries(${PROJECT}
         Qt5::Widgets
         Qt5::Xml)
 
-if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     # Linux : Installs TurtleBrowser to CMAKE_INSTALL_PREFIX/bin
     install(TARGETS ${PROJECT} RUNTIME DESTINATION bin COMPONENT Runtime)
 else ()
