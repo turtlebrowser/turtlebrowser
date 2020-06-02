@@ -74,7 +74,7 @@ jobs:
       working-directory: ${{ env.INSTALL_DIR }}
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
-        macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
+        DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
