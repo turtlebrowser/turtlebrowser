@@ -58,15 +58,17 @@ target_link_libraries(${PROJECT}
         Qt5::Widgets
         Qt5::Xml)
 
+set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME turtlebrowser)
+
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     # Linux : Installs TurtleBrowser to CMAKE_INSTALL_PREFIX/bin
-    install(TARGETS ${PROJECT} RUNTIME DESTINATION bin COMPONENT Runtime)
+    install(TARGETS ${PROJECT} RUNTIME DESTINATION bin)
 else ()
     # Windows : Installs TurtleBrowser.exe to CMAKE_INSTALL_PREFIX/bin
     # Mac     : Installs TurtleBrowser.app to CMAKE_INSTALL_PREFIX/
     INSTALL(TARGETS ${PROJECT}
-            BUNDLE DESTINATION . COMPONENT Runtime
-            RUNTIME DESTINATION bin COMPONENT Runtime)
+            BUNDLE DESTINATION .
+            RUNTIME DESTINATION bin)
 endif ()
 
 install(DIRECTORY ${CMAKE_BINARY_DIR}/src/licenses DESTINATION .)
