@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 # Download automatically, you can also just copy the conan.cmake file
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -24,12 +25,28 @@ endif()
 
 find_package(Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml REQUIRED)
 find_package(Qt5Test REQUIRED)
+find_package(Qt5 COMPONENTS LinguistTools REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
 
 add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
 
 qt5_add_resources(QT_RESOURCES resources/resources.qrc)
+
+set(tsFiles
+    ${PROJECT}_de_AT.ts
+    ${PROJECT}_de_DE.ts
+    ${PROJECT}_ja.ts)
+
+option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
+
+if(ENABLE_TS_RESCAN)
+    # Need to generate the ts files using lupdate
+    qt5_create_translation(qmFiles ${CMAKE_CURRENT_LIST_DIR} ${tsFiles})
+else()
+    # Need to the ts files to qm files using lrelease
+    qt5_add_translation(qmFiles ${tsFiles})
+endif()
 
 if(NOT DEFINED HEADERS)
     file(GLOB HEADERS *.h)
@@ -42,11 +59,7 @@ endif()
 source_group("Header Files" FILES ${HEADERS})
 source_group("Source Files" FILES ${SOURCES})
 
-if(APPLE)
-    add_executable(${PROJECT} MACOSX_BUNDLE ${HEADERS} ${SOURCES} ${QT_RESOURCES})
-else()
-    add_executable(${PROJECT} ${HEADERS} ${SOURCES} ${QT_RESOURCES})
-endif()
+add_executable(${PROJECT} MACOSX_BUNDLE WIN32 ${HEADERS} ${SOURCES} ${QT_RESOURCES} ${qmFiles})
 
 target_link_libraries(${PROJECT}
         Qt5::Core
@@ -58,17 +71,64 @@ target_link_libraries(${PROJECT}
         Qt5::Widgets
         Qt5::Xml)
 
-set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME turtlebrowser)
+set(qmFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
 
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    # Linux : Installs TurtleBrowser to CMAKE_INSTALL_PREFIX/bin
-    install(TARGETS ${PROJECT} RUNTIME DESTINATION bin)
-else ()
-    # Windows : Installs TurtleBrowser.exe to CMAKE_INSTALL_PREFIX/bin
-    # Mac     : Installs TurtleBrowser.app to CMAKE_INSTALL_PREFIX/
-    INSTALL(TARGETS ${PROJECT}
-            BUNDLE DESTINATION .
-            RUNTIME DESTINATION bin)
+if (APPLE)
+    set_target_properties(${PROJECT} PROPERTIES INSTALL_RPATH @executable_path/../Frameworks)
+    set_source_files_properties(${qmFiles} PROPERTIES
+                                MACOSX_PACKAGE_LOCATION "translations")
 endif ()
 
-install(DIRECTORY ${CMAKE_BINARY_DIR}/src/licenses DESTINATION .)
+set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME turtlebrowser)
+
+include(GNUInstallDirs)
+set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/${PROJECT})
+
+# Don't know if this is needed
+set(CMAKE_INSTALL_SYSTEM_RUNTIME_COMPONENT ${PROJECT})
+include(InstallRequiredSystemLibraries)
+
+# Maybe install(TARGETS ${PROJECT}) is sufficient with GNUInstallDirs and CMAKE_INSTALL_DEFAULT_COMPONENT_NAME?
+install(TARGETS ${PROJECT}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        BUNDLE DESTINATION .)
+
+# Get the Qt bin directory
+get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
+get_filename_component(qtBinDir "${mocExe}" DIRECTORY)
+
+if (APPLE)
+    # Merge language files
+    find_program(LCONVERT_EXECUTABLE lconvert
+                 PATHS "${qtBinDir}"
+                 NO_DEFAULT_PATH)
+    find_program(DEPLOYQT_EXECUTABLE macdeployqt
+            PATHS "${qtBinDir}"
+            NO_DEFAULT_PATH)
+    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 -dmg -qmldir=${qmFiles}]])
+#    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 "-codesign=Apple Development"]])
+    set(TRANSLATION_DIR MyQtApp.app/Contents/translations)
+endif()
+
+if (WIN32)
+    find_program(DEPLOYQT_EXECUTABLE windeployqt
+                 PATHS "${qtBinDir}"
+                 NO_DEFAULT_PATH)
+    set(DEPLOY_OPTIONS
+        bin/${PROJECT}.exe
+        --dir .
+        --libdir bin
+        --plugindir plugins
+        --qmldir ${qmFiles})
+#    set(DEPLOY_OPTIONS [[ --qmldir ${qmFiles} ${PROJECT}.exe]])
+    set(TRANSLATION_DIR translations)
+endif ()
+
+# androiddeployqt ???
+
+if (APPLE OR WIN32)
+    configure_file(deployapp.cmake.in deployapp.cmake @ONLY)
+    install(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/deployapp.cmake)
+endif ()
