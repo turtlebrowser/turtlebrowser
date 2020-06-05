@@ -84,16 +84,13 @@ set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME turtlebrowser)
 include(GNUInstallDirs)
 set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/${PROJECT})
 
-# Don't know if this is needed
-set(CMAKE_INSTALL_SYSTEM_RUNTIME_COMPONENT ${PROJECT})
-include(InstallRequiredSystemLibraries)
-
 # Maybe install(TARGETS ${PROJECT}) is sufficient with GNUInstallDirs and CMAKE_INSTALL_DEFAULT_COMPONENT_NAME?
 install(TARGETS ${PROJECT}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         BUNDLE DESTINATION .)
+install(FILES qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Get the Qt bin directory
 get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
@@ -122,7 +119,6 @@ if (WIN32)
         --libdir bin
         --plugindir plugins
         --qmldir ${qmFiles})
-#    set(DEPLOY_OPTIONS [[ --qmldir ${qmFiles} ${PROJECT}.exe]])
     set(TRANSLATION_DIR translations)
 endif ()
 
