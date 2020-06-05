@@ -8,11 +8,11 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 # Download automatically, you can also just copy the conan.cmake file
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
     file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake"
-            "${CMAKE_BINARY_DIR}/conan.cmake")
-endif()
+         "${CMAKE_BINARY_DIR}/conan.cmake")
+endif ()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
@@ -21,7 +21,7 @@ conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missin
 # For running locally in CLion
 if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
     file(COPY ${CMAKE_BINARY_DIR}/src/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/src/bin/)
-endif()
+endif ()
 
 find_package(Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml REQUIRED)
 find_package(Qt5Test REQUIRED)
@@ -40,21 +40,21 @@ set(tsFiles
 
 option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
 
-if(ENABLE_TS_RESCAN)
+if (ENABLE_TS_RESCAN)
     # Need to generate the ts files using lupdate
     qt5_create_translation(qmFiles ${CMAKE_CURRENT_LIST_DIR} ${tsFiles})
-else()
+else ()
     # Need to the ts files to qm files using lrelease
     qt5_add_translation(qmFiles ${tsFiles})
-endif()
+endif ()
 
-if(NOT DEFINED HEADERS)
+if (NOT DEFINED HEADERS)
     file(GLOB HEADERS *.h)
-endif()
+endif ()
 
-if(NOT DEFINED SOURCES)
+if (NOT DEFINED SOURCES)
     file(GLOB SOURCES *.cpp)
-endif()
+endif ()
 
 source_group("Header Files" FILES ${HEADERS})
 source_group("Source Files" FILES ${SOURCES})
@@ -62,14 +62,14 @@ source_group("Source Files" FILES ${SOURCES})
 add_executable(${PROJECT} MACOSX_BUNDLE WIN32 ${HEADERS} ${SOURCES} ${QT_RESOURCES} ${qmFiles})
 
 target_link_libraries(${PROJECT}
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Qml
-        Qt5::Quick
-        Qt5::Svg
-        Qt5::WebEngine
-        Qt5::Widgets
-        Qt5::Xml)
+                      Qt5::Core
+                      Qt5::Gui
+                      Qt5::Qml
+                      Qt5::Quick
+                      Qt5::Svg
+                      Qt5::WebEngine
+                      Qt5::Widgets
+                      Qt5::Xml)
 
 set(qmFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
 
@@ -92,11 +92,33 @@ install(TARGETS ${PROJECT}
         BUNDLE DESTINATION .)
 
 # Set up the qt.conf
-set(qtConfPrefix ..)
-set(qtConfQml2Imports .)
-set(qtConfLibraryExecutables .)
+if (WIN32)
+    set(qtConfPrefix ..)
+    set(qtConfQml2Imports .)
+    set(qtConfLibraryExecutables .)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(qtConfPrefix .)
+    set(qtConfQml2Imports qml)
+    set(qtConfLibraryExecutables libexec)
+endif ()
+
 configure_file(qt.conf.in qt.conf @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# Make a runnable bundle for linux
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    install(DIRECTORY
+            ${CMAKE_CURRENT_BINARY_DIR}/lib
+            ${CMAKE_CURRENT_BINARY_DIR}/plugins
+            ${CMAKE_CURRENT_BINARY_DIR}/qml
+            ${CMAKE_CURRENT_BINARY_DIR}/resources
+            ${CMAKE_CURRENT_BINARY_DIR}/translations
+            DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/libexec/QtWebEngineProcess
+            DESTINATION ${CMAKE_INSTALL_BINDIR}/libexec
+            PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_READ WORLD_EXECUTE)
+endif ()
 
 # Get the Qt bin directory
 get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
@@ -108,12 +130,12 @@ if (APPLE)
                  PATHS "${qtBinDir}"
                  NO_DEFAULT_PATH)
     find_program(DEPLOYQT_EXECUTABLE macdeployqt
-            PATHS "${qtBinDir}"
-            NO_DEFAULT_PATH)
+                 PATHS "${qtBinDir}"
+                 NO_DEFAULT_PATH)
     set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 -dmg -qmldir=${qmFiles}]])
-#    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 "-codesign=Apple Development"]])
+    #    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 "-codesign=Apple Development"]])
     set(TRANSLATION_DIR MyQtApp.app/Contents/translations)
-endif()
+endif ()
 
 if (WIN32)
     find_program(DEPLOYQT_EXECUTABLE windeployqt
