@@ -107,8 +107,15 @@ configure_file(qt.conf.in qt.conf @ONLY)
 # Install the qt.conf
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
 
+# Configure the licenses install location
+if (WIN32)
+    set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR}/..)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
+endif ()
+
 # Install the licenses
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${ROOT_INSTALL_DIR})
 
 # Make a runnable bundle for linux
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
