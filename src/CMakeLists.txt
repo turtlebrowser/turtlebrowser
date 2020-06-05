@@ -90,7 +90,9 @@ install(TARGETS ${PROJECT}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         BUNDLE DESTINATION .)
-install(FILES qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+configure_file(qt.conf.in qt.conf @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Get the Qt bin directory
 get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
