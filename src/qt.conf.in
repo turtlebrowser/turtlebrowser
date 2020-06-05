@@ -1,4 +1,4 @@
 [Paths]
-Prefix = ..
-Qml2Imports = .
-LibraryExecutables = .
+Prefix = @qtConfPrefix@
+Qml2Imports = @qtConfQml2Imports@
+LibraryExecutables = @qtConfLibraryExecutables@

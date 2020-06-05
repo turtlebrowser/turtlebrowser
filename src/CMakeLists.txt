@@ -91,6 +91,10 @@ install(TARGETS ${PROJECT}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         BUNDLE DESTINATION .)
 
+# Set up the qt.conf
+set(qtConfPrefix ..)
+set(qtConfQml2Imports .)
+set(qtConfLibraryExecutables .)
 configure_file(qt.conf.in qt.conf @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
 
