@@ -91,7 +91,7 @@ install(TARGETS ${PROJECT}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         BUNDLE DESTINATION .)
 
-# Set up the qt.conf
+# Configure the qt.conf
 if (WIN32)
     set(qtConfPrefix ..)
     set(qtConfQml2Imports .)
@@ -103,7 +103,12 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
 endif ()
 
 configure_file(qt.conf.in qt.conf @ONLY)
+
+# Install the qt.conf
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# Install the licenses
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Make a runnable bundle for linux
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
