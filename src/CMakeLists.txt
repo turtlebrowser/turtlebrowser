@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.14)
-
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -34,9 +32,9 @@ add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFI
 qt5_add_resources(QT_RESOURCES resources/resources.qrc)
 
 set(tsFiles
-    ${PROJECT}_de_AT.ts
-    ${PROJECT}_de_DE.ts
-    ${PROJECT}_ja.ts)
+    ${PROJECT_NAME}_de_AT.ts
+    ${PROJECT_NAME}_de_DE.ts
+    ${PROJECT_NAME}_ja.ts)
 
 option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
 
@@ -48,20 +46,15 @@ else ()
     qt5_add_translation(qmFiles ${tsFiles})
 endif ()
 
-if (NOT DEFINED HEADERS)
-    file(GLOB HEADERS *.h)
-endif ()
-
-if (NOT DEFINED SOURCES)
-    file(GLOB SOURCES *.cpp)
-endif ()
+file(GLOB HEADERS *.h)
+file(GLOB SOURCES *.cpp)
 
 source_group("Header Files" FILES ${HEADERS})
 source_group("Source Files" FILES ${SOURCES})
 
-add_executable(${PROJECT} MACOSX_BUNDLE WIN32 ${HEADERS} ${SOURCES} ${QT_RESOURCES} ${qmFiles})
+add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32 ${HEADERS} ${SOURCES} ${QT_RESOURCES} ${qmFiles})
 
-target_link_libraries(${PROJECT}
+target_link_libraries(${PROJECT_NAME}
                       Qt5::Core
                       Qt5::Gui
                       Qt5::Qml
@@ -74,7 +67,7 @@ target_link_libraries(${PROJECT}
 set(qmlFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
 
 if (APPLE)
-    set_target_properties(${PROJECT} PROPERTIES INSTALL_RPATH @executable_path/../Frameworks)
+    set_target_properties(${PROJECT_NAME} PROPERTIES INSTALL_RPATH @executable_path/../Frameworks)
     set_source_files_properties(${qmFiles} PROPERTIES
                                 MACOSX_PACKAGE_LOCATION "translations")
 endif ()
@@ -83,10 +76,10 @@ set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME turtlebrowser)
 
 # Use the default install directories
 include(GNUInstallDirs)
-set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/${PROJECT})
+set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/${PROJECT_NAME})
 
-# Maybe install(TARGETS ${PROJECT}) is sufficient with GNUInstallDirs and CMAKE_INSTALL_DEFAULT_COMPONENT_NAME?
-install(TARGETS ${PROJECT}
+# Maybe install(TARGETS ${PROJECT_NAME}) is sufficient with GNUInstallDirs and CMAKE_INSTALL_DEFAULT_COMPONENT_NAME?
+install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -149,7 +142,7 @@ if (APPLE)
                  NO_DEFAULT_PATH)
     # macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
     set(DEPLOY_OPTIONS
-        ${PROJECT}.app
+        ${PROJECT_NAME}.app
         -verbose=2
         -dmg
         -qmldir=${qmlFiles}) # "-codesign=Apple Development"
@@ -161,7 +154,7 @@ if (MSVC)
                  PATHS "${qtBinDir}"
                  NO_DEFAULT_PATH)
     set(DEPLOY_OPTIONS
-        bin/${PROJECT}.exe
+        bin/${PROJECT_NAME}.exe
         --dir .
         --libdir bin
         --plugindir plugins
