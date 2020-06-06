@@ -149,7 +149,7 @@ if (APPLE)
                  NO_DEFAULT_PATH)
     # macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
     set(DEPLOY_OPTIONS
-        TurtleBrowser.app
+        ${PROJECT}.app
         -verbose=2
         -dmg
         -qmldir=${qmlFiles}) # "-codesign=Apple Development"
