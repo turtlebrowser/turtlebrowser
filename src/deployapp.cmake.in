@@ -1,18 +1,18 @@
-# Loop over the set of languages to deploy
-if (APPLE)
-    foreach(lang IN ITEMS ja de fr)
-        execute_process(
-            COMMAND "@LCONVERT_EXECUTABLE@"
-                    -o ${CMAKE_INSTALL_PREFIX}/@TRANSLATION_DIR@/qt_${lang}.qm
-                    @qtBinDir@/../translations/qtbase_${lang}.qm
-                    @qtBinDir@/../translations/qtmultimedia_${lang}.qm
-            RESULT_VARIABLE result
-        )
-        if(result)
-            message(FATAL_ERROR "Failed to create qt_${lang}.qm: ${result}")
-        endif()
-    endforeach()
-endif()
+# Need to figure this part out on a Mac
+#    if (APPLE)
+#        foreach(lang IN ITEMS ja de fr)
+#            execute_process(
+#                COMMAND "@LCONVERT_EXECUTABLE@"
+#                        -o ${CMAKE_INSTALL_PREFIX}/@TRANSLATION_DIR@/qt_${lang}.qm
+#                        @qtBinDir@/../translations/qtbase_${lang}.qm
+#                        @qtBinDir@/../translations/qtmultimedia_${lang}.qm
+#                RESULT_VARIABLE result
+#            )
+#            if(result)
+#                message(FATAL_ERROR "Failed to create qt_${lang}.qm: ${result}")
+#            endif()
+#        endforeach()
+#    endif()
 
 execute_process(
     COMMAND "@DEPLOYQT_EXECUTABLE@" @DEPLOY_OPTIONS@
