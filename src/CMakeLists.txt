@@ -81,6 +81,7 @@ endif ()
 
 set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME turtlebrowser)
 
+# Use the default install directories
 include(GNUInstallDirs)
 set(CMAKE_INSTALL_DOCDIR ${CMAKE_INSTALL_DATAROOTDIR}/doc/${PROJECT})
 
