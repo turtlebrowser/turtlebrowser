@@ -148,7 +148,7 @@ if (APPLE)
                  NO_DEFAULT_PATH)
     set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 -dmg -qmldir=${qmFiles}]])
     #    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 "-codesign=Apple Development"]])
-    set(TRANSLATION_DIR MyQtApp.app/Contents/translations)
+    set(TRANSLATION_DIR ${PROJECT}.app/Contents/translations)
 endif ()
 
 if (WIN32)
