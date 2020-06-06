@@ -146,9 +146,9 @@ if (APPLE)
     find_program(DEPLOYQT_EXECUTABLE macdeployqt
                  PATHS "${qtBinDir}"
                  NO_DEFAULT_PATH)
-    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 -dmg -qmldir=${qmlFiles}]])
+    set(DEPLOY_OPTIONS [[TurtleBrowser.app -verbose=2 -dmg -qmldir=${qmlFiles}]])
     #    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 "-codesign=Apple Development"]])
-    set(TRANSLATION_DIR ${PROJECT}.app/Contents/translations)
+    set(TRANSLATION_DIR TurtleBrowser.app/Contents/translations)
 endif ()
 
 if (MSVC)
