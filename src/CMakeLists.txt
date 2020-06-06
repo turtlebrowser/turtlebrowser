@@ -92,9 +92,9 @@ install(TARGETS ${PROJECT}
         BUNDLE DESTINATION .)
 
 # Need to figure out how to do this on Mac
-if (WIN32 OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+if (MSVC OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
     # Configure the qt.conf
-    if (WIN32)
+    if (MSVC)
         set(qtConfPrefix ..)
         set(qtConfQml2Imports .)
         set(qtConfLibraryExecutables .)
@@ -109,7 +109,7 @@ if (WIN32 OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_INSTALL_BINDIR})
 
     # Configure the licenses install location
-    if (WIN32)
+    if (MSVC)
         set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR}/..)
     elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
@@ -151,7 +151,7 @@ if (APPLE)
     set(TRANSLATION_DIR ${PROJECT}.app/Contents/translations)
 endif ()
 
-if (WIN32)
+if (MSVC)
     find_program(DEPLOYQT_EXECUTABLE windeployqt
                  PATHS "${qtBinDir}"
                  NO_DEFAULT_PATH)
@@ -166,7 +166,7 @@ endif ()
 
 # androiddeployqt ???
 
-if (APPLE OR WIN32)
+if (APPLE OR MSVC)
     configure_file(deployapp.cmake.in deployapp.cmake @ONLY)
     install(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/deployapp.cmake)
 endif ()
