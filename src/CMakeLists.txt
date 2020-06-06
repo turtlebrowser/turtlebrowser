@@ -71,7 +71,7 @@ target_link_libraries(${PROJECT}
                       Qt5::Widgets
                       Qt5::Xml)
 
-set(qmFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
+set(qmlFiles ${CMAKE_SOURCE_DIR}/src/resources/qml/)
 
 if (APPLE)
     set_target_properties(${PROJECT} PROPERTIES INSTALL_RPATH @executable_path/../Frameworks)
@@ -146,7 +146,7 @@ if (APPLE)
     find_program(DEPLOYQT_EXECUTABLE macdeployqt
                  PATHS "${qtBinDir}"
                  NO_DEFAULT_PATH)
-    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 -dmg -qmldir=${qmFiles}]])
+    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 -dmg -qmldir=${qmlFiles}]])
     #    set(DEPLOY_OPTIONS [[${PROJECT}.app -verbose=2 "-codesign=Apple Development"]])
     set(TRANSLATION_DIR ${PROJECT}.app/Contents/translations)
 endif ()
@@ -160,7 +160,7 @@ if (MSVC)
         --dir .
         --libdir bin
         --plugindir plugins
-        --qmldir ${qmFiles})
+        --qmldir ${qmlFiles})
     set(TRANSLATION_DIR translations)
 endif ()
 
