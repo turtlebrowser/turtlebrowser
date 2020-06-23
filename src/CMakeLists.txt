@@ -134,7 +134,6 @@ endif ()
 
 if (CHECK_IN_LICENSES)
     # Install the licenses
-    # find licenses/linux/ -type f -exec echo "<file>" {} "</file>" \; > linux_licenses.qrc
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${CMAKE_SOURCE_DIR}/src/resources/licenses/${TARGET_OS_NAME}/)
 endif (CHECK_IN_LICENSES)
 

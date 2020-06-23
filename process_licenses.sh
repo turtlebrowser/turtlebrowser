@@ -65,6 +65,24 @@ export RELATIVE_LICENSE_PATH=src/resources/licenses/${PLATFORM_NAME}/
 export QRC_FILENAME=${PLATFORM_NAME}_licenses.qrc
 export RELATIVE_QRC_PATH=src/resources/licenses/${PLATFORM_NAME}/${QRC_FILENAME}
 
+fix_licenses() {
+  cd ${APPLICATION_DIR}
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.cpp" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.h" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.cc" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.py" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pyc" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl.vanilla" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.js" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.json" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pro" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qrc" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.png" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qdoc" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.yml" -exec rm {} +
+}
+
 header "Prepare Cache for update"
 
 confirm "Clean cache? [y/N]" && cd ${CONAN_USER_HOME} && git clean -df && git checkout . && git checkout ${CONAN_CACHE_BRANCH}
@@ -95,7 +113,7 @@ confirm "Start build? [y/N]" && cd ${APPLICATION_DIR} && cd build && cmake -DCHE
 
 confirm "Install build? [y/N]" && cd ${APPLICATION_DIR} && cd build && cmake --build . --config Release --target install
 
-confirm "Fix licenses? [y/N]" && cd ${APPLICATION_DIR} && find ${RELATIVE_LICENSE_PATH} -name "*.cpp" -exec rm {} + && find ${RELATIVE_LICENSE_PATH} -name "*.h" -exec rm {} +
+confirm "Fix licenses? [y/N]" && fix_licenses
 
 confirm "Truncate qrc file? [y/N]" && cd ${APPLICATION_DIR} && : >${RELATIVE_QRC_PATH}
 
