@@ -75,12 +75,22 @@ fix_licenses() {
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl.vanilla" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.js" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*,js" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.json" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pro" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qrc" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.png" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qdoc" -exec rm {} +
   find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.yml" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.patch" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.ini" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "CHANGELOG.md" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "README.md" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name ".npmignore" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name ".eslintignore" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "license-checker" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "nopt" -exec rm {} +
+  find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "OWNERS" -exec rm {} +
 }
 
 header "Prepare Cache for update"
