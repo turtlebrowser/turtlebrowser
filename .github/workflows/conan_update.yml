@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '40 10 * * 3'
+    - cron:  '10 13 * * 3'
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
     env:
       CONAN_USER_HOME: "${{ github.workspace }}/release"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
-      CONAN_SYSREQUIRES_MODE: enabld
+      CONAN_SYSREQUIRES_MODE: enabled
 
     steps:
     - uses: actions/checkout@v2
