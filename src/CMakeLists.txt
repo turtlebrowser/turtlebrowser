@@ -5,16 +5,24 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-OPTION(UPDATE_CONAN "Update Conan Cache" OFF)
-OPTION(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
+option(UPDATE_CONAN "Update Conan Cache" OFF)
+option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
+option(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
 
 if (APPLE)
     set(TARGET_OS_NAME "macos")
+    set(LICENSE_QRC resources/licenses/linux/linux_licenses.qrc)
 elseif (MSVC)
     set(TARGET_OS_NAME "windows")
+    set(LICENSE_QRC resources/licenses/windows/windows_licenses.qrc)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(TARGET_OS_NAME "linux")
+    set(LICENSE_QRC resources/licenses/linux/linux_licenses.qrc)
 endif ()
+
+if (CHECK_IN_LICENSES)
+    set(LICENSE_QRC "")
+endif(CHECK_IN_LICENSES)
 
 # Download automatically, you can also just copy the conan.cmake file
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -45,14 +53,12 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
 
 add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
 
-qt5_add_resources(QT_RESOURCES resources/resources.qrc)
+qt5_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
 
 set(tsFiles
     ${PROJECT_NAME}_de_AT.ts
     ${PROJECT_NAME}_de_DE.ts
     ${PROJECT_NAME}_ja.ts)
-
-option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
 
 if (ENABLE_TS_RESCAN)
     # Need to generate the ts files using lupdate
