@@ -16,6 +16,8 @@ ColumnLayout {
     property string title: webView.title
     property bool offTheRecord: false
 
+    signal showLicenses
+
     Layout.fillWidth: true
     Layout.fillHeight: true
 
@@ -31,6 +33,7 @@ ColumnLayout {
         onBack: webView.goBack()
         onForward: webView.goForward()
         onGoToAddress: webView.typedText = address
+        onShowLicenses: root.showLicenses()
     }
 
     WebEngineView {

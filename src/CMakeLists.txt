@@ -68,8 +68,8 @@ else ()
     qt5_add_translation(qmFiles ${tsFiles})
 endif ()
 
-file(GLOB HEADERS *.h)
-file(GLOB SOURCES *.cpp)
+file(GLOB_RECURSE HEADERS *.h)
+file(GLOB_RECURSE SOURCES *.cpp)
 
 source_group("Header Files" FILES ${HEADERS})
 source_group("Source Files" FILES ${SOURCES})

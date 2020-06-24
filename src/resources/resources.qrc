@@ -4,6 +4,8 @@
         <file>qml/main.qml</file>
         <file>qml/AddressBar.qml</file>
         <file>qml/FramelessTopLevelWindow.qml</file>
+        <file>qml/LicenseNavigator.qml</file>
+        <file>qml/LicensePage.qml</file>
         <file>qml/TabToolbar.qml</file>
         <file>qml/TopLevelWindow.qml</file>
         <file>qml/WebPage.qml</file>
