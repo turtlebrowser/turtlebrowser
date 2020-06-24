@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 
-import "icons.js" as Theme
+import "icons.js" as Icons
 
 FramelessTopLevelWindow {
     id: window
@@ -13,9 +13,12 @@ FramelessTopLevelWindow {
     visibility: Window.Maximized
 
     property QtObject globalContext
-    property Item currentPage: pagesStack.currentPage
     property QtObject windowProfile
     property bool windowOffTheRecord: windowProfile ? windowProfile.offTheRecord : false
+
+    function showLicenses() {
+        tabBar.makeLicenseTab()
+    }
 
     function getTitle(currentIndex) {
         var current = tabModel.get(currentIndex)
@@ -29,12 +32,13 @@ FramelessTopLevelWindow {
 
         readonly property string speedDial: "https://www.google.com"
         readonly property string speedDialTitle: "Google"
-        readonly property string speedDialIcon: Theme.webIcon
+        readonly property string speedDialIcon: Icons.webIcon
 
         ListElement {
             tabUrl: "https://www.google.com"
             tabTitle: "Google"
             tabIcon: ""
+            isPage: true
         }
     }
 
@@ -57,16 +61,6 @@ FramelessTopLevelWindow {
             id: pagesStack
             currentIndex: tabBar.currentIndex
 
-            property Item currentPage
-
-            onCurrentIndexChanged: {
-                var currentItem = pages.itemAt(currentIndex)
-                if (currentItem)
-                    currentPage = currentItem.view
-                else
-                    currentPage = null
-            }
-
             Repeater {
                 id: pages
                 model: tabModel
@@ -74,19 +68,33 @@ FramelessTopLevelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
+                Loader {
+                    id: pageLoader
+                    property variant modelData: model
+                    sourceComponent: modelData.isPage ? webDelegate : licenseDelegate
+                }
+            }
+
+            Component {
+                id: webDelegate
                 WebPage {
                     id: page
+                    address: modelData ? modelData.tabUrl : ""
                     windowProfile: window.windowProfile
                     offTheRecord: window.windowOffTheRecord
-                    Component.onCompleted: address = tabUrl
-
-                    onTitleChanged: tabTitle = page.title
-                    onAddressChanged: tabUrl = page.address
+                    onShowLicenses: window.showLicenses()
+                    onTitleChanged: modelData.tabTitle = page.title
+                    onAddressChanged: modelData.tabUrl = page.address
                     onIconChanged: {
                         console.log("fav icon changed : " + page.icon)
-                        tabIcon = Theme.webIcon
+                        modelData.tabIcon = Icons.webIcon
                     }
                 }
+            }
+
+            Component {
+                id: licenseDelegate
+                LicensePage {}
             }
         }
     }
