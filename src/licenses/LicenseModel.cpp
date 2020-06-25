@@ -39,8 +39,7 @@ namespace licenses {
 
       if (path.startsWith(webviewRootPath))
         categories.append(QVariant(static_cast<int>(LicenseCategory::WebView)));
-
-      if (path.startsWith(toolkitRootPath) && !path.startsWith(webviewRootPath))
+      else if (path.startsWith(toolkitRootPath))
         categories.append(QVariant(static_cast<int>(LicenseCategory::Toolkit)));
 
       if (path.startsWith(platformRootPath) && !path.startsWith(qtRootPath))
