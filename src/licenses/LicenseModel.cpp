@@ -115,11 +115,4 @@ namespace licenses {
     return item->data(static_cast<LicenseRoles>(role));
   }
 
-  Qt::ItemFlags LicenseModel::flags(const QModelIndex &index) const {
-    if (!index.isValid())
-      return Qt::NoItemFlags;
-
-    return QAbstractItemModel::flags(index);
-  }
-
 }
