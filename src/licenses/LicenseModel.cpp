@@ -24,10 +24,10 @@ namespace licenses {
 
   void LicenseModel::populate() {
     QList<QVariant> root_categories;
-    rootItem = std::make_unique<LicenseItem>(QString("Licenses"), QString(platformRootPath), root_categories);
+    m_rootItem = std::make_unique<LicenseItem>(QString("Licenses"), QString(platformRootPath), root_categories);
 
     QHash<QString, LicenseItem *> map;
-    map[rootItem->path()] = rootItem.get();
+    map[m_rootItem->path()] = m_rootItem.get();
 
     QDirIterator it(m_dir, QDirIterator::Subdirectories);
 
@@ -63,7 +63,7 @@ namespace licenses {
     LicenseItem *parentItem;
 
     if (!parent.isValid())
-      parentItem = rootItem.get();
+      parentItem = m_rootItem.get();
     else
       parentItem = getItem(parent);
 
@@ -80,7 +80,7 @@ namespace licenses {
     auto *childItem = getItem(index);
     LicenseItem *parentItem = childItem->parentItem();
 
-    if (parentItem == rootItem.get())
+    if (parentItem == m_rootItem.get())
       return QModelIndex();
 
     return createIndex(parentItem->row(), 0, parentItem);
@@ -93,7 +93,7 @@ namespace licenses {
     LicenseItem * parentItem;
 
     if (!parent.isValid())
-      parentItem = rootItem.get();
+      parentItem = m_rootItem.get();
     else
       parentItem = getItem(parent);
 
