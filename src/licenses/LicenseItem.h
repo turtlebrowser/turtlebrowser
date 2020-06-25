@@ -5,7 +5,7 @@
 
 #include <QObject>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
 class LicenseItem : private QObject {
 

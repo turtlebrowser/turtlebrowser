@@ -5,7 +5,7 @@
 
 #include <QtCore/QSortFilterProxyModel>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
   class LicenseFilter : public QSortFilterProxyModel {
   Q_OBJECT

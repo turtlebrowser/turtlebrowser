@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
   enum class LicenseCategory : uint8_t {
     All = 0,

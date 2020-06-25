@@ -4,22 +4,26 @@
 #include "licenses/LicenseFilter.h"
 #include "licenses/LicenseModel.h"
 
-class Context {
-public:
+namespace turtle_browser {
 
-  Context();
+  class Context {
+  public:
 
-  licenses::LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
-  licenses::LicenseFilter * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
-  licenses::LicenseFilter * searchModelPlatformLicenses() { return &m_filterLicenseModelPlatform; }
-  licenses::LicenseFilter * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
+    Context();
 
-private:
-  licenses::LicenseModel m_licenseModel;
-  licenses::LicenseFilter m_filterLicenseModelWebView;
-  licenses::LicenseFilter m_filterLicenseModelToolkit;
-  licenses::LicenseFilter m_filterLicenseModelPlatform;
-  licenses::LicenseFilter m_filterLicenseModelAll;
-};
+    licenses::LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
+    licenses::LicenseFilter * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
+    licenses::LicenseFilter * searchModelPlatformLicenses() { return &m_filterLicenseModelPlatform; }
+    licenses::LicenseFilter * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
+
+  private:
+    licenses::LicenseModel m_licenseModel;
+    licenses::LicenseFilter m_filterLicenseModelWebView;
+    licenses::LicenseFilter m_filterLicenseModelToolkit;
+    licenses::LicenseFilter m_filterLicenseModelPlatform;
+    licenses::LicenseFilter m_filterLicenseModelAll;
+  };
+
+}
 
 #endif //TURTLEBROWSER_CONTEXT_H

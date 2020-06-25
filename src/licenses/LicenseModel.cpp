@@ -3,7 +3,7 @@
 
 #include <QDirIterator>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
   namespace {
     const char *const platformRootPath = ":/licenses";
