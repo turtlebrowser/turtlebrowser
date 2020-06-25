@@ -17,8 +17,7 @@ namespace licenses {
 
   void LicenseModel::populate() {
     QList<QVariant> root_categories;
-    QVector<QVariant> rootData = {QString("Licenses"), QString(platformRootPath)};
-    rootItem = std::make_unique<LicenseItem>(rootData, root_categories);
+    rootItem = std::make_unique<LicenseItem>(QString("Licenses"), QString(platformRootPath), root_categories);
 
     QHash<QString, LicenseItem *> map;
     map[rootItem->path()] = rootItem.get();
@@ -43,8 +42,7 @@ namespace licenses {
       const QFileInfo &fileInfo = it.fileInfo();
       LicenseItem *parent = map[fileInfo.dir().path()];
 
-      QVector<QVariant> child_data = {fileInfo.fileName(), fileInfo.absoluteFilePath()};
-      auto *child = new LicenseItem(child_data, categories, parent);
+      auto *child = new LicenseItem(fileInfo.fileName(), fileInfo.absoluteFilePath(), categories, parent);
       parent->appendChild(child);
 
       if (fileInfo.isDir())
@@ -128,8 +126,11 @@ namespace licenses {
     return QVariant();
   }
 
-  LicenseItem::LicenseItem(QVector<QVariant> data, QList<QVariant> categories, LicenseItem *parent)
-      : m_itemData(std::move(data)), m_categories(std::move(categories)), m_parentItem(parent) {}
+  LicenseItem::LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem *parent)
+      : m_file_name(std::move(file_name)),
+        m_file_path(std::move(file_path)),
+        m_categories(std::move(categories)),
+        m_parentItem(parent) {}
 
   LicenseItem::~LicenseItem() {
     qDeleteAll(m_childItems);
@@ -157,15 +158,15 @@ namespace licenses {
   }
 
   int LicenseItem::columnCount() const {
-    return m_itemData.count();
+    return 1;
   }
 
-  QVariant LicenseItem::data(int role) const {
+  QVariant LicenseItem::data(LicenseRoles role) const {
     switch (role) {
       case licenses::LicenseFileName :
-        return m_itemData.at(0);
+        return m_file_name;
       case licenses::LicenseFilePath :
-        return m_itemData.at(1);
+        return m_file_path;
       case licenses::LicenseCategories :
         return m_categories;
       default:
@@ -174,7 +175,7 @@ namespace licenses {
   }
 
   QString LicenseItem::path() const {
-    return data(Qt::UserRole).toString();
+    return m_file_path;
   }
 
   LicenseItem *LicenseItem::parentItem() {
