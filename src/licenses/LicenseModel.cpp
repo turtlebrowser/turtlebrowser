@@ -1,13 +1,20 @@
 #include "LicenseModel.h"
+#include "LicenseItem.h"
 
 #include <QDirIterator>
 
-static const char *const platformRootPath = ":/licenses";
-static const char *const qtRootPath = ":/licenses/qt";
-static const char *const toolkitRootPath = ":/licenses/qt/licenses";
-static const char *const webviewRootPath = ":/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
-
 namespace licenses {
+
+  namespace {
+    const char *const platformRootPath = ":/licenses";
+    const char *const qtRootPath = ":/licenses/qt";
+    const char *const toolkitRootPath = ":/licenses/qt/licenses";
+    const char *const webviewRootPath = ":/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
+
+    LicenseItem * getItem(const QModelIndex & index) {
+      return static_cast<LicenseItem *>(index.internalPointer());
+    }
+  }
 
   LicenseModel::LicenseModel(QObject *parent) : QAbstractItemModel(parent), m_dir(platformRootPath) {
     populate();
@@ -43,7 +50,6 @@ namespace licenses {
       LicenseItem *parent = map[fileInfo.dir().path()];
 
       auto *child = new LicenseItem(fileInfo.fileName(), fileInfo.absoluteFilePath(), categories, parent);
-      parent->appendChild(child);
 
       if (fileInfo.isDir())
         map[child->path()] = child;
@@ -59,7 +65,7 @@ namespace licenses {
     if (!parent.isValid())
       parentItem = rootItem.get();
     else
-      parentItem = static_cast<LicenseItem *>(parent.internalPointer());
+      parentItem = getItem(parent);
 
     LicenseItem *childItem = parentItem->child(row);
     if (childItem)
@@ -71,7 +77,7 @@ namespace licenses {
     if (!index.isValid())
       return QModelIndex();
 
-    auto *childItem = static_cast<LicenseItem *>(index.internalPointer());
+    auto *childItem = getItem(index);
     LicenseItem *parentItem = childItem->parentItem();
 
     if (parentItem == rootItem.get())
@@ -81,22 +87,21 @@ namespace licenses {
   }
 
   int LicenseModel::rowCount(const QModelIndex &parent) const {
-    LicenseItem *parentItem;
     if (parent.column() > 0)
       return 0;
+
+    LicenseItem * parentItem;
 
     if (!parent.isValid())
       parentItem = rootItem.get();
     else
-      parentItem = static_cast<LicenseItem *>(parent.internalPointer());
+      parentItem = getItem(parent);
 
     return parentItem->childCount();
   }
 
   int LicenseModel::columnCount(const QModelIndex &parent) const {
-    if (parent.isValid())
-      return static_cast<LicenseItem *>(parent.internalPointer())->columnCount();
-    return rootItem->columnCount();
+    return 1;
   }
 
   QVariant LicenseModel::data(const QModelIndex &index, int role) const {
@@ -106,9 +111,9 @@ namespace licenses {
     if (role != licenses::LicenseFileName && role != licenses::LicenseFilePath && role != licenses::LicenseCategories)
       return QVariant();
 
-    auto *item = static_cast<LicenseItem *>(index.internalPointer());
+    auto *item = getItem(index);
 
-    return item->data(role);
+    return item->data(static_cast<LicenseRoles>(role));
   }
 
   Qt::ItemFlags LicenseModel::flags(const QModelIndex &index) const {
@@ -116,70 +121,6 @@ namespace licenses {
       return Qt::NoItemFlags;
 
     return QAbstractItemModel::flags(index);
-  }
-
-  QVariant LicenseModel::headerData(int section, Qt::Orientation orientation,
-                                    int role) const {
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
-      return rootItem->data(section);
-
-    return QVariant();
-  }
-
-  LicenseItem::LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem *parent)
-      : m_file_name(std::move(file_name)),
-        m_file_path(std::move(file_path)),
-        m_categories(std::move(categories)),
-        m_parentItem(parent) {}
-
-  LicenseItem::~LicenseItem() {
-    qDeleteAll(m_childItems);
-  }
-
-  void LicenseItem::appendChild(LicenseItem *item) {
-    m_childItems.append(item);
-  }
-
-  LicenseItem *LicenseItem::child(int row) {
-    if (row < 0 || row >= m_childItems.size())
-      return nullptr;
-    return m_childItems.at(row);
-  }
-
-  int LicenseItem::childCount() const {
-    return m_childItems.count();
-  }
-
-  int LicenseItem::row() const {
-    if (m_parentItem)
-      return m_parentItem->m_childItems.indexOf(const_cast<LicenseItem *>(this));
-
-    return 0;
-  }
-
-  int LicenseItem::columnCount() const {
-    return 1;
-  }
-
-  QVariant LicenseItem::data(LicenseRoles role) const {
-    switch (role) {
-      case licenses::LicenseFileName :
-        return m_file_name;
-      case licenses::LicenseFilePath :
-        return m_file_path;
-      case licenses::LicenseCategories :
-        return m_categories;
-      default:
-        return QVariant();
-    }
-  }
-
-  QString LicenseItem::path() const {
-    return m_file_path;
-  }
-
-  LicenseItem *LicenseItem::parentItem() {
-    return m_parentItem;
   }
 
 }
