@@ -26,13 +26,13 @@ namespace turtle_browser::licenses {
     return 0;
   }
 
-  QVariant LicenseItem::data(LicenseRoles role) const {
+  QVariant LicenseItem::data(LicenseRole role) const {
     switch (role) {
-      case licenses::LicenseFileName :
+      case LicenseRole::LicenseFileName :
         return m_file_name;
-      case licenses::LicenseFilePath :
+      case LicenseRole::LicenseFilePath :
         return m_file_path;
-      case licenses::LicenseCategories :
+      case LicenseRole::LicenseCategories :
         return m_categories;
       default:
         return QVariant();

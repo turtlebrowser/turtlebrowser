@@ -1,7 +1,7 @@
 #ifndef TURTLEBROWSER_LICENSEITEM_H
 #define TURTLEBROWSER_LICENSEITEM_H
 
-#include "LicenseCategory.h"
+#include "LicenseRole.h"
 
 #include <QObject>
 
@@ -18,7 +18,7 @@ public:
 
   int childCount() const;
 
-  QVariant data(LicenseRoles role) const;
+  QVariant data(LicenseRole role) const;
 
   int row() const;
 

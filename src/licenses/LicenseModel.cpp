@@ -14,6 +14,16 @@ namespace turtle_browser::licenses {
     LicenseItem * getItem(const QModelIndex & index) {
       return static_cast<LicenseItem *>(index.internalPointer());
     }
+
+    bool isValidRole(int role) {
+      switch (role) {
+        case static_cast<int>(LicenseRole::LicenseFileName):
+        case static_cast<int>(LicenseRole::LicenseFilePath):
+        case static_cast<int>(LicenseRole::LicenseCategories):
+          return true;
+        default: return false;
+      }
+    }
   }
 
   LicenseModel::LicenseModel(QObject *parentObject) : QAbstractItemModel(parentObject), m_dir(platformRootPath) {
@@ -107,12 +117,12 @@ namespace turtle_browser::licenses {
     if (!index.isValid())
       return QVariant();
 
-    if (role != licenses::LicenseFileName && role != licenses::LicenseFilePath && role != licenses::LicenseCategories)
+    if (!isValidRole(role))
       return QVariant();
 
     auto *item = getItem(index);
 
-    return item->data(static_cast<LicenseRoles>(role));
+    return item->data(static_cast<LicenseRole>(role));
   }
 
 }

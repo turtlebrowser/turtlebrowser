@@ -1,7 +1,7 @@
 #ifndef TURTLEBROWSER_LICENSEFILTER_H
 #define TURTLEBROWSER_LICENSEFILTER_H
 
-#include "licenses/LicenseCategory.h"
+#include "LicenseCategory.h"
 
 #include <QtCore/QSortFilterProxyModel>
 
@@ -22,6 +22,10 @@ namespace turtle_browser::licenses {
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
   private:
+    QString getFilePath(const QModelIndex & index) const;
+    QString getFileName(const QModelIndex & index) const;
+    QList<QVariant> getCategories(const QModelIndex & index) const;
+
     LicenseCategory m_category;
   };
 
