@@ -1,4 +1,5 @@
 #include "LicenseFilter.h"
+#include "LicenseRole.h"
 
 #include <QtCore/QFile>
 #include <QTextStream>
@@ -10,19 +11,19 @@ namespace turtle_browser::licenses {
   bool LicenseFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
 
-    auto categories = sourceModel()->data(index, LicenseCategories).toList();
+    auto categories = getCategories(index);
 
     if (!categories.contains(static_cast<int>(m_category)))
       return false;
 
-    QString filename = sourceModel()->data(index).toString();
-    QString path = sourceModel()->data(index, LicenseRoles::LicenseFilePath).toString();
+    QString filename = getFileName(index);
+    QString path = getFilePath(index);
     return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
   }
 
   QString LicenseFilter::readFile(const QModelIndex &index) {
 
-    QString fileName = sourceModel()->data(mapToSource(index), LicenseRoles::LicenseFilePath).toString();
+    QString fileName = getFilePath(mapToSource(index));
 
     if (fileName.isEmpty())
       return QString();
@@ -33,6 +34,18 @@ namespace turtle_browser::licenses {
       return t.readAll();
     }
     return QString();
+  }
+
+  QList<QVariant> LicenseFilter::getCategories(const QModelIndex & index) const {
+    return sourceModel()->data(index, static_cast<int>(LicenseRole::LicenseCategories)).toList();
+  }
+
+  QString LicenseFilter::getFileName(const QModelIndex & index) const {
+    return sourceModel()->data(index, static_cast<int>(LicenseRole::LicenseFileName)).toString();
+  }
+
+  QString LicenseFilter::getFilePath(const QModelIndex & index) const {
+    return sourceModel()->data(index, static_cast<int>(LicenseRole::LicenseFilePath)).toString();
   }
 
 }

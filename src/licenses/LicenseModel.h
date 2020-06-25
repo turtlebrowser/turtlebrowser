@@ -1,8 +1,6 @@
 #ifndef TURTLEBROWSER_LICENSEMODEL_H
 #define TURTLEBROWSER_LICENSEMODEL_H
 
-#include "licenses/LicenseCategory.h"
-
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QDir>
 
