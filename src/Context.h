@@ -20,8 +20,6 @@ private:
   licenses::LicenseFilter m_filterLicenseModelToolkit;
   licenses::LicenseFilter m_filterLicenseModelPlatform;
   licenses::LicenseFilter m_filterLicenseModelAll;
-
-  static void connectSearchModel(licenses::LicenseModel & model, licenses::LicenseFilter & search_model, licenses::LicenseCategory category);
 };
 
 #endif //TURTLEBROWSER_CONTEXT_H
