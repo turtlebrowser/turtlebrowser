@@ -1,4 +1,4 @@
-#include "Context.h"
+#include "ApplicationState.h"
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
@@ -12,13 +12,13 @@ int main(int argc, char *argv[]) {
 
   QtWebEngine::initialize();
 
-  turtle_browser::Context context;
+  turtle_browser::ApplicationState applicationState;
 
   QQmlApplicationEngine engine;
-  engine.rootContext()->setContextProperty("licenseModelWebView", context.searchModelWebLicenses());
-  engine.rootContext()->setContextProperty("licenseModelToolkit", context.searchModelToolkitLicenses());
-  engine.rootContext()->setContextProperty("licenseModelPlatform", context.searchModelPlatformLicenses());
-  engine.rootContext()->setContextProperty("licenseModelAll", context.searchModelAllLicenses());
+  engine.rootContext()->setContextProperty("licenseModelWebView", applicationState.searchModelWebLicenses());
+  engine.rootContext()->setContextProperty("licenseModelToolkit", applicationState.searchModelToolkitLicenses());
+  engine.rootContext()->setContextProperty("licenseModelPlatform", applicationState.searchModelPlatformLicenses());
+  engine.rootContext()->setContextProperty("licenseModelAll", applicationState.searchModelAllLicenses());
   engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
   QMetaObject::invokeMethod(engine.rootObjects().first(), "start");
 

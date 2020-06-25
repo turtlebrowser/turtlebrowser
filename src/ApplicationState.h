@@ -1,15 +1,15 @@
-#ifndef TURTLEBROWSER_CONTEXT_H
-#define TURTLEBROWSER_CONTEXT_H
+#ifndef TURTLEBROWSER_APPLICATIONSTATE_H
+#define TURTLEBROWSER_APPLICATIONSTATE_H
 
 #include "licenses/LicenseFilter.h"
 #include "licenses/LicenseModel.h"
 
 namespace turtle_browser {
 
-  class Context {
+  class ApplicationState {
   public:
 
-    Context();
+    ApplicationState();
 
     licenses::LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
     licenses::LicenseFilter * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
@@ -26,4 +26,4 @@ namespace turtle_browser {
 
 }
 
-#endif //TURTLEBROWSER_CONTEXT_H
+#endif //TURTLEBROWSER_APPLICATIONSTATE_H

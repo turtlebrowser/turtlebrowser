@@ -1,4 +1,4 @@
-#include "Context.h"
+#include "ApplicationState.h"
 
 namespace turtle_browser {
 
@@ -17,7 +17,7 @@ namespace turtle_browser {
     }
   }
 
-  Context::Context() {
+  ApplicationState::ApplicationState() {
     connectSearchModel(m_licenseModel, m_filterLicenseModelWebView, licenses::LicenseCategory::WebView);
     connectSearchModel(m_licenseModel, m_filterLicenseModelToolkit, licenses::LicenseCategory::Toolkit);
     connectSearchModel(m_licenseModel, m_filterLicenseModelPlatform, licenses::LicenseCategory::Platform);
