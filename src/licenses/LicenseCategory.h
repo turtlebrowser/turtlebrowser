@@ -5,7 +5,7 @@
 
 namespace licenses {
 
-  enum class LicenseCategory {
+  enum class LicenseCategory : uint8_t {
     All = 0,
     Platform = 1,
     Toolkit = 2,
