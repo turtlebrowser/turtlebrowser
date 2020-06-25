@@ -9,35 +9,7 @@
 
 namespace licenses {
 
-  class LicenseItem {
-  public:
-    explicit LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
-
-    ~LicenseItem();
-
-    void appendChild(LicenseItem *child);
-
-    LicenseItem *child(int row);
-
-    int childCount() const;
-
-    int columnCount() const;
-
-    QVariant data(LicenseRoles role) const;
-
-    QString path() const;
-
-    int row() const;
-
-    LicenseItem *parentItem();
-
-  private:
-    QVector<LicenseItem *> m_childItems;
-    QString m_file_name;
-    QString m_file_path;
-    QList<QVariant> m_categories;
-    LicenseItem *m_parentItem;
-  };
+  class LicenseItem;
 
   class LicenseModel : public QAbstractItemModel {
 
@@ -57,9 +29,6 @@ namespace licenses {
     QVariant data(const QModelIndex &index, int role) const override;
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const override;
 
   private:
     void populate();
