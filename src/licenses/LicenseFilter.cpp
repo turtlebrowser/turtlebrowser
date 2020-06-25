@@ -16,13 +16,13 @@ namespace licenses {
       return false;
 
     QString filename = sourceModel()->data(index).toString();
-    QString path = sourceModel()->data(index, Qt::UserRole).toString();
+    QString path = sourceModel()->data(index, LicenseRoles::LicenseFilePath).toString();
     return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
   }
 
   QString LicenseFilter::readFile(const QModelIndex &index) {
 
-    QString fileName = sourceModel()->data(mapToSource(index), Qt::UserRole).toString();
+    QString fileName = sourceModel()->data(mapToSource(index), LicenseRoles::LicenseFilePath).toString();
 
     if (fileName.isEmpty())
       return QString();
