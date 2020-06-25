@@ -12,15 +12,7 @@ namespace licenses {
 
     auto categories = sourceModel()->data(index, LicenseCategories).toList();
 
-    bool support = false;
-
-    for (const auto &category : categories) {
-      auto cat = static_cast<LicenseCategory>(category.toInt());
-      if (cat == m_category)
-        support = true;
-    }
-
-    if (!support)
+    if (!categories.contains(static_cast<int>(m_category)))
       return false;
 
     QString filename = sourceModel()->data(index).toString();
