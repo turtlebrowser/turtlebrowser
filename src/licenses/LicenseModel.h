@@ -5,7 +5,6 @@
 
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QDir>
-#include <memory>
 
 namespace licenses {
 
