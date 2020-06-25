@@ -11,7 +11,7 @@ namespace licenses {
 
   class LicenseItem {
   public:
-    explicit LicenseItem(QVector<QVariant> data, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
+    explicit LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
 
     ~LicenseItem();
 
@@ -23,7 +23,7 @@ namespace licenses {
 
     int columnCount() const;
 
-    QVariant data(int role) const;
+    QVariant data(LicenseRoles role) const;
 
     QString path() const;
 
@@ -33,8 +33,9 @@ namespace licenses {
 
   private:
     QVector<LicenseItem *> m_childItems;
+    QString m_file_name;
+    QString m_file_path;
     QList<QVariant> m_categories;
-    QVector<QVariant> m_itemData;
     LicenseItem *m_parentItem;
   };
 
