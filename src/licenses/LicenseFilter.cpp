@@ -3,7 +3,7 @@
 #include <QtCore/QFile>
 #include <QTextStream>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
   LicenseFilter::LicenseFilter(QObject *parent) : QSortFilterProxyModel(parent) {}
 

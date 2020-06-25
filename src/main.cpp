@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
   QtWebEngine::initialize();
 
-  Context context;
+  turtle_browser::Context context;
 
   QQmlApplicationEngine engine;
   engine.rootContext()->setContextProperty("licenseModelWebView", context.searchModelWebLicenses());

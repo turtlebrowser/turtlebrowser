@@ -2,7 +2,7 @@
 
 #include <QVariant>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
   LicenseItem::LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem * parent)
       : QObject(parent),

@@ -6,7 +6,7 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QDir>
 
-namespace licenses {
+namespace turtle_browser::licenses {
 
   class LicenseItem;
 
