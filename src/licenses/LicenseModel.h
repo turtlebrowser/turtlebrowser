@@ -33,7 +33,7 @@ namespace licenses {
     void populate();
 
     QDir m_dir;
-    std::unique_ptr<LicenseItem> rootItem;
+    std::unique_ptr<LicenseItem> m_rootItem;
   };
 
 }
