@@ -16,7 +16,7 @@ namespace licenses {
     }
   }
 
-  LicenseModel::LicenseModel(QObject *parent) : QAbstractItemModel(parent), m_dir(platformRootPath) {
+  LicenseModel::LicenseModel(QObject *parentObject) : QAbstractItemModel(parentObject), m_dir(platformRootPath) {
     populate();
   }
 
@@ -46,25 +46,25 @@ namespace licenses {
         categories.append(QVariant(static_cast<int>(LicenseCategory::Platform)));
 
       const QFileInfo &fileInfo = it.fileInfo();
-      LicenseItem *parent = map[fileInfo.dir().path()];
+      LicenseItem *parentItem = map[fileInfo.dir().path()];
 
-      auto *child = new LicenseItem(fileInfo.fileName(), fileInfo.absoluteFilePath(), categories, parent);
+      auto *child = new LicenseItem(fileInfo.fileName(), fileInfo.absoluteFilePath(), categories, parentItem);
 
       if (fileInfo.isDir())
         map[child->path()] = child;
     }
   }
 
-  QModelIndex LicenseModel::index(int row, int column, const QModelIndex &parent) const {
-    if (!hasIndex(row, column, parent))
+  QModelIndex LicenseModel::index(int row, int column, const QModelIndex &parentIndex) const {
+    if (!hasIndex(row, column, parentIndex))
       return QModelIndex();
 
     LicenseItem *parentItem;
 
-    if (!parent.isValid())
+    if (!parentIndex.isValid())
       parentItem = m_rootItem.get();
     else
-      parentItem = getItem(parent);
+      parentItem = getItem(parentIndex);
 
     LicenseItem *childItem = parentItem->child(row);
     if (childItem)
@@ -72,11 +72,11 @@ namespace licenses {
     return QModelIndex();
   }
 
-  QModelIndex LicenseModel::parent(const QModelIndex &index) const {
-    if (!index.isValid())
+  QModelIndex LicenseModel::parent(const QModelIndex &childIndex) const {
+    if (!childIndex.isValid())
       return QModelIndex();
 
-    auto *childItem = getItem(index);
+    auto *childItem = getItem(childIndex);
     LicenseItem *parentItem = childItem->parentItem();
 
     if (parentItem == m_rootItem.get())
@@ -85,21 +85,21 @@ namespace licenses {
     return createIndex(parentItem->row(), 0, parentItem);
   }
 
-  int LicenseModel::rowCount(const QModelIndex &parent) const {
-    if (parent.column() > 0)
+  int LicenseModel::rowCount(const QModelIndex &parentIndex) const {
+    if (parentIndex.column() > 0)
       return 0;
 
     LicenseItem * parentItem;
 
-    if (!parent.isValid())
+    if (!parentIndex.isValid())
       parentItem = m_rootItem.get();
     else
-      parentItem = getItem(parent);
+      parentItem = getItem(parentIndex);
 
     return parentItem->childCount();
   }
 
-  int LicenseModel::columnCount(const QModelIndex &parent) const {
+  int LicenseModel::columnCount(const QModelIndex &parentIndex) const {
     return 1;
   }
 
