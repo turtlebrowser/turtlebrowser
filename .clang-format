@@ -1,0 +1,16 @@
+﻿---
+BasedOnStyle: Mozilla
+AllowAllConstructorInitializersOnNextLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+BreakBeforeBraces: Custom
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+ColumnLimit: '120'
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+NamespaceIndentation: All
+PenaltyReturnTypeOnItsOwnLine: '10000'
+PointerAlignment: Middle
+
+...
