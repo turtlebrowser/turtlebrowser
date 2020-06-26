@@ -1,14 +1,15 @@
 #include "LicenseFilter.h"
 #include "LicenseRole.h"
 
-#include <QtCore/QFile>
 #include <QTextStream>
+#include <QtCore/QFile>
 
 namespace turtle_browser::licenses {
 
-  LicenseFilter::LicenseFilter(QObject *parent) : QSortFilterProxyModel(parent) {}
+  LicenseFilter::LicenseFilter(QObject * parent)
+    : QSortFilterProxyModel(parent) {}
 
-  bool LicenseFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
+  bool LicenseFilter::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
 
     auto categories = getCategories(index);
@@ -21,7 +22,7 @@ namespace turtle_browser::licenses {
     return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
   }
 
-  QString LicenseFilter::readFile(const QModelIndex &index) {
+  QString LicenseFilter::readFile(const QModelIndex & index) {
 
     QString fileName = getFilePath(mapToSource(index));
 

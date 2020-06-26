@@ -7,7 +7,7 @@ namespace turtle_browser {
 
   class ApplicationState {
   public:
-    licenses::LicenseState &licenseState() { return m_licenseState; }
+    licenses::LicenseState & licenseState() { return m_licenseState; }
 
   private:
     licenses::LicenseState m_licenseState;

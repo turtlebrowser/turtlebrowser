@@ -8,10 +8,10 @@
 namespace turtle_browser::licenses {
 
   namespace {
-    const char *const platformRootPath = ":/licenses";
-    const char *const qtRootPath = ":/licenses/qt";
-    const char *const toolkitRootPath = ":/licenses/qt/licenses";
-    const char *const webviewRootPath = ":/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
+    const char * const platformRootPath = ":/licenses";
+    const char * const qtRootPath = ":/licenses/qt";
+    const char * const toolkitRootPath = ":/licenses/qt/licenses";
+    const char * const webviewRootPath = ":/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
 
     LicenseItem * getItem(const QModelIndex & index) {
       return static_cast<LicenseItem *>(index.internalPointer());
@@ -23,12 +23,15 @@ namespace turtle_browser::licenses {
         case static_cast<int>(LicenseRole::LicenseFilePath):
         case static_cast<int>(LicenseRole::LicenseCategories):
           return true;
-        default: return false;
+        default:
+          return false;
       }
     }
   }
 
-  LicenseModel::LicenseModel(QObject *parentObject) : QAbstractItemModel(parentObject), m_dir(platformRootPath) {
+  LicenseModel::LicenseModel(QObject * parentObject)
+    : QAbstractItemModel(parentObject),
+      m_dir(platformRootPath) {
     populate();
   }
 
@@ -57,39 +60,39 @@ namespace turtle_browser::licenses {
       if (path.startsWith(platformRootPath) && !path.startsWith(qtRootPath))
         categories.append(QVariant(static_cast<int>(LicenseCategory::Platform)));
 
-      const QFileInfo &fileInfo = it.fileInfo();
-      LicenseItem *parentItem = map[fileInfo.dir().path()];
+      const QFileInfo & fileInfo = it.fileInfo();
+      LicenseItem * parentItem = map[fileInfo.dir().path()];
 
-      auto *child = new LicenseItem(fileInfo.fileName(), fileInfo.absoluteFilePath(), categories, parentItem);
+      auto * child = new LicenseItem(fileInfo.fileName(), fileInfo.absoluteFilePath(), categories, parentItem);
 
       if (fileInfo.isDir())
         map[child->path()] = child;
     }
   }
 
-  QModelIndex LicenseModel::index(int row, int column, const QModelIndex &parentIndex) const {
+  QModelIndex LicenseModel::index(int row, int column, const QModelIndex & parentIndex) const {
     if (!hasIndex(row, column, parentIndex))
       return QModelIndex();
 
-    LicenseItem *parentItem;
+    LicenseItem * parentItem;
 
     if (!parentIndex.isValid())
       parentItem = m_rootItem.get();
     else
       parentItem = getItem(parentIndex);
 
-    LicenseItem *childItem = parentItem->child(row);
+    LicenseItem * childItem = parentItem->child(row);
     if (childItem)
       return createIndex(row, column, childItem);
     return QModelIndex();
   }
 
-  QModelIndex LicenseModel::parent(const QModelIndex &childIndex) const {
+  QModelIndex LicenseModel::parent(const QModelIndex & childIndex) const {
     if (!childIndex.isValid())
       return QModelIndex();
 
-    auto *childItem = getItem(childIndex);
-    LicenseItem *parentItem = childItem->parentItem();
+    auto * childItem = getItem(childIndex);
+    LicenseItem * parentItem = childItem->parentItem();
 
     if (parentItem == m_rootItem.get())
       return QModelIndex();
@@ -97,7 +100,7 @@ namespace turtle_browser::licenses {
     return createIndex(parentItem->row(), 0, parentItem);
   }
 
-  int LicenseModel::rowCount(const QModelIndex &parentIndex) const {
+  int LicenseModel::rowCount(const QModelIndex & parentIndex) const {
     if (parentIndex.column() > 0)
       return 0;
 
@@ -111,18 +114,18 @@ namespace turtle_browser::licenses {
     return parentItem->childCount();
   }
 
-  int LicenseModel::columnCount(const QModelIndex &parentIndex) const {
+  int LicenseModel::columnCount(const QModelIndex & parentIndex) const {
     return 1;
   }
 
-  QVariant LicenseModel::data(const QModelIndex &index, int role) const {
+  QVariant LicenseModel::data(const QModelIndex & index, int role) const {
     if (!index.isValid())
       return QVariant();
 
     if (!isValidRole(role))
       return QVariant();
 
-    auto *item = getItem(index);
+    auto * item = getItem(index);
 
     return item->data(static_cast<LicenseRole>(role));
   }

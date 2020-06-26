@@ -8,7 +8,6 @@ namespace turtle_browser::licenses {
 
   class LicenseState {
   public:
-
     LicenseState();
 
     LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }

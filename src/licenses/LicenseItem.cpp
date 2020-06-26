@@ -5,12 +5,12 @@
 namespace turtle_browser::licenses {
 
   LicenseItem::LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem * parent)
-      : QObject(parent),
-        m_file_name(std::move(file_name)),
-        m_file_path(std::move(file_path)),
-        m_categories(std::move(categories)) {}
+    : QObject(parent),
+      m_file_name(std::move(file_name)),
+      m_file_path(std::move(file_path)),
+      m_categories(std::move(categories)) {}
 
-  LicenseItem *LicenseItem::child(int row) {
+  LicenseItem * LicenseItem::child(int row) {
     if (row < 0 || row >= childCount())
       return nullptr;
     return static_cast<LicenseItem *>(children().at(row));
@@ -28,11 +28,11 @@ namespace turtle_browser::licenses {
 
   QVariant LicenseItem::data(LicenseRole role) const {
     switch (role) {
-      case LicenseRole::LicenseFileName :
+      case LicenseRole::LicenseFileName:
         return m_file_name;
-      case LicenseRole::LicenseFilePath :
+      case LicenseRole::LicenseFilePath:
         return m_file_path;
-      case LicenseRole::LicenseCategories :
+      case LicenseRole::LicenseCategories:
         return m_categories;
       default:
         return QVariant();
@@ -43,8 +43,8 @@ namespace turtle_browser::licenses {
     return m_file_path;
   }
 
-  LicenseItem *LicenseItem::parentItem() const {
-    return static_cast<LicenseItem*>(parent());
+  LicenseItem * LicenseItem::parentItem() const {
+    return static_cast<LicenseItem *>(parent());
   }
 
 }
