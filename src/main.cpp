@@ -15,10 +15,10 @@ int main(int argc, char *argv[]) {
   turtle_browser::ApplicationState applicationState;
 
   QQmlApplicationEngine engine;
-  engine.rootContext()->setContextProperty("licenseModelWebView", applicationState.searchModelWebLicenses());
-  engine.rootContext()->setContextProperty("licenseModelToolkit", applicationState.searchModelToolkitLicenses());
-  engine.rootContext()->setContextProperty("licenseModelPlatform", applicationState.searchModelPlatformLicenses());
-  engine.rootContext()->setContextProperty("licenseModelAll", applicationState.searchModelAllLicenses());
+  engine.rootContext()->setContextProperty("licenseModelWebView", applicationState.licenseState().searchModelWebLicenses());
+  engine.rootContext()->setContextProperty("licenseModelToolkit", applicationState.licenseState().searchModelToolkitLicenses());
+  engine.rootContext()->setContextProperty("licenseModelPlatform", applicationState.licenseState().searchModelPlatformLicenses());
+  engine.rootContext()->setContextProperty("licenseModelAll", applicationState.licenseState().searchModelAllLicenses());
   engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
   QMetaObject::invokeMethod(engine.rootObjects().first(), "start");
 
