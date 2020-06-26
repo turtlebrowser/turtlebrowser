@@ -13,7 +13,7 @@ namespace turtle_browser::licenses {
   class LicenseModel : public QAbstractItemModel {
 
   public:
-    explicit LicenseModel(QObject * parentObject = nullptr);
+    LicenseModel(QString platformRootPath, QString qtRootPath, QString webviewRootPath, QObject * parentObject = nullptr);
 
     ~LicenseModel() override;
 
@@ -30,6 +30,9 @@ namespace turtle_browser::licenses {
   private:
     void populate();
 
+    QString m_platformRootPath;
+    QString m_qtRootPath;
+    QString m_webviewRootPath;
     QDir m_dir;
     std::unique_ptr<LicenseItem> m_rootItem;
   };
