@@ -13,19 +13,19 @@ namespace turtle_browser::licenses {
   class LicenseModel : public QAbstractItemModel {
 
   public:
-    explicit LicenseModel(QObject *parentObject = nullptr);
+    explicit LicenseModel(QObject * parentObject = nullptr);
 
     ~LicenseModel() override;
 
-    QModelIndex index(int row, int column, const QModelIndex &parentIndex) const override;
+    QModelIndex index(int row, int column, const QModelIndex & parentIndex) const override;
 
-    QModelIndex parent(const QModelIndex &childIndex) const override;
+    QModelIndex parent(const QModelIndex & childIndex) const override;
 
-    int rowCount(const QModelIndex &parentIndex) const override;
+    int rowCount(const QModelIndex & parentIndex) const override;
 
-    int columnCount(const QModelIndex &parentIndex) const override;
+    int columnCount(const QModelIndex & parentIndex) const override;
 
-    QVariant data(const QModelIndex &index, int role) const override;
+    QVariant data(const QModelIndex & index, int role) const override;
 
   private:
     void populate();

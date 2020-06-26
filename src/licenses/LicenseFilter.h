@@ -8,18 +8,17 @@
 namespace turtle_browser::licenses {
 
   class LicenseFilter : public QSortFilterProxyModel {
-  Q_OBJECT
+    Q_OBJECT
 
   public:
+    explicit LicenseFilter(QObject * parent = nullptr);
 
-    explicit LicenseFilter(QObject *parent = nullptr);
+    Q_INVOKABLE QString readFile(const QModelIndex & index);
 
-    Q_INVOKABLE QString readFile(const QModelIndex &index);
-
-    void setCategory(const LicenseCategory &cat) { m_category = cat; }
+    void setCategory(const LicenseCategory & cat) { m_category = cat; }
 
   protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    bool filterAcceptsRow(int source_row, const QModelIndex & source_parent) const override;
 
   private:
     QString getFilePath(const QModelIndex & index) const;

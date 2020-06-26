@@ -7,30 +7,30 @@
 
 namespace turtle_browser::licenses {
 
-class LicenseItem : private QObject {
+  class LicenseItem : private QObject {
 
-  Q_OBJECT
+    Q_OBJECT
 
-public:
-  LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
+  public:
+    LicenseItem(QString file_name, QString file_path, QList<QVariant> categories, LicenseItem * parentItem = nullptr);
 
-  LicenseItem *child(int row);
+    LicenseItem * child(int row);
 
-  int childCount() const;
+    int childCount() const;
 
-  QVariant data(LicenseRole role) const;
+    QVariant data(LicenseRole role) const;
 
-  int row() const;
+    int row() const;
 
-  QString path() const;
+    QString path() const;
 
-  LicenseItem *parentItem() const;
+    LicenseItem * parentItem() const;
 
-private:
-  QString m_file_name;
-  QString m_file_path;
-  QList<QVariant> m_categories;
-};
+  private:
+    QString m_file_name;
+    QString m_file_path;
+    QList<QVariant> m_categories;
+  };
 
 }
 
