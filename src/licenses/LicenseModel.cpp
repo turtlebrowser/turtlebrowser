@@ -8,11 +8,6 @@
 namespace turtle_browser::licenses {
 
   namespace {
-    const char * const platformRootPath = ":/licenses";
-    const char * const qtRootPath = ":/licenses/qt";
-    const char * const toolkitRootPath = ":/licenses/qt/licenses";
-    const char * const webviewRootPath = ":/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
-
     LicenseItem * getItem(const QModelIndex & index) {
       return static_cast<LicenseItem *>(index.internalPointer());
     }
@@ -27,11 +22,18 @@ namespace turtle_browser::licenses {
           return false;
       }
     }
+
+    QVariant asVariant(const LicenseCategory & category) {
+      return QVariant(static_cast<int>(category));
+    }
   }
 
-  LicenseModel::LicenseModel(QObject * parentObject)
+  LicenseModel::LicenseModel(QString platformRootPath, QString qtRootPath, QString webviewRootPath, QObject * parentObject)
     : QAbstractItemModel(parentObject),
-      m_dir(platformRootPath) {
+      m_platformRootPath(std::move(platformRootPath)),
+      m_qtRootPath(std::move(qtRootPath)),
+      m_webviewRootPath(std::move(webviewRootPath)),
+      m_dir(m_platformRootPath) {
     populate();
   }
 
@@ -39,7 +41,7 @@ namespace turtle_browser::licenses {
 
   void LicenseModel::populate() {
     QList<QVariant> root_categories;
-    m_rootItem = std::make_unique<LicenseItem>(QString("Licenses"), QString(platformRootPath), root_categories);
+    m_rootItem = std::make_unique<LicenseItem>(QString("Licenses"), m_platformRootPath, root_categories);
 
     QHash<QString, LicenseItem *> map;
     map[m_rootItem->path()] = m_rootItem.get();
@@ -49,16 +51,18 @@ namespace turtle_browser::licenses {
     while (it.hasNext()) {
       QString path = it.next();
 
+      bool inWebview = path.startsWith(m_webviewRootPath);
+      bool inQt = path.startsWith(m_qtRootPath);
+
       QList<QVariant> categories;
-      categories.append(QVariant(static_cast<int>(LicenseCategory::All)));
+      categories.append(asVariant(LicenseCategory::All));
 
-      if (path.startsWith(webviewRootPath))
-        categories.append(QVariant(static_cast<int>(LicenseCategory::WebView)));
-      else if (path.startsWith(toolkitRootPath))
-        categories.append(QVariant(static_cast<int>(LicenseCategory::Toolkit)));
-
-      if (path.startsWith(platformRootPath) && !path.startsWith(qtRootPath))
-        categories.append(QVariant(static_cast<int>(LicenseCategory::Platform)));
+      if (inWebview)
+        categories.append(asVariant(LicenseCategory::WebView));
+      else if (inQt)
+        categories.append(asVariant(LicenseCategory::Toolkit));
+      else
+        categories.append(asVariant(LicenseCategory::Platform));
 
       const QFileInfo & fileInfo = it.fileInfo();
       LicenseItem * parentItem = map[fileInfo.dir().path()];

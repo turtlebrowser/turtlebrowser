@@ -3,6 +3,10 @@
 namespace turtle_browser::licenses {
 
   namespace {
+    const char * const platformRootPath = ":/licenses";
+    const char * const qtRootPath = ":/licenses/qt";
+    const char * const webviewRootPath = ":/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
+
     void connectSearchModel(LicenseModel & model,
                             LicenseFilter & search_model,
                             LicenseCategory category) {
@@ -17,7 +21,8 @@ namespace turtle_browser::licenses {
     }
   }
 
-  LicenseState::LicenseState() {
+  LicenseState::LicenseState()
+    : m_licenseModel(platformRootPath, qtRootPath, webviewRootPath) {
     connectSearchModel(m_licenseModel, m_filterLicenseModelWebView, LicenseCategory::WebView);
     connectSearchModel(m_licenseModel, m_filterLicenseModelToolkit, LicenseCategory::Toolkit);
     connectSearchModel(m_licenseModel, m_filterLicenseModelPlatform, LicenseCategory::Platform);
