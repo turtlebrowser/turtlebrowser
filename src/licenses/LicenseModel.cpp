@@ -1,4 +1,6 @@
 #include "LicenseModel.h"
+
+#include "LicenseCategory.h"
 #include "LicenseItem.h"
 
 #include <QDirIterator>
