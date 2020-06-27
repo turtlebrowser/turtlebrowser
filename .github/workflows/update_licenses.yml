@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '40 15 * * 6'
+    - cron:  '50 15 * * 6'
 
 jobs:
   build:
@@ -61,6 +61,7 @@ jobs:
       run: cmake -DCHECK_IN_LICENSES=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean licenses
+      shell: bash
       run: |
         rm -rf ${{ env.FULL_LICENSE_PATH }}
         mkdir ${{ env.FULL_LICENSE_PATH }}
