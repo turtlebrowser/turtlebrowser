@@ -70,7 +70,7 @@ jobs:
       run: cmake --build . --config Release --target install
 
     - name: Clean licenses
-      working-directory: turtlebrowser
+#      working-directory: turtlebrowser
       run: | 
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.cpp" -exec rm {} +
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.h" -exec rm {} +
