@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '50 13 * * 6'
+    - cron:  '37 14 * * 6'
 
 jobs:
   build:
@@ -29,7 +29,9 @@ jobs:
       CONAN_SYSREQUIRES_MODE: enabled
       INSTALL_DIR: ${{ github.workspace }}/install/
       RELATIVE_LICENSE_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/
-      RELATIVE_QRC_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/${{matrix.PLATFORM_NAME}}_licenses.qrc
+      FULL_LICENSE_PATH: ${{ github.workspace }}/turtlebrowser/${{env.RELATIVE_LICENSE_PATH}}
+      QRC_FILE_NAME: ${{matrix.PLATFORM_NAME}}_licenses.qrc
+#      RELATIVE_QRC_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/${{matrix.PLATFORM_NAME}}_licenses.qrc
 
     steps:
     - uses: actions/checkout@v2
@@ -69,8 +71,8 @@ jobs:
       run: |
         rm -rf build
         mkdir build
-        rm -rf ${{ env.RELATIVE_LICENSE_PATH }}
-        mkdir ${{ env.RELATIVE_LICENSE_PATH }}
+        rm -rf ${{ env.FULL_LICENSE_PATH }}
+        mkdir ${{ env.FULL_LICENSE_PATH }}
 
     - name: Build licenses
       working-directory: build
@@ -81,6 +83,7 @@ jobs:
       run: cmake --build . --config Release --target install
 
     - name: Clean licenses
+      working-directory: turtlebrowser
       run: | 
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.cpp" -exec rm {} +
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.h" -exec rm {} +
@@ -108,18 +111,19 @@ jobs:
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "OWNERS" -exec rm {} +
 
     - name: Make qrc
-      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+      working-directory: turtlebrowser/${{ env.RELATIVE_LICENSE_PATH }}
       run: |
-        touch ${{ env.RELATIVE_QRC_PATH }}
-        echo '<RCC><qresource prefix="/">' >> ${{ env.RELATIVE_QRC_PATH }}
-        find licenses -type f -exec echo "<file>{}</file>" \; >>  ${{ env.RELATIVE_QRC_PATH }}
-        echo '</qresource></RCC>' >> ${{ env.RELATIVE_QRC_PATH }}
+        touch ${{ env.QRC_FILE_NAME }}
+        echo '<RCC><qresource prefix="/">' >> ${{ env.QRC_FILE_NAME }}
+        find licenses -type f -exec echo "<file>{}</file>" \; >>  ${{ env.QRC_FILE_NAME }}
+        echo '</qresource></RCC>' >> ${{ env.QRC_FILE_NAME }}
         
     - name: Commit qrc
-      run: git commit -a -m "Updated qrc file" ${{ env.RELATIVE_QRC_PATH }}
+      working-directory: turtlebrowser
+      run: git commit -a -m "Updated qrc file" ${{ env.RELATIVE_LICENSE_PATH }}
       
     - name: Commit licenses
-      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+      working-directory: turtlebrowser/${{ env.RELATIVE_LICENSE_PATH }}
       run: |
         git add -A .
         git commit -m "Updated license files"
