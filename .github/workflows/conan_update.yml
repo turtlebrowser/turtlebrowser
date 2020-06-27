@@ -3,14 +3,23 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '5 10 * * 6'
+    - cron:  '45 13 * * 6'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest] # [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+        - os: macos-latest
+          PLATFORM_NAME: macos
+
+        - os: ubuntu-latest
+          PLATFORM_NAME: linux
+
+        - os: windows-latest
+          PLATFORM_NAME: windows
 
     runs-on: ${{ matrix.os }}
     
@@ -18,11 +27,13 @@ jobs:
       CONAN_USER_HOME: "${{ github.workspace }}/release"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
       CONAN_SYSREQUIRES_MODE: enabled
+      INSTALL_DIR: ${{ github.workspace }}/install/
+      RELATIVE_LICENSE_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/
+      RELATIVE_QRC_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/${{matrix.PLATFORM_NAME}}_licenses.qrc
 
     steps:
     - uses: actions/checkout@v2
 
-    # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
       id: cache-conan
       uses: turtlebrowser/conan-cache@master
@@ -53,7 +64,62 @@ jobs:
         conan remove -f "*" --builds
         conan remove -f "*" --src
         conan remove -f "*" --system-reqs
+
+    - name: Clean licenses
+      run: |
+        rm -rf build
+        mkdir build
+        rm -rf ${{ env.RELATIVE_LICENSE_PATH }}
+        mkdir ${{ env.RELATIVE_LICENSE_PATH }}
+
+    - name: Build licenses
+      working-directory: build
+      run: cmake -DCHECK_IN_LICENSES=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
+
+    - name: Install licenses
+      working-directory: build
+      run: cmake --build . --config Release --target install
+
+    - name: Clean licenses
+      run: | 
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.cpp" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.h" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.cc" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.py" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pyc" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl.vanilla" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.js" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*,js" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.json" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pro" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qrc" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.png" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qdoc" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.yml" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.patch" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.ini" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "CHANGELOG.md" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "README.md" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name ".npmignore" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name ".eslintignore" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "license-checker" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "nopt" -exec rm {} +
+        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "OWNERS" -exec rm {} +
+
+    - name: Make qrc
+      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+      run: |
+        touch ${{ env.RELATIVE_QRC_PATH }}
+        echo '<RCC><qresource prefix="/">' >> ${{ env.RELATIVE_QRC_PATH }}
+        find licenses -type f -exec echo "<file>{}</file>" \; >>  ${{ env.RELATIVE_QRC_PATH }}
+        echo '</qresource></RCC>' >> ${{ env.RELATIVE_QRC_PATH }}
         
-    - name: Dependency Checker
-      if: matrix.os == 'ubuntu-latest'
-      run: pip3 install -U cve-bin-tool # csv2cve dependency.csv
+    - name: Commit qrc
+      run: git commit -a -m "Updated qrc file" ${{ env.RELATIVE_QRC_PATH }}
+      
+    - name: Commit licenses
+      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+      run: |
+        git add -A .
+        git commit -m "Updated license files"
