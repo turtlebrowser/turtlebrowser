@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '45 13 * * 6'
+    - cron:  '50 13 * * 6'
 
 jobs:
   build:
@@ -82,30 +82,30 @@ jobs:
 
     - name: Clean licenses
       run: | 
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.cpp" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.h" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.cc" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.py" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pyc" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pl.vanilla" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.js" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*,js" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.json" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.pro" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qrc" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.png" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.qdoc" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.yml" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.patch" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "*.ini" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "CHANGELOG.md" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "README.md" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name ".npmignore" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name ".eslintignore" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "license-checker" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "nopt" -exec rm {} +
-        find ${RELATIVE_LICENSE_PATH}/licenses -type f -name "OWNERS" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.cpp" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.h" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.cc" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.py" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.pyc" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.pl" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.pl.vanilla" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.js" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*,js" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.json" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.pro" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.qrc" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.png" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.qdoc" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.yml" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.patch" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.ini" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "CHANGELOG.md" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "README.md" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name ".npmignore" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name ".eslintignore" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "license-checker" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "nopt" -exec rm {} +
+        find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "OWNERS" -exec rm {} +
 
     - name: Make qrc
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
