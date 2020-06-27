@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '35 17 * * 6'
+    - cron:  '50 17 * * 6'
 
 jobs:
   build:
@@ -119,11 +119,19 @@ jobs:
         
     - name: Commit qrc
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
-      run: git status --porcelain ${{ env.QRC_FILE_NAME }} && git add ${{ env.QRC_FILE_NAME }} && git commit -m "Updated qrc file"
-      
+      run: | 
+        if [[ "$(git status --porcelain ${{ env.QRC_FILE_NAME }})" != "" ]]; then
+          git add ${{ env.QRC_FILE_NAME }}
+          git commit -m "Updated qrc file"
+        fi
+    
     - name: Commit licenses
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
-      run: git status --porcelain . && git add -A . && git commit -m "Updated license files"
+      run: | 
+        if [[ "$(git status --porcelain .)" != "" ]]; then
+          git add -A .
+          git commit -m "Updated license files"
+        fi
               
     - name: Push licenses and qrc
       run: |
