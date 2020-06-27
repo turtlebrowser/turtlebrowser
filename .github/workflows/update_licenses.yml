@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '50 16 * * 6'
+    - cron:  '05 17 * * 6'
 
 jobs:
   build:
@@ -108,8 +108,8 @@ jobs:
       run: |
         git config user.email "bot@turtlebrowser.com"
         git config user.name "Turtle Bot (GitHub Action)"
-        git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
-        git pull --rebase github
+        #git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+        git pull --rebase
         
     - name: Commit qrc
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
@@ -125,5 +125,5 @@ jobs:
               
     - name: Push licenses and qrc
       run: |
-        git pull --rebase github
-        git push github HEAD:${GITHUB_REF}
+        git pull --rebase
+        git push
