@@ -103,19 +103,25 @@ jobs:
         find licenses -type f -exec echo "<file>{}</file>" \; >>  ${{ env.QRC_FILE_NAME }}
         echo '</qresource></RCC>' >> ${{ env.QRC_FILE_NAME }}
         
-    - name: Commit qrc
-      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+    - name: Configure Git
       run: |
         git config user.email "bot@turtlebrowser.com"
         git config user.name "Turtle Bot (GitHub Action)"
         git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
         git pull github ${GITHUB_REF} --ff-only
+        
+    - name: Commit qrc
+      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+      run: |
         git add ${{ env.QRC_FILE_NAME }}
         git commit -m "Updated qrc file"
-        git push github HEAD:${GITHUB_REF}
       
     - name: Commit licenses
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
       run: |
         git add -A .
         git commit -m "Updated license files"
+              
+    - name: Push licenses and qrc
+      run: |
+        git push github HEAD:${GITHUB_REF}
