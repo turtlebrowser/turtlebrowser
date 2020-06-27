@@ -62,7 +62,6 @@ jobs:
 
     - name: Clean licenses
       run: |
-        ls -ltr
         rm -rf ${{ env.FULL_LICENSE_PATH }}
         mkdir ${{ env.FULL_LICENSE_PATH }}
 
