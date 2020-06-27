@@ -29,7 +29,7 @@ jobs:
       CONAN_SYSREQUIRES_MODE: enabled
       INSTALL_DIR: ${{ github.workspace }}/install/
       RELATIVE_LICENSE_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/
-      FULL_LICENSE_PATH: ${{ github.workspace }}/turtlebrowser/src/resources/licenses/${{matrix.PLATFORM_NAME}}/
+      FULL_LICENSE_PATH: ${{ github.workspace }}/src/resources/licenses/${{matrix.PLATFORM_NAME}}/
       QRC_FILE_NAME: ${{matrix.PLATFORM_NAME}}_licenses.qrc
 
     steps:
@@ -56,14 +56,15 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
-    - name: Clean licenses
-      run: |
-        rm -rf ${{ env.FULL_LICENSE_PATH }}
-        mkdir ${{ env.FULL_LICENSE_PATH }}
-
     - name: Build licenses
       working-directory: build
       run: cmake -DCHECK_IN_LICENSES=ON -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
+
+    - name: Clean licenses
+      run: |
+        ls -ltr
+        rm -rf ${{ env.FULL_LICENSE_PATH }}
+        mkdir ${{ env.FULL_LICENSE_PATH }}
 
     - name: Install licenses
       working-directory: build
@@ -98,7 +99,7 @@ jobs:
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "OWNERS" -exec rm {} +
 
     - name: Make qrc
-      working-directory: turtlebrowser/${{ env.RELATIVE_LICENSE_PATH }}
+      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
       run: |
         touch ${{ env.QRC_FILE_NAME }}
         echo '<RCC><qresource prefix="/">' >> ${{ env.QRC_FILE_NAME }}
@@ -106,11 +107,11 @@ jobs:
         echo '</qresource></RCC>' >> ${{ env.QRC_FILE_NAME }}
         
     - name: Commit qrc
-      working-directory: turtlebrowser
+#      working-directory: turtlebrowser
       run: git commit -a -m "Updated qrc file" ${{ env.RELATIVE_LICENSE_PATH }}
       
     - name: Commit licenses
-      working-directory: turtlebrowser/${{ env.RELATIVE_LICENSE_PATH }}
+      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
       run: |
         git add -A .
         git commit -m "Updated license files"
