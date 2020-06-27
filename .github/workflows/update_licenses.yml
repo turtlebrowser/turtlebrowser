@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '15 18 * * 6'
+    - cron:  '45 18 * * 6'
 
 jobs:
   build:
@@ -115,6 +115,7 @@ jobs:
       run: |
         git config user.email "bot@turtlebrowser.com"
         git config user.name "Turtle Bot (GitHub Action)"
+        git config core.longpaths true
         git config pull.rebase true
         git config rebase.autoStash true
         git pull
