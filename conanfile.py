@@ -35,7 +35,7 @@ class ConanDependencies(ConanFile):
             self.requires("qt/5.15.0@bincrafters/stable")
         else:
             self.output.info("Getting Qt from the system. CMAKE_PREFIX_PATH = " + platform_qt)
-        self.requires("gflags/2.2.2")
+#        self.requires("gflags/2.2.2")
 
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin")
