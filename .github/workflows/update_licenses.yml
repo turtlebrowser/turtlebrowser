@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '50 15 * * 6'
+    - cron:  '15 16 * * 6'
 
 jobs:
   build:
@@ -106,8 +106,11 @@ jobs:
     - name: Commit qrc
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
       run: |
+        git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+        git pull github ${GITHUB_REF} --ff-only
         git add ${{ env.QRC_FILE_NAME }}
         git commit -m "Updated qrc file"
+        git push github HEAD:${GITHUB_REF}
       
     - name: Commit licenses
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
