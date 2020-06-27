@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '20 15 * * 6'
+    - cron:  '30 15 * * 6'
 
 jobs:
   build:
@@ -71,7 +71,6 @@ jobs:
       run: cmake --build . --config Release --target install
 
     - name: Clean licenses
-#      working-directory: turtlebrowser
       run: | 
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.cpp" -exec rm {} +
         find ${{ env.RELATIVE_LICENSE_PATH }}/licenses -type f -name "*.h" -exec rm {} +
@@ -107,8 +106,8 @@ jobs:
         echo '</qresource></RCC>' >> ${{ env.QRC_FILE_NAME }}
         
     - name: Commit qrc
-#      working-directory: turtlebrowser
-      run: git commit -a -m "Updated qrc file" ${{ env.RELATIVE_LICENSE_PATH }}
+      working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
+      run: git commit -a -m "Updated qrc file" ${{ env.QRC_FILE_NAME }}
       
     - name: Commit licenses
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
