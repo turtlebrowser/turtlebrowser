@@ -107,7 +107,9 @@ jobs:
         
     - name: Commit qrc
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
-      run: git commit -a -m "Updated qrc file" ${{ env.QRC_FILE_NAME }}
+      run: |
+        git add ${{ env.QRC_FILE_NAME }}
+        git commit -m "Updated qrc file"
       
     - name: Commit licenses
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
