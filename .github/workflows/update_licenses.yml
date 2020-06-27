@@ -119,6 +119,7 @@ jobs:
         git pull
         
     - name: Commit qrc
+      shell: bash
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
       run: | 
         if [[ "$(git status --porcelain ${{ env.QRC_FILE_NAME }})" != "" ]]; then
@@ -127,6 +128,7 @@ jobs:
         fi
     
     - name: Commit licenses
+      shell: bash
       working-directory: ${{ env.RELATIVE_LICENSE_PATH }}
       run: | 
         if [[ "$(git status --porcelain .)" != "" ]]; then
