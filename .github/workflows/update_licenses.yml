@@ -62,9 +62,7 @@ jobs:
 
     - name: Clean licenses
       shell: bash
-      run: |
-        rm -rf ${{ env.FULL_LICENSE_PATH }}
-        mkdir ${{ env.FULL_LICENSE_PATH }}
+      run: rm -rf ${{ env.RELATIVE_LICENSE_PATH }}/*
 
     - name: Install licenses
       working-directory: build
