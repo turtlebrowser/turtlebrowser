@@ -111,6 +111,7 @@ jobs:
         echo '</qresource></RCC>' >> ${{ env.QRC_FILE_NAME }}
           
     - name: Configure Git
+      shell: bash
       run: |
         git config user.email "bot@turtlebrowser.com"
         git config user.name "Turtle Bot (GitHub Action)"
@@ -137,6 +138,7 @@ jobs:
         fi
               
     - name: Push licenses and qrc
+      shell: bash
       run: |
         git pull
         git push
