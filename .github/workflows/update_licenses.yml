@@ -3,7 +3,7 @@ name: Update Licenses
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '45 18 * * 6'
+    - cron:  '00 19 * * 6'
 
 jobs:
   build:
@@ -109,7 +109,12 @@ jobs:
         echo '<RCC><qresource prefix="/">' >> ${{ env.QRC_FILE_NAME }}
         find licenses -type f -exec echo "<file>{}</file>" \; >>  ${{ env.QRC_FILE_NAME }}
         echo '</qresource></RCC>' >> ${{ env.QRC_FILE_NAME }}
-          
+  
+    - name: Check LongPathsEnabled On Windows
+      if: matrix.os == 'windows-latest'
+      run: |
+        (Get-ItemProperty "HKLM:System\CurrentControlSet\Control\FileSystem").LongPathsEnabled
+     
     - name: Configure Git
       shell: bash
       run: |
@@ -143,3 +148,15 @@ jobs:
       run: |
         git pull
         git push
+        
+    - name: Prepare test build
+      run: |
+        git checkout .
+        git clean -df
+        mkdir build
+ 
+    - name: Perfom test build
+      working-directory: build
+      run: |
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build . --config Release -j 4
