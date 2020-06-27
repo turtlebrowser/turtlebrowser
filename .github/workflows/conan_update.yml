@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '37 14 * * 6'
+    - cron:  '55 14 * * 6'
 
 jobs:
   build:
@@ -29,9 +29,8 @@ jobs:
       CONAN_SYSREQUIRES_MODE: enabled
       INSTALL_DIR: ${{ github.workspace }}/install/
       RELATIVE_LICENSE_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/
-      FULL_LICENSE_PATH: ${{ github.workspace }}/turtlebrowser/${{env.RELATIVE_LICENSE_PATH}}
+      FULL_LICENSE_PATH: ${{ github.workspace }}/turtlebrowser/src/resources/licenses/${{matrix.PLATFORM_NAME}}/
       QRC_FILE_NAME: ${{matrix.PLATFORM_NAME}}_licenses.qrc
-#      RELATIVE_QRC_PATH: src/resources/licenses/${{matrix.PLATFORM_NAME}}/${{matrix.PLATFORM_NAME}}_licenses.qrc
 
     steps:
     - uses: actions/checkout@v2
