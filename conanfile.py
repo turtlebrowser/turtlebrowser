@@ -1,7 +1,7 @@
 import os
 from conans import ConanFile, CMake
 
-# Increment this number to force a new tag on the cache: 4
+# Conan update 19
 class ConanDependencies(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
