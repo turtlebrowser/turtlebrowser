@@ -3,7 +3,7 @@ name: Update Languages
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '20 7 * * 0'
+    - cron:  '30 23 * * 2'
 
 jobs:
   build:
