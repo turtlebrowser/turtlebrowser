@@ -7,6 +7,7 @@ import QtQuick.Window 2.15
 
 import "icons.js" as Icons
 
+// Review
 FramelessTopLevelWindow {
     id: window
 

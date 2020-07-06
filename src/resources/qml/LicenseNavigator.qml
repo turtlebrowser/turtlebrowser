@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.15
 
 import "icons.js" as Icons
 
+// Review
 ColumnLayout {
     id: root
 

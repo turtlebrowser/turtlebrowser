@@ -6,6 +6,7 @@ import QtQml.Models 2.15
 
 import "icons.js" as Icons
 
+// Review
 ColumnLayout {
     id: root
     spacing: 0
