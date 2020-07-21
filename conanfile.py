@@ -20,6 +20,7 @@ class ConanDependencies(ConanFile):
         "qt:with_fontconfig": True,
         "qt:with_freetype": True,
         "qt:with_glib": False,
+        "fontconfig:shared": True,
         "harfbuzz:with_glib": False,
     }
 
