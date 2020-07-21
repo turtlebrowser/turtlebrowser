@@ -26,7 +26,7 @@ jobs:
 
     # Check if GitHub Cache has it, because that's free
     - name: Using the builtin GitHub Cache Action for .conan
-      #if: matrix.os != 'windows-latest'
+      if: matrix.os != 'windows-latest'
       id: github-cache-conan
       uses: actions/cache@v1
       env:
