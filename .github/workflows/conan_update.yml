@@ -45,6 +45,7 @@ jobs:
       run: echo "::add-path::/home/runner/.local/bin"
 
     - name: Remove all previous builds
+      if: matrix.os == 'macos-latest'
       run: conan remove -f "*"
 
     - name: Get Conan Dependencies
