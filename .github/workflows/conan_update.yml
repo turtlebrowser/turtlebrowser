@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 23 * * 0'
+    - cron:  '25 7 * * 3'
 
 jobs:
   build:
@@ -43,6 +43,9 @@ jobs:
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
+
+    - name: Remove all previous builds
+      run: conan remove -f "*"
 
     - name: Get Conan Dependencies
       working-directory: build
