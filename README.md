@@ -184,13 +184,14 @@ $ sudo pip3 install conan --upgrade
 $ python --version
 Python 2.7.17
 $ export CONAN_USER_HOME=/Code/
+$ conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 $ conan install . -s build_type=Debug -s compiler=gcc -s compiler.version=7 -s compiler.libcxx=libstdc++11 -g=cmake --build=missing
 ```
 
 ### Might be needed
 
 ```
-sudo apt-get install libxcb-xinput0
+sudo apt-get install libxcb-xinput0 xorg-dev libxcb-render-util0-dev libxcb-xkb-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev 
 ```
 
 ## Test conan-qt branch
