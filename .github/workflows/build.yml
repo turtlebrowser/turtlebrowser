@@ -59,6 +59,7 @@ jobs:
         sudo apt install libxcursor-dev
         sudo apt install libxdamage-dev
         sudo apt install libxi-dev
+        sudo apt install libxinerama-dev
         
 
     - name: Get Conan
