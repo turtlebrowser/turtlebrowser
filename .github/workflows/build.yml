@@ -53,6 +53,7 @@ jobs:
       run: |
         sudo apt install libgl1-mesa-dev
         sudo apt install libx11-xcb-dev
+        sudo apt install libfontenc-dev
 
     - name: Get Conan
       run: |
