@@ -1,7 +1,7 @@
 import os
 from conans import ConanFile, CMake
 
-# Conan update 31
+# Conan update 31 ubuntu-20.04
 class ConanDependencies(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
