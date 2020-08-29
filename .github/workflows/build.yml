@@ -54,6 +54,7 @@ jobs:
         sudo apt install libgl1-mesa-dev
         sudo apt install libx11-xcb-dev
         sudo apt install libfontenc-dev
+        sudo apt install libxaw7-dev
 
     - name: Get Conan
       run: |
