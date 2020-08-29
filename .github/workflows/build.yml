@@ -55,7 +55,7 @@ jobs:
         mkdir build
         
     - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04'
       run: echo "::add-path::/home/runner/.local/bin"
 
     - name: Get Conan Dependencies
@@ -83,7 +83,7 @@ jobs:
       run: cmake --build . --config Release -j 4
 
     - name: Linux Install
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04'
       working-directory: build
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
