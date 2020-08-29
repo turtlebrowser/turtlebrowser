@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 23 * * 0'
+    - cron:  '15 10 * * 6'
 
 jobs:
   build:
@@ -43,6 +43,10 @@ jobs:
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
+        
+    - name: Add System Dependency
+      if: matrix.os == 'ubuntu-latest'
+      run: apt install libgl1-mesa-dev
 
     - name: Remove all previous builds
       if: matrix.os == 'macos-latest'
