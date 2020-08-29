@@ -55,6 +55,7 @@ jobs:
         sudo apt install libx11-xcb-dev
         sudo apt install libfontenc-dev
         sudo apt install libxaw7-dev
+        sudo apt install libxcomposite-dev
 
     - name: Get Conan
       run: |
