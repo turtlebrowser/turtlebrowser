@@ -50,7 +50,9 @@ jobs:
         
     - name: Add System Dependency
       if: matrix.os == 'ubuntu-20.04'
-      run: sudo apt install libgl1-mesa-dev
+      run: |
+        sudo apt install libgl1-mesa-dev
+        sudo apt install libx11-xcb-dev
 
     - name: Get Conan
       run: |
