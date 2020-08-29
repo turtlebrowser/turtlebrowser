@@ -58,6 +58,8 @@ jobs:
         sudo apt install libxcomposite-dev
         sudo apt install libxcursor-dev
         sudo apt install libxdamage-dev
+        sudo apt install libxi-dev
+        
 
     - name: Get Conan
       run: |
