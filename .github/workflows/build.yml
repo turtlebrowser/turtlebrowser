@@ -47,6 +47,10 @@ jobs:
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}
           lfs_limit: 60
+        
+    - name: Add System Dependency
+      if: matrix.os == 'ubuntu-20.04'
+      run: sudo apt install libgl1-mesa-dev
 
     - name: Get Conan
       run: |
