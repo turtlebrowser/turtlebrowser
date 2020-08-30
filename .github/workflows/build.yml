@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_SYSREQUIRES_MODE: verify
+      CONAN_SYSREQUIRES_MODE: disabled
       CONAN_USER_HOME: "${{ github.workspace }}/release"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
       INSTALL_DIR: ${{ github.workspace }}/install/
