@@ -43,6 +43,14 @@ jobs:
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
+    
+    - name: Install patched conan-qt
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        git clone https://github.com/patricia-gallardo/conan-qt.git
+        cd conan-qt
+        git checkout get_opus_from_chromium
+        conan export . qt/5.15.0@patricia-gallardo/patched
 
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
