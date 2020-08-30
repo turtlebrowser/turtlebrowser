@@ -58,6 +58,14 @@ jobs:
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
+    - name: Install patched conan-qt
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        git clone https://github.com/patricia-gallardo/conan-qt.git
+        cd conan-qt
+        git checkout get_opus_from_chromium
+        conan export . qt/5.15.0@patricia-gallardo/patched
+
     - name: Get Conan Dependencies
       working-directory: build
       run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
