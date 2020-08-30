@@ -60,7 +60,7 @@ jobs:
 
     - name: Get Conan Dependencies
       working-directory: build
-      run: sudo cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
+      run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Get Licences
       shell: bash
