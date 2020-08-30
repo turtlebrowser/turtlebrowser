@@ -65,6 +65,7 @@ jobs:
         sudo apt install libxres-dev
         sudo apt install libxss-dev
         sudo apt install libxtst-dev
+        sudo apt install libxv-dev
         
     - name: Get Conan
       run: |
