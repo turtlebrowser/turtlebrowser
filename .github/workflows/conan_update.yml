@@ -3,14 +3,14 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '15 10 * * 6'
+    - cron:  '50 11 * * 0'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, ubuntu-20.04, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
@@ -41,12 +41,36 @@ jobs:
         mkdir build
         
     - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
-        
+      
     - name: Add System Dependency
-      if: matrix.os == 'ubuntu-latest'
-      run: apt install libgl1-mesa-dev
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+        sudo apt-get update
+        sudo apt-get build-dep qt5-default
+        sudo apt install libgl1-mesa-dev
+        sudo apt install libx11-xcb-dev
+        sudo apt install libfontenc-dev
+        sudo apt install libxaw7-dev
+        sudo apt install libxcomposite-dev
+        sudo apt install libxcursor-dev
+        sudo apt install libxdamage-dev
+        sudo apt install libxi-dev
+        sudo apt install libxinerama-dev
+        sudo apt install libxmuu-dev
+        sudo apt install libxrandr-dev
+        sudo apt install libxres-dev
+        sudo apt install libxss-dev
+        sudo apt install libxtst-dev
+        sudo apt install libxv-dev
+        sudo apt install libxvmc-dev
+        sudo apt install libxxf86vm-dev
+          
+#    - name: Add System Dependency
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      run: apt install libgl1-mesa-dev
 
     - name: Remove all previous builds
       if: matrix.os == 'macos-latest'
