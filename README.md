@@ -43,70 +43,6 @@ On Windows, Linux, and macOS, Qt WebView depends on the Qt WebEngine module to r
 
 [Qt docs on Qt WebView](https://doc.qt.io/qt-5/qtwebview-index.html)
 
-# High level qml layout description of current prototype
-
-- _main.qml_ handles the creation of top level windows (using _TopLevelWindow.qml_),
-  both private and public ones using WebEngineProfile
-- _TopLevelWindow.qml_ represents a browser window and has a column layout with a tab-toolbar
-  (_TabToolbar.qml_) and a StackLayout of web pages (_WebPage.qml_), it also handles all global keyboard shortcuts
-- _TabToolbar.qml_ has a RowLayout with a tab-bar followed by a new tab button
-- _WebPage.qml_ has a ColumnLayout of the address-bar followed by the WebEngineView/WebView, it handles some tab specific keyboard shortcuts
-
-Ascii art drawing
-
-~~~
-+---------------------------------------------------------------------------------+
-|                                                                                 |
-|                        TopLevelWindow.qml                                       |
-|                                                                                 |
-|  +---------------------------------------------------------------------------+  |
-|  |                                                                           |  |
-|  |                     ColumnLayout                                          |  |
-|  |                                                                           |  |
-|  | +-----------------------------------------------------------------------+ |  |
-|  | |                                                                       | |  |
-|  | |                   TabToolbar.qml                                      | |  |
-|  | |                                                                       | |  |
-|  | |  +-----------------------------------------------------------------+  | |  |
-|  | |  |                                                                 |  | |  |
-|  | |  |                RowLayout                                        |  | |  |
-|  | |  |                                                                 |  | |  |
-|  | |  | +-----------------------------------------------+ +-----------+ |  | |  |
-|  | |  | |                                               | |           | |  | |  |
-|  | |  | |              TabBar                           | | New Tab   | |  | |  |
-|  | |  | |                                               | |           | |  | |  |
-|  | |  | +-----------------------------------------------+ +-----------+ |  | |  |
-|  | |  +-----------------------------------------------------------------+  | |  |
-|  | +-----------------------------------------------------------------------+ |  |
-|  | +-----------------------------------------------------------------------+ |  |
-|  | |                                                                       | |  |
-|  | |                   StackLayout                                         | |  |
-|  | |                                                                       | |  |
-|  | | +-------------------------------------------------------------------+ | |  |
-|  | | |                                                                   | | |  |
-|  | | |                 WebPage.qml                                       | | |  |
-|  | | |                                                                   | | |  |
-|  | | | +---------------------------------------------------------------+ | | |  |
-|  | | | |                                                               | | | |  |
-|  | | | |               ColumnLayout                                    | | | |  |
-|  | | | |                                                               | | | |  |
-|  | | | | +-----------------------------------------------------------+ | | | |  |
-|  | | | | |                                                           | | | | |  |
-|  | | | | |             AddressBar.qml                                | | | | |  |
-|  | | | | |                                                           | | | | |  |
-|  | | | | +-----------------------------------------------------------+ | | | |  |
-|  | | | | +-----------------------------------------------------------+ | | | |  |
-|  | | | | |                                                           | | | | |  |
-|  | | | | |             WebView                                       | | | | |  |
-|  | | | | |                                                           | | | | |  |
-|  | | | | +-----------------------------------------------------------+ | | | |  |
-|  | | | +---------------------------------------------------------------+ | | |  |
-|  | | +-------------------------------------------------------------------+ | |  |
-|  | +-----------------------------------------------------------------------+ |  |
-|  +---------------------------------------------------------------------------+  |
-+---------------------------------------------------------------------------------+
-~~~
-
 # Licences
 
 Tracked in [issue 16](https://github.com/turtlebrowser/turtlebrowser/issues/16)
@@ -121,20 +57,15 @@ Icons: [Material icons](https://material.io/resources/icons/?style=outline) lice
 
 ## Development notes
 
-In general CMake and Conan should make building this pretty straight forward,
-point CONAN_USER_HOME (and on Windows CONAN_USER_HOME_SHORT) in the right direction
-and it should Just Work. See the [conan-cache README](https://github.com/turtlebrowser/conan-cache).
+### See Qt Dependencies to build Qt locally, either through Conan or stand alone
 
-Tip: For editing qml QtCreator is by far the best IDE, for C++ CLion is probably superior
+https://wiki.qt.io/Building_Qt_5_from_Git
 
-### Useful environment vars
+### Using the prebuilt conan cache to avoid building Qt
 
-```
-QT_DEBUG_PLUGINS=1
-LD_DEBUG=libs
-```
+Clone the appropriate branch of [conan-cache-turtlebrowser](https://github.com/turtlebrowser/conan-cache-turtlebrowser) according to the instructions [here](https://github.com/turtlebrowser/conan-cache#how-to-use-locally).
 
-## Windows Conan Cache build settings
+#### Windows Conan Cache build settings
 ```
 Configuration:
 [settings]
@@ -151,11 +82,40 @@ os_build=Windows
 [env]
 ```
 
+#### Linux Conan Cache build settings
+```
+Configuration:
+[settings]
+arch=x86_64
+arch_build=x86_64
+build_type=Release
+compiler=gcc
+compiler.libcxx=libstdc++11
+compiler.version=7
+os=Linux
+os_build=Linux
+[options]
+[build_requires]
+[env]
+```
+
+#### Build new Windows Conan Cache
+Use the [script](https://github.com/turtlebrowser/conan-cache/blob/master/update_cache_windows.sh) in [conan-cache](https://github.com/turtlebrowser/conan-cache)
+```
+./update_cache_windows.sh <path to TurtleBrowser checkout>
+```
+
+#### Build new Linux Conan Cache
+Use the [script](https://github.com/turtlebrowser/conan-cache/blob/master/update_cache_linux.sh) in [conan-cache](https://github.com/turtlebrowser/conan-cache)
+```
+./update_cache_linux.sh <path to TurtleBrowser checkout>
+```
+
 ## Using conan install
 
 - Conan needs Python 3
 - Chromium needs Python greater than equal to 2.7.5 and less than 3
-- Chromium generates very long filenames/paths - put Conan at the root of the filesystem
+- Chromium generates very long filenames/paths - put .conan at the root of the filesystem
   [https://docs.conan.io/en/latest/mastering/custom_cache.html]
 - git config --system core.longpaths true (probably not needed)
 
@@ -165,16 +125,6 @@ os_build=Windows
 $ pip3 install conan --upgrade
 $ python --version
 Python 2.7.17
-$ mkdir c:/Code/
-$ export CONAN_USER_HOME=c:/Code/
-$ cd <path to TurtleBrowser>
-$ conan install . -s arch=x86_64 -s build_type=Debug -s compiler="Visual Studio" -s compiler.version=16 -s compiler.runtime=MDd -g=cmake --build=missing
-```
-
-### Developer Command Prompt for VS 2019
-
-```
-SET CONAN_USER_HOME=c:\Code
 ```
 
 ## Linux
@@ -183,6 +133,9 @@ SET CONAN_USER_HOME=c:\Code
 $ sudo pip3 install conan --upgrade
 $ python --version
 Python 2.7.17
+```
+
+```
 $ export CONAN_USER_HOME=/Code/
 $ conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 $ conan install . -s build_type=Debug -s compiler=gcc -s compiler.version=7 -s compiler.libcxx=libstdc++11 -g=cmake --build=missing
@@ -190,14 +143,18 @@ $ conan install . -s build_type=Debug -s compiler=gcc -s compiler.version=7 -s c
 
 ### Might be needed
 
+See [Qt dependencies](https://wiki.qt.io/Building_Qt_5_from_Git) for help in what you need to build Qt
+
 ```
 sudo apt-get install libxcb-xinput0 xorg-dev libxcb-render-util0-dev libxcb-xkb-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev 
 ```
 
 ## Test conan-qt branch
 
+If you need to test conan-qt changes locally.
+
 ```
-conan export /path/to/conan-qt qt/5.14.2@user/channel
+conan export /path/to/conan-qt qt/5.15.0@user/channel
 ```
 
 ## Style
