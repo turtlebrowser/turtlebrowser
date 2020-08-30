@@ -1,9 +1,7 @@
 function process(loadRequest) {
-    console.log("Loading changed for request url : " + loadRequest.url);
 
     switch(loadRequest.status) {
     case WebEngineView.LoadStartedStatus: {
-        console.log("status STARTED");
         break;
     }
     case WebEngineView.LoadStoppedStatus: {
@@ -11,7 +9,6 @@ function process(loadRequest) {
         break;
     }
     case WebEngineView.LoadSucceededStatus: {
-        console.log("status SUCCEEDED");
         break;
     }
     case WebEngineView.LoadFailedStatus: {

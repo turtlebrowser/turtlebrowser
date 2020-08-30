@@ -86,7 +86,7 @@ FramelessTopLevelWindow {
                     onTitleChanged: modelData.tabTitle = page.title
                     onAddressChanged: modelData.tabUrl = page.address
                     onIconChanged: {
-                        console.log("fav icon changed : " + page.icon)
+//                        console.log("fav icon changed : " + page.icon)
                         modelData.tabIcon = Icons.webIcon
                     }
                 }
