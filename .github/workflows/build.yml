@@ -51,23 +51,23 @@ jobs:
     - name: Add System Dependency
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: |
-        sudo apt install libgl1-mesa-dev
-        sudo apt install libx11-xcb-dev
-        sudo apt install libfontenc-dev
-        sudo apt install libxaw7-dev
-        sudo apt install libxcomposite-dev
-        sudo apt install libxcursor-dev
-        sudo apt install libxdamage-dev
-        sudo apt install libxi-dev
-        sudo apt install libxinerama-dev
-        sudo apt install libxmuu-dev
-        sudo apt install libxrandr-dev
-        sudo apt install libxres-dev
-        sudo apt install libxss-dev
-        sudo apt install libxtst-dev
-        sudo apt install libxv-dev
-        sudo apt install libxvmc-dev
         sudo apt-get build-dep qt5-default
+#        sudo apt install libgl1-mesa-dev
+#        sudo apt install libx11-xcb-dev
+#        sudo apt install libfontenc-dev
+#        sudo apt install libxaw7-dev
+#        sudo apt install libxcomposite-dev
+#        sudo apt install libxcursor-dev
+#        sudo apt install libxdamage-dev
+#        sudo apt install libxi-dev
+#        sudo apt install libxinerama-dev
+#        sudo apt install libxmuu-dev
+#        sudo apt install libxrandr-dev
+#        sudo apt install libxres-dev
+#        sudo apt install libxss-dev
+#        sudo apt install libxtst-dev
+#        sudo apt install libxv-dev
+#        sudo apt install libxvmc-dev
         
     - name: Get Conan
       run: |
