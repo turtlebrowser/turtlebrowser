@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '10 12 * * 0'
+    - cron:  '25 12 * * 0'
 
 jobs:
   build:
@@ -64,10 +64,10 @@ jobs:
       run: |
         sudo apt-get install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libdbus-1-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
 
-    - name: Add Qt Multimedia Dependencies
+    - name: Add Qt Multimedia Dependencies - using GStreamer 1.0
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: |
-        sudo apt-get install libasound2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+        sudo apt-get install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
     - name: Add QDoc Documentation Generator Tool Dependencies
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
