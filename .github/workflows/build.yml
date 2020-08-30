@@ -11,12 +11,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-20.04, macos-latest, windows-latest] # [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, ubuntu-20.04, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_SYSREQUIRES_MODE: enabled
+      CONAN_SYSREQUIRES_MODE: verify
       CONAN_USER_HOME: "${{ github.workspace }}/release"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
       INSTALL_DIR: ${{ github.workspace }}/install/
@@ -47,31 +47,7 @@ jobs:
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}
           lfs_limit: 60
-        
-    - name: Add System Dependency
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
-      run: |
-        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
-        sudo apt-get update
-        sudo apt-get build-dep qt5-default
-        sudo apt install libgl1-mesa-dev
-        sudo apt install libx11-xcb-dev
-        sudo apt install libfontenc-dev
-        sudo apt install libxaw7-dev
-        sudo apt install libxcomposite-dev
-        sudo apt install libxcursor-dev
-        sudo apt install libxdamage-dev
-        sudo apt install libxi-dev
-        sudo apt install libxinerama-dev
-        sudo apt install libxmuu-dev
-        sudo apt install libxrandr-dev
-        sudo apt install libxres-dev
-        sudo apt install libxss-dev
-        sudo apt install libxtst-dev
-        sudo apt install libxv-dev
-        sudo apt install libxvmc-dev
-        sudo apt install libxxf86vm-dev
-        
+       
     - name: Get Conan
       run: |
         pip3 install wheel setuptools
