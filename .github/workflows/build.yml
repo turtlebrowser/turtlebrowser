@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_SYSREQUIRES_MODE: disabled
+      CONAN_SYSREQUIRES_MODE: enabled
       CONAN_USER_HOME: "${{ github.workspace }}/release"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
       INSTALL_DIR: ${{ github.workspace }}/install/
@@ -60,7 +60,7 @@ jobs:
 
     - name: Get Conan Dependencies
       working-directory: build
-      run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
+      run: sudo cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Get Licences
       shell: bash
