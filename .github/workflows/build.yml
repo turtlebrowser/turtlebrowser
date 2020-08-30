@@ -67,6 +67,7 @@ jobs:
         sudo apt install libxtst-dev
         sudo apt install libxv-dev
         sudo apt install libxvmc-dev
+        sudo apt-get build-dep qt5-default
         
     - name: Get Conan
       run: |
