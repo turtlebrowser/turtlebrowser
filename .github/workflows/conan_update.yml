@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '50 11 * * 0'
+    - cron:  '10 12 * * 0'
 
 jobs:
   build:
@@ -43,34 +43,36 @@ jobs:
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
-      
-    - name: Add System Dependency
+
+# Debian Dependencies
+# https://wiki.qt.io/Building_Qt_5_from_Git
+
+    - name: Add Qt Source Dependencies
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: |
         sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
         sudo apt-get update
         sudo apt-get build-dep qt5-default
-        sudo apt install libgl1-mesa-dev
-        sudo apt install libx11-xcb-dev
-        sudo apt install libfontenc-dev
-        sudo apt install libxaw7-dev
-        sudo apt install libxcomposite-dev
-        sudo apt install libxcursor-dev
-        sudo apt install libxdamage-dev
-        sudo apt install libxi-dev
-        sudo apt install libxinerama-dev
-        sudo apt install libxmuu-dev
-        sudo apt install libxrandr-dev
-        sudo apt install libxres-dev
-        sudo apt install libxss-dev
-        sudo apt install libxtst-dev
-        sudo apt install libxv-dev
-        sudo apt install libxvmc-dev
-        sudo apt install libxxf86vm-dev
-          
-#    - name: Add System Dependency
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
-#      run: apt install libgl1-mesa-dev
+
+    - name: Add Libxcb Dependencies
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+
+    - name: Add Qt WebEngine Dependencies
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libdbus-1-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
+
+    - name: Add Qt Multimedia Dependencies
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get install libasound2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+
+    - name: Add QDoc Documentation Generator Tool Dependencies
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt install libclang-6.0-dev llvm-6.0
 
     - name: Remove all previous builds
       if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
