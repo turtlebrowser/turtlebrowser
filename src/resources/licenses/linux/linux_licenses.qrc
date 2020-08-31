@@ -1,5 +1,4 @@
 <RCC><qresource prefix="/">
-<file>licenses/opus/licenses/COPYING</file>
 <file>licenses/libmysqlclient/licenses/LICENSE</file>
 <file>licenses/expat/licenses/COPYING</file>
 <file>licenses/libpng/licenses/LICENSE</file>
