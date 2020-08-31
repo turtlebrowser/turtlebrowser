@@ -55,6 +55,11 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
+    - name: Remove all previous builds
+      # Mac and not hit in either cache
+      if: (matrix.os == 'macos-latest') && (steps.github-cache-conan.outputs.cache-hit != 'true') && (steps.cache-conan.outputs.cache-hit != 1)
+      run: conan remove -f "*"
+
     - name: Install patched conan-qt
       run: |
         git clone https://github.com/patricia-gallardo/conan-qt.git
