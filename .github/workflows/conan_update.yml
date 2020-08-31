@@ -75,7 +75,7 @@ jobs:
         sudo apt install libclang-6.0-dev llvm-6.0
 
     - name: Remove all previous builds
-      if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'macos-latest'
       run: conan remove -f "*"
 
     - name: Install patched conan-qt
