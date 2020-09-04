@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 19 * * 5'
+    - cron:  '30 21 * * 5'
 
 jobs:
   build:
@@ -80,9 +80,9 @@ jobs:
 #      run: |
 #        sudo apt install libclang-6.0-dev llvm-6.0
 
-#    - name: Remove all previous builds
-#      if: matrix.os == 'macos-latest'
-#      run: conan remove -f "*"
+    - name: Remove all previous builds
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-latest'
+      run: conan remove -f "*"
 
 #    - name: Install patched conan-qt
 #      run: |
