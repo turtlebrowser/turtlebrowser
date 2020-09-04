@@ -3,14 +3,14 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '5 13 * * 5'
+    - cron:  '30 19 * * 5'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest] # ubuntu-20.04
+        os: [ubuntu-latest, macos-latest, windows-latest, ubuntu-20.04] # ubuntu-20.04
 
     runs-on: ${{ matrix.os }}
     
@@ -47,11 +47,11 @@ jobs:
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
 
-    - name: Clean up Conan
-      run: |
-        conan remove -f "*" --builds
-        conan remove -f "*" --src
-        conan remove -f "*" --system-reqs
+#    - name: Clean up Conan
+#      run: |
+#        conan remove -f "*" --builds
+#        conan remove -f "*" --src
+#        conan remove -f "*" --system-reqs
 
 #    - name: Add Qt Source Dependencies
 #      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
@@ -84,12 +84,12 @@ jobs:
 #      if: matrix.os == 'macos-latest'
 #      run: conan remove -f "*"
 
-    - name: Install patched conan-qt
-      run: |
-        git clone https://github.com/patricia-gallardo/conan-qt.git
-        cd conan-qt
-        git checkout get_opus_from_chromium
-        conan export . qt/5.15.0@patricia-gallardo/patched
+#    - name: Install patched conan-qt
+#      run: |
+#        git clone https://github.com/patricia-gallardo/conan-qt.git
+#        cd conan-qt
+#        git checkout get_opus_from_chromium
+#        conan export . qt/5.15.0@patricia-gallardo/patched
 
     - name: Get Conan Dependencies
       working-directory: build
