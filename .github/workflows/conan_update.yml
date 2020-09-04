@@ -25,7 +25,7 @@ jobs:
 
     - name: Cache Conan modules
       id: cache-conan
-      uses: turtlebrowser/conan-cache@master
+      uses: turtlebrowser/conan-cache@conan-cache@v1.1
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
@@ -89,8 +89,8 @@ jobs:
       working-directory: build
       run: cmake -DUPDATE_CONAN=ON -DCMAKE_BUILD_TYPE=Release ..
 
-    - name: Clean up Conan
-      run: |
-        conan remove -f "*" --builds
-        conan remove -f "*" --src
-        conan remove -f "*" --system-reqs
+#    - name: Clean up Conan
+#      run: |
+#        conan remove -f "*" --builds
+#        conan remove -f "*" --src
+#        conan remove -f "*" --system-reqs
