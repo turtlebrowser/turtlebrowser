@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 9 * * 2'
+    - cron:  '10 12 * * 5'
 
 jobs:
   build:
@@ -47,36 +47,42 @@ jobs:
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
 
-    - name: Add Qt Source Dependencies
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+    - name: Clean up Conan
       run: |
-        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
-        sudo apt-get update
-        sudo apt-get build-dep qt5-default
+        conan remove -f "*" --builds
+        conan remove -f "*" --src
+        conan remove -f "*" --system-reqs
 
-    - name: Add Libxcb Dependencies
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+#    - name: Add Qt Source Dependencies
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      run: |
+#        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+#        sudo apt-get update
+#        sudo apt-get build-dep qt5-default
 
-    - name: Add Qt WebEngine Dependencies
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt-get install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libdbus-1-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
+#    - name: Add Libxcb Dependencies
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      run: |
+#        sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
 
-    - name: Add Qt Multimedia Dependencies - using GStreamer 1.0
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt-get install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+#    - name: Add Qt WebEngine Dependencies
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      run: |
+#        sudo apt-get install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libdbus-1-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
 
-    - name: Add QDoc Documentation Generator Tool Dependencies
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt install libclang-6.0-dev llvm-6.0
+#    - name: Add Qt Multimedia Dependencies - using GStreamer 1.0
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      run: |
+#        sudo apt-get install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
-    - name: Remove all previous builds
-      if: matrix.os == 'macos-latest'
-      run: conan remove -f "*"
+#    - name: Add QDoc Documentation Generator Tool Dependencies
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      run: |
+#        sudo apt install libclang-6.0-dev llvm-6.0
+
+#    - name: Remove all previous builds
+#      if: matrix.os == 'macos-latest'
+#      run: conan remove -f "*"
 
     - name: Install patched conan-qt
       run: |
