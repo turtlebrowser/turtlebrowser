@@ -39,7 +39,7 @@ jobs:
     - name: Cache Conan modules
       if: steps.github-cache-conan.outputs.cache-hit != 'true'
       id: cache-conan
-      uses: turtlebrowser/conan-cache@master
+      uses: turtlebrowser/conan-cache@v1.1
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
@@ -79,11 +79,11 @@ jobs:
         find . -wholename  ${{ env.ABOUT_CREDITS_PATH }}
         find . -wholename  ${{ env.ABOUT_CREDITS_PATH }} -exec cp {} ${{ github.workspace }} \;
 
-    - name: Clean up Conan
-      run: |
-        conan remove -f "*" --builds
-        conan remove -f "*" --src
-        conan remove -f "*" --system-reqs
+#    - name: Clean up Conan
+#      run: |
+#        conan remove -f "*" --builds
+#        conan remove -f "*" --src
+#        conan remove -f "*" --system-reqs
 
     - name: Build
       working-directory: build
