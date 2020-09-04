@@ -113,7 +113,7 @@ Use the [script](https://github.com/turtlebrowser/conan-cache/blob/master/update
 
 ## Using conan install
 
-- Conan needs Python 3
+- Conan needs Python 3 - so make sure to install it with pip3
 - Chromium needs Python greater than equal to 2.7.5 and less than 3
 - Chromium generates very long filenames/paths - put .conan at the root of the filesystem
   [https://docs.conan.io/en/latest/mastering/custom_cache.html]
