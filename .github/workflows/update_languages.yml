@@ -30,8 +30,8 @@ jobs:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
           cache_name: turtlebrowser/conan-cache-turtlebrowser
-          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
-          target_os: ${{ runner.os }}
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-${{ hashFiles('conanfile.py') }}
+          target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
     - name: Get Conan
