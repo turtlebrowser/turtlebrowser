@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-18.04, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
@@ -41,7 +41,7 @@ jobs:
         mkdir build
         
     - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
       run: echo "::add-path::/home/runner/.local/bin"
 
     - name: Set up build for language files

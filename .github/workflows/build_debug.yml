@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest] # [ubuntu-latest, macos-latest, windows-latest]
+        os: [macos-latest] # [ubuntu-18.04, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
@@ -52,7 +52,7 @@ jobs:
         pip3 install conan --upgrade
         
     - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
       run: echo "::add-path::/home/runner/.local/bin"
 
     - name: Remove all previous builds

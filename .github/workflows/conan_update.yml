@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest, ubuntu-20.04] # ubuntu-20.04
+        os: [ubuntu-18.04, macos-latest, windows-latest, ubuntu-20.04] # ubuntu-20.04
 
     runs-on: ${{ matrix.os }}
     
@@ -41,36 +41,36 @@ jobs:
         mkdir build
         
     - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
       run: echo "::add-path::/home/runner/.local/bin"
 
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
 
 #    - name: Add Qt Source Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
 #      run: |
 #        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
 #        sudo apt-get update
 #        sudo apt-get build-dep qt5-default
 
 #    - name: Add Libxcb Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
 
 #    - name: Add Qt WebEngine Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt-get install libssl-dev libxcursor-dev libxcomposite-dev libxdamage-dev libxrandr-dev libdbus-1-dev libfontconfig1-dev libcap-dev libxtst-dev libpulse-dev libudev-dev libpci-dev libnss3-dev libasound2-dev libxss-dev libegl1-mesa-dev gperf bison
 
 #    - name: Add Qt Multimedia Dependencies - using GStreamer 1.0
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt-get install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
 #    - name: Add QDoc Documentation Generator Tool Dependencies
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
 #      run: |
 #        sudo apt install libclang-6.0-dev llvm-6.0
 
