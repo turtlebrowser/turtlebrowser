@@ -58,32 +58,26 @@ jobs:
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
-    - name: Install patched conan-qt
-      run: |
-        git clone https://github.com/patricia-gallardo/conan-qt.git
-        cd conan-qt
-        git checkout get_opus_from_chromium
-        conan export . qt/5.15.0@patricia-gallardo/patched
+#    - name: Install patched conan-qt
+#      run: |
+#        git clone https://github.com/patricia-gallardo/conan-qt.git
+#        cd conan-qt
+#        git checkout get_opus_from_chromium
+#        conan export . qt/5.15.0@patricia-gallardo/patched
 
     - name: Get Conan Dependencies
       working-directory: build
       run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
-    - name: Get Licences
-      shell: bash
-      working-directory: ${{ env.CONAN_USER_HOME_SHORT }}
-      env:
-        ABOUT_CREDITS_PATH: "*/qtwebengine/src/core/debug/gen/components/resources/about_credits.html"
-      run: |
-        echo "Try to find the about_credits.html file"
-        find . -wholename  ${{ env.ABOUT_CREDITS_PATH }}
-        find . -wholename  ${{ env.ABOUT_CREDITS_PATH }} -exec cp {} ${{ github.workspace }} \;
-
-#    - name: Clean up Conan
+#    - name: Get Licences
+#      shell: bash
+#      working-directory: ${{ env.CONAN_USER_HOME_SHORT }}
+#      env:
+#        ABOUT_CREDITS_PATH: "*/qtwebengine/src/core/debug/gen/components/resources/about_credits.html"
 #      run: |
-#        conan remove -f "*" --builds
-#        conan remove -f "*" --src
-#        conan remove -f "*" --system-reqs
+#        echo "Try to find the about_credits.html file"
+#        find . -wholename  ${{ env.ABOUT_CREDITS_PATH }}
+#        find . -wholename  ${{ env.ABOUT_CREDITS_PATH }} -exec cp {} ${{ github.workspace }} \;
 
     - name: Build
       working-directory: build
