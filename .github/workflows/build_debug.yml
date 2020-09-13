@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest] # [ubuntu-18.04, macos-latest, windows-latest]
+        os: [macos-10.15] # [ubuntu-18.04, macos-10.15, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
@@ -57,7 +57,7 @@ jobs:
 
     - name: Remove all previous builds
       # Mac and not hit in either cache
-      if: (matrix.os == 'macos-latest') && (steps.github-cache-conan.outputs.cache-hit != 'true') && (steps.cache-conan.outputs.cache-hit != 1)
+      if: (matrix.os == 'macos-10.15') && (steps.github-cache-conan.outputs.cache-hit != 'true') && (steps.cache-conan.outputs.cache-hit != 1)
       run: conan remove -f "*"
 
 #    - name: Install patched conan-qt
