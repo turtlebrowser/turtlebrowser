@@ -60,21 +60,15 @@ jobs:
       if: (matrix.os == 'macos-latest') && (steps.github-cache-conan.outputs.cache-hit != 'true') && (steps.cache-conan.outputs.cache-hit != 1)
       run: conan remove -f "*"
 
-    - name: Install patched conan-qt
-      run: |
-        git clone https://github.com/patricia-gallardo/conan-qt.git
-        cd conan-qt
-        git checkout get_opus_from_chromium
-        conan export . qt/5.15.0@patricia-gallardo/patched
+#    - name: Install patched conan-qt
+#      run: |
+#        git clone https://github.com/patricia-gallardo/conan-qt.git
+#        cd conan-qt
+#        git checkout get_opus_from_chromium
+#        conan export . qt/5.15.0@patricia-gallardo/patched
 
     - name: Get Conan Dependencies
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..
-
-#    - name: Clean up Conan
-#      run: |
-#        conan remove -f "*" --builds
-#        conan remove -f "*" --src
-#        conan remove -f "*" --system-reqs
 
     - name: Build
       run: cmake --build build
