@@ -1,7 +1,7 @@
 import os
 from conans import ConanFile, CMake
 
-# Conan update 44
+# Conan update 50
 class ConanDependencies(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
@@ -30,7 +30,6 @@ class ConanDependencies(ConanFile):
             self.output.info("CMAKE_PREFIX_PATH not set")
             self.output.info("To use the Qt from your system, set the CMAKE_PREFIX_PATH env var")
             self.output.info("Trying to get Qt from Conan")
-#            self.requires("qt/5.15.0@patricia-gallardo/patched")
             self.requires("qt/5.15.0@bincrafters/stable")
         else:
             self.output.info("Getting Qt from the system. CMAKE_PREFIX_PATH = " + platform_qt)
