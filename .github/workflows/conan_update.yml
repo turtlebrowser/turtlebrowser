@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '45 14 * * 6'
+    - cron:  '45 15 * * 6'
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
         mkdir build
         
     - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-16.04'
       run: echo "::add-path::/home/runner/.local/bin"
 
 # Debian Dependencies
@@ -75,7 +75,7 @@ jobs:
 #        sudo apt install libclang-6.0-dev llvm-6.0
 
 #    - name: Remove all previous builds
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-10.15'
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-10.15' || matrix.os == 'ubuntu-16.04'
 #      run: conan remove -f "*"
 
     - name: Get Conan Dependencies
