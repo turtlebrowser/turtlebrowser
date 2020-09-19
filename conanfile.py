@@ -1,7 +1,7 @@
 import os
 from conans import ConanFile, CMake
 
-# Conan update 50
+# Conan update 52
 class ConanDependencies(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
