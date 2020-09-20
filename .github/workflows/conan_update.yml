@@ -3,14 +3,14 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '45 15 * * 6'
+    - cron:  '30 23 * * 0'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, windows-2016, windows-2019] # ubuntu-20.04
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, windows-2019] # windows-2016
 
     runs-on: ${{ matrix.os }}
     
