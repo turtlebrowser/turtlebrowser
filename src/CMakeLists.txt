@@ -1,14 +1,3 @@
-set(CMAKE_CXX_STANDARD 17)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-
-option(UPDATE_CONAN "Update Conan Cache" OFF)
-option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
-option(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
-
 if (APPLE)
     set(TARGET_OS_NAME "macos")
     set(LICENSE_QRC resources/licenses/linux/linux_licenses.qrc)
