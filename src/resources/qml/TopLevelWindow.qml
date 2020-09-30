@@ -1,3 +1,6 @@
+/* SPDX-FileCopyrightText: (c) 2018 TurtleSec AS
+ * SPDX-License-Identifier: MIT
+ */
 import QtQml 2.15
 import QtQml.Models 2.15
 import QtQuick 2.15
