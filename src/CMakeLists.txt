@@ -13,25 +13,29 @@ if (CHECK_IN_LICENSES)
     set(LICENSE_QRC "")
 endif(CHECK_IN_LICENSES)
 
-# Download automatically, you can also just copy the conan.cmake file
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-    message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake"
-         "${CMAKE_BINARY_DIR}/conan.cmake")
-endif ()
+if (USE_CONAN)
+    # Download automatically, you can also just copy the conan.cmake file
+    if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+        message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+        file(DOWNLOAD "https://github.com/conan-io/cmake-conan/raw/v0.15/conan.cmake"
+            "${CMAKE_BINARY_DIR}/conan.cmake")
+    endif ()
 
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
+    include(${CMAKE_BINARY_DIR}/conan.cmake)
+    conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
 
-if (UPDATE_CONAN)
-    conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
-else()
-    conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
-endif (UPDATE_CONAN)
+    if (UPDATE_CONAN)
+        conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
+    else()
+        conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
+    endif (UPDATE_CONAN)
 
-# For running locally in CLion
-if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
-    file(COPY ${CMAKE_BINARY_DIR}/src/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/src/bin/)
+    # For running locally in CLion
+    if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
+        file(COPY ${CMAKE_BINARY_DIR}/src/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/src/bin/)
+    endif ()
+else ()
+    message(STATUS "Conan package manager is switched off.")
 endif ()
 
 find_package(Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml REQUIRED)
