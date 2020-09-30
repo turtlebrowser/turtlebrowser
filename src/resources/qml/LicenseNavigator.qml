@@ -1,3 +1,6 @@
+/* SPDX-FileCopyrightText: (c) 2018 Patricia Aas
+ * SPDX-License-Identifier: MIT
+ */
 import QtQuick 2.15
 import QtQuick.Controls 1.4 as Classic
 import QtQuick.Controls.Styles 1.4 as ClassicStyles
