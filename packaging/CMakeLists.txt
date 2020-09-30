@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: (c) 2018 Patricia Aas
+# SPDX-License-Identifier: MIT
+
 set(CPACK_PACKAGE_VENDOR "TurtleSec AS")
 
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT_NAME})

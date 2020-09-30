@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: (c) 2018 Patricia Aas
+# SPDX-License-Identifier: MIT
+
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

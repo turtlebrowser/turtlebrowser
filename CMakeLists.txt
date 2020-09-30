@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: (c) 2018 Patricia Aas
+# SPDX-License-Identifier: MIT
+
 cmake_minimum_required(VERSION 3.10)
 
 project(TurtleBrowser
