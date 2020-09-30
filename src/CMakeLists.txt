@@ -11,7 +11,7 @@ endif ()
 
 if (CHECK_IN_LICENSES)
     set(LICENSE_QRC "")
-endif(CHECK_IN_LICENSES)
+endif ()
 
 if (USE_CONAN)
     # Download automatically, you can also just copy the conan.cmake file
@@ -26,9 +26,9 @@ if (USE_CONAN)
 
     if (UPDATE_CONAN)
         conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
-    else()
+    else ()
         conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
-    endif (UPDATE_CONAN)
+    endif ()
 
     # For running locally in CLion
     if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
@@ -128,7 +128,7 @@ endif ()
 if (CHECK_IN_LICENSES)
     # Install the licenses
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${CMAKE_SOURCE_DIR}/src/resources/licenses/${TARGET_OS_NAME}/)
-endif (CHECK_IN_LICENSES)
+endif ()
 
 # Make a runnable bundle for linux
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
