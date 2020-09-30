@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: (c) 2018 TurtleSec AS
+# SPDX-License-Identifier: MIT
+
 if (APPLE)
     set(TARGET_OS_NAME "macos")
     set(LICENSE_QRC resources/licenses/linux/linux_licenses.qrc)
