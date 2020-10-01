@@ -53,6 +53,8 @@ Using Qt and Chromium comes with a wide range of licences that all have to be ta
 
 Icons: [Material icons](https://material.io/resources/icons/?style=outline) licence: [Apache license version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 
+Contributions: ["inbound=outbound"](https://docs.github.com/en/free-pro-team@latest/github/site-policy/github-terms-of-service#6-contributions-under-repository-license)
+
 # Development
 
 ## Development notes
