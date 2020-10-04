@@ -3,6 +3,8 @@
 ![CI-Release](https://github.com/turtlebrowser/turtlebrowser/workflows/CI-Release/badge.svg)
 ![CI-Debug](https://github.com/turtlebrowser/turtlebrowser/workflows/CI-Debug/badge.svg)
 
+_Online is Real_
+
 # Introduction
 
 TurtleBrowser is intended to become a full featured browser on at least Linux, MacOS, Windows, iOS and Android.
