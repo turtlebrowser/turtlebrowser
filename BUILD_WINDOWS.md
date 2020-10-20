@@ -16,3 +16,15 @@ git checkout host-Windows-target-Windows-windows-2019-master
 git lfs pull
 find .conan/ -name .conan_link -exec perl -pi -e 's=CONAN_USER_HOME_SHORT=$ENV{CONAN_USER_HOME_SHORT}=g' {} +
 ~~~
+
+Now let's get the TurtleBrowser source, this can reside anywhere, but here I will assume it's in a folder called Code in your user directory.
+
+~~~
+cd ~/Code
+git clone git@github.com:turtlebrowser/turtlebrowser.git
+cd turtlebrowser
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --config Release -j 4
+~~~
