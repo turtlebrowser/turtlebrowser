@@ -4,6 +4,7 @@ The primary purpose of these build instructions is to avoid having to build all 
 To do this we will use the Conan Cache.
 
 These instructions will assume use of GitBash.
+The cache resides in c: because long file paths will cause issues.
 
 ~~~
 cd c:
