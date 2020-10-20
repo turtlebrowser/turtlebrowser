@@ -1,4 +1,4 @@
-# Windows Build Instructions (Work in Progress)
+# Windows Developer Build Instructions (Work in Progress)
 
 The primary purpose of these build instructions is to avoid having to build all of Qt including QtWebEngine.
 To do this we will use the Conan Cache.
