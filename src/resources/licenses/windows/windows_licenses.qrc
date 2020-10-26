@@ -1,4 +1,5 @@
 <RCC><qresource prefix="/">
+<file>licenses/brotli/licenses/LICENSE</file>
 <file>licenses/bzip2/licenses/LICENSE</file>
 <file>licenses/double-conversion/licenses/LICENSE</file>
 <file>licenses/freetype/licenses/FTL.TXT</file>
