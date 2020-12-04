@@ -3,7 +3,7 @@ name: Run Snyk on Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '10 23 * * *'
+    - cron:  '35 23 * * *'
 
 jobs:
   build:
@@ -60,3 +60,9 @@ jobs:
     - name: Get Conan Dependencies
       working-directory: build
       run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
+
+    - name: Run snyk on .conan/data
+      working-directory: ${{ env.CONAN_USER_HOME }}/.conan/data
+      run: snyk test source
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
