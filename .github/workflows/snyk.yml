@@ -3,7 +3,7 @@ name: Run Snyk on Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '45 14 * * 5'
+    - cron:  '05 15 * * 5'
 
 jobs:
   build:
@@ -34,7 +34,12 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
-    - uses: snyk/actions/setup@master
-      id: snyk
+    - name: Install coreutils for macOS
+      if: matrix.os == 'macOS-latest' || matrix.os == 'macos-10.15'
+      run: brew install coreutils
+
+    - name: Run Snyk
+      id: snyk 
+      uses: snyk/actions/setup@master
       with:
         snyk-version: v1.391.0
