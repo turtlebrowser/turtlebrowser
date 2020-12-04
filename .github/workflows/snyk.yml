@@ -1,0 +1,40 @@
+name: Run Snyk on Conan
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 23 * * 0'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, windows-2019] # windows-2016
+
+    runs-on: ${{ matrix.os }}
+    
+    env:
+      CONAN_USER_HOME: "${{ github.workspace }}/release"
+      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
+      CONAN_SYSREQUIRES_MODE: enabled
+      INSTALL_DIR: ${{ github.workspace }}/install/
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Conan modules
+      id: cache-conan
+      uses: turtlebrowser/conan-cache@master
+      with:
+          bot_name: turtlebrowser-bot
+          bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
+          cache_name: turtlebrowser/conan-cache-turtlebrowser
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-${{ hashFiles('conanfile.py') }}
+          target_os: ${{ runner.os }}-${{ matrix.os }}
+          lfs_limit: 60
+
+    - uses: snyk/actions/setup@master
+      id: snyk
+      with:
+        snyk-version: v1.391.0
