@@ -3,7 +3,7 @@ name: Run Snyk on Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '35 15 * * 5'
+    - cron:  '30 16 * * 5'
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
-    - name: Install coreutils for macOS
+    - name: Install coreutils for macOS for Snyk
       if: matrix.os == 'macOS-latest' || matrix.os == 'macos-10.15'
       run: brew install coreutils
 
@@ -46,3 +46,17 @@ jobs:
 
     - name: Snyk version
       run: echo "${{ steps.snyk.outputs.version }}"
+
+    - name: Get Conan
+      run: |
+        pip3 install wheel setuptools
+        pip3 install conan --upgrade
+        mkdir build
+        
+    - name: Fix Path on Ubuntu
+      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' ||  matrix.os == 'ubuntu-16.04'
+      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
+
+    - name: Get Conan Dependencies
+      working-directory: build
+      run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
