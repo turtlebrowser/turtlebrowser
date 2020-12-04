@@ -3,14 +3,14 @@ name: Run Snyk on Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '35 23 * * *'
+    - cron:  '55 23 * * *'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, macos-10.15, windows-2019]
+        os: [ubuntu-18.04, macos-10.15] # windows-2019
 
     runs-on: ${{ matrix.os }}
     
@@ -63,6 +63,6 @@ jobs:
 
     - name: Run snyk on .conan/data
       working-directory: ${{ env.CONAN_USER_HOME }}/.conan/data
-      run: snyk test source
+      run: snyk source test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
