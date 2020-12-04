@@ -41,8 +41,8 @@ jobs:
     - name: Install Snyk
       id: snyk 
       uses: snyk/actions/setup@master
-      with:
-        snyk-version: v1.391.0
+#      with:
+#        snyk-version: v1.391.0
 
     - name: Snyk version
       run: echo "${{ steps.snyk.outputs.version }}"
