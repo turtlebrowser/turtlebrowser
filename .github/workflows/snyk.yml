@@ -3,7 +3,7 @@ name: Run Snyk on Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 23 * * 0'
+    - cron:  '45 14 * * 5'
 
 jobs:
   build:
