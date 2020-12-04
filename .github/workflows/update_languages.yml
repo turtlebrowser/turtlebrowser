@@ -42,7 +42,7 @@ jobs:
         
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04'
-      run: echo "::add-path::/home/runner/.local/bin"
+      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
 
     - name: Set up build for language files
       working-directory: build
