@@ -47,16 +47,23 @@ jobs:
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ matrix.os }}-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
-       
-    - name: Get Conan
-      run: |
-        pip3 install wheel setuptools
-        pip3 install conan --upgrade
-        mkdir build
+
+    - name: Install Conan
+      id: conan
+      uses: turtlebrowser/get-conan@main
+
+    - name: Conan version
+      run: echo "${{ steps.conan.outputs.version }}"
+
+#    - name: Get Conan
+#      run: |
+#        pip3 install wheel setuptools
+#        pip3 install conan --upgrade
+#        mkdir build
         
-    - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' ||  matrix.os == 'ubuntu-16.04'
-      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
+#    - name: Fix Path on Ubuntu
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' ||  matrix.os == 'ubuntu-16.04'
+#      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
 
 #    - name: Install patched conan-qt
 #      run: |
