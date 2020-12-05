@@ -3,14 +3,14 @@ name: Run Snyk on Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '55 23 * * *'
+    - cron:  '55 19 * * *'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, macos-10.15] # windows-2019
+        os: [ubuntu-18.04, macos-10.15, windows-2019]
 
     runs-on: ${{ matrix.os }}
     
@@ -34,15 +34,19 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
-    - name: Install coreutils for macOS for Snyk
-      if: matrix.os == 'macOS-latest' || matrix.os == 'macos-10.15'
-      run: brew install coreutils
+#    - name: Install coreutils for macOS for Snyk
+#      if: matrix.os == 'macOS-latest' || matrix.os == 'macos-10.15'
+#      run: brew install coreutils
 
-    - name: Install Snyk
-      id: snyk 
-      uses: snyk/actions/setup@master
+#    - name: Install Snyk
+#      id: snyk 
+#      uses: snyk/actions/setup@master
 #      with:
 #        snyk-version: v1.391.0
+
+    - name: Install Snyk
+      id: snyk
+      uses: turtlebrowser/get-snyk@main
 
     - name: Snyk version
       run: echo "${{ steps.snyk.outputs.version }}"
