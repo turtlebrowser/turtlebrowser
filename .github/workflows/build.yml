@@ -55,6 +55,9 @@ jobs:
     - name: Conan version
       run: echo "${{ steps.conan.outputs.version }}"
 
+    - name: Make build directory
+      run: mkdir build
+
 #    - name: Get Conan
 #      run: |
 #        pip3 install wheel setuptools
