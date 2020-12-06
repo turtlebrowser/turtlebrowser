@@ -3,7 +3,7 @@ name: Test
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 23 * * 5'
+    - cron:  '15 16 * * 0'
 
 jobs:
   testfreebsd:
@@ -22,8 +22,8 @@ jobs:
         usesh: true
         prepare: pkg install -y curl
         run: |
-          pwd
-          ls -lah
-          whoami
-          env
-          freebsd-version
+          pip3 install wheel setuptools
+          pip3 install conan --upgrade
+          cmake -E make_directory ${{runner.workspace}}/build
+          cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
