@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '50 17 * * 5'
+    - cron:  '05 15 * * 0'
 
 jobs:
   build:
@@ -34,15 +34,25 @@ jobs:
           target_os: ${{ runner.os }}-${{ matrix.os }}
           lfs_limit: 60
 
-    - name: Get Conan
-      run: |
-        pip3 install wheel setuptools
-        pip3 install conan --upgrade
-        mkdir build
-        
-    - name: Fix Path on Ubuntu
-      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-16.04'
-      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
+    - name: Install Conan
+      id: conan
+      uses: turtlebrowser/get-conan@main
+
+    - name: Conan version
+      run: echo "${{ steps.conan.outputs.version }}"
+
+    - name: Make build directory
+      run: mkdir build
+
+#    - name: Get Conan
+#      run: |
+#        pip3 install wheel setuptools
+#        pip3 install conan --upgrade
+#        mkdir build
+#        
+#    - name: Fix Path on Ubuntu
+#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-16.04'
+#      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
 
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
