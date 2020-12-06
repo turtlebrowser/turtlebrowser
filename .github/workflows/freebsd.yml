@@ -1,9 +1,9 @@
-name: Test
+name: FreeBSD
 
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '15 16 * * 0'
+    - cron:  '5 17 * * 0'
 
 jobs:
   testfreebsd:
@@ -20,10 +20,10 @@ jobs:
       with:
         envs: 'MYTOKEN MYTOKEN2'
         usesh: true
-        prepare: pkg install -y curl
+        prepare: pkg install -y cmake py36-pip
         run: |
           pip3 install wheel setuptools
           pip3 install conan --upgrade
           cmake -E make_directory ${{runner.workspace}}/build
           cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release
-          cmake --build . --config Release
+          cd ${{runner.workspace}}/build && cmake --build . --config Release
