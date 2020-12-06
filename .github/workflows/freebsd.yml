@@ -3,7 +3,7 @@ name: FreeBSD
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '20 22 * * 0'
+    - cron:  '50 22 * * 0'
 
 jobs:
   testfreebsd:
