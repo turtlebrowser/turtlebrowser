@@ -20,5 +20,5 @@ jobs:
       with:
         envs: 'MYTOKEN MYTOKEN2'
         usesh: true
-        prepare: pkg install -y cmake conan python2
+        prepare: pkg install -y cmake conan python2 sudo
         run: python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release && cmake --build . --config Release
