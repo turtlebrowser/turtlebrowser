@@ -18,7 +18,7 @@ jobs:
       id: test
       uses: vmactions/freebsd-vm@v0.0.9
       with:
-        envs: 'MYTOKEN CONAN_CMAKE_PROGRAM'
+        envs: 'MYTOKEN CONAN_MAKE_PROGRAM'
         usesh: true
         prepare: pkg install -y cmake conan python2 sudo gmake
         run: MAKE=gmake && python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=gmake && cmake --build . --config Release
