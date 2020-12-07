@@ -3,7 +3,7 @@ name: FreeBSD
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '55 23 * * 0'
+    - cron:  '20 0 * * 1'
 
 jobs:
   testfreebsd:
@@ -20,5 +20,5 @@ jobs:
       with:
         envs: 'MYTOKEN CONAN_MAKE_PROGRAM'
         usesh: true
-        prepare: pkg install -y cmake conan python2 sudo gmake
+        prepare: pkg install -y cmake conan python2 sudo gmake perl
         run: MAKE=gmake && python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=gmake && cmake --build . --config Release
