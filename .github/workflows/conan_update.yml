@@ -3,14 +3,14 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '25 15 * * 0'
+    - cron:  '0 11 * * 1'
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11.0, windows-2019] # windows-2016, ubuntu-20.04
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11.0, windows-2019]
 
     runs-on: ${{ matrix.os }}
     
@@ -43,6 +43,10 @@ jobs:
 
     - name: Make build directory
       run: mkdir build
+
+    - name: Add 20.04 dependency - Should be builtin in a future conan-qt release
+      if: matrix.os == 'ubuntu-20.04'
+      run: sudo apt install libxcb-dri3-dev
 
 #    - name: Get Conan
 #      run: |
