@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 11 * * 1'
+    - cron:  '10 18 * * 1'
 
 jobs:
   build:
@@ -47,6 +47,10 @@ jobs:
     - name: Add 20.04 dependency - Should be builtin in a future conan-qt release
       if: matrix.os == 'ubuntu-20.04'
       run: sudo apt install libxcb-dri3-dev
+
+    - name: Add 16.04 dependency - Should be builtin in a future conan-qt release
+      if: matrix.os == 'ubuntu-16.04'
+      run: sudo apt install libegl1-mesa-dev
 
 #    - name: Get Conan
 #      run: |
