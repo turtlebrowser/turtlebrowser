@@ -24,5 +24,5 @@ jobs:
       with:
         envs: 'MYTOKEN CONAN_MAKE_PROGRAM'
         usesh: true
-        prepare: pkg install -y cmake conan python2 sudo gmake perl5 pkgconf
+        prepare: pkg install -y cmake conan python2 sudo gmake perl5 pkgconf libunwind
         run: python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release && cmake --build . --config Release
