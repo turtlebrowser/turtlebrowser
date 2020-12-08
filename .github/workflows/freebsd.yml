@@ -24,5 +24,5 @@ jobs:
       with:
         envs: 'MYTOKEN CONAN_MAKE_PROGRAM'
         usesh: true
-        prepare: pkg install -y cmake conan python2 sudo gmake perl5 pkgconf libunwind sqlite3 zstd
-        run: MAKE=gmake && python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=gmake && cmake --build . --config Release
+        prepare: pkg install -y cmake conan python2 sudo gmake perl5 pkgconf
+        run: python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release && cmake --build . --config Release
