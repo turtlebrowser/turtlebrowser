@@ -6,6 +6,12 @@ These instructions are to update the Conan Cache
 
 Prerequisite: SSH key has been added to your accout
 
+## 16.04 - needs
+
+~~~ bash
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+~~~
+
 ## Setup of machine
 
 ~~~ bash
@@ -20,13 +26,14 @@ cd /Code
 export CONAN_USER_HOME="/Code/release"
 export CONAN_USER_HOME_SHORT=${CONAN_USER_HOME}/short
 git clone git@github.com:turtlebrowser/conan-cache-turtlebrowser.git $CONAN_USER_HOME
-sudo apt update
-sudo apt-get install git-lfs
-sudo apt install python
+sudo apt-get -y update
+sudo apt-get -y install git-lfs
+sudo apt-get -y install python
+sudo apt-get -y install python3-pip
 pip3 install wheel setuptools
 pip3 install conan --upgrade
-sudo apt install cmake
-sudo apt install pkgconf
+sudo apt-get -y install cmake
+sudo apt-get -y install pkgconf
 ~~~
 
 ## Run build
