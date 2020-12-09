@@ -2,6 +2,20 @@
 
 These instructions are to update the Conan Cache
 
+# Temporary fixes
+
+* 'ubuntu-20.04'
+
+~~~ bash
+sudo apt install libxcb-dri3-dev
+~~~
+
+* 'ubuntu-16.04'
+
+~~~ bash
+sudo apt install libegl1-mesa-dev
+~~~
+
 # Ubuntu 20.04 : Taking in a new release
 
 Prerequisite: SSH key has been added to your accout
