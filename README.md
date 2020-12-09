@@ -7,6 +7,8 @@ _Online is Real_
 
 # Introduction
 
+** NOT READY FOR USE. PRE-ALPHA **
+
 TurtleBrowser is intended to become a full featured browser on at least Linux, MacOS, Windows, iOS and Android.
 
 Once the basics are in place the goal is to create a browser that allows "installation" of Progressive Web Apps
