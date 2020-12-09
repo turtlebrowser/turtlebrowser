@@ -25,4 +25,4 @@ jobs:
         envs: 'MYTOKEN CONAN_MAKE_PROGRAM'
         usesh: true
         prepare: pkg install -y cmake conan python2 sudo gmake perl5 pkgconf libunwind mesa-libs
-        run: python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release && cmake --build . --config Release
+        run: python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ && cmake --build . --config Release
