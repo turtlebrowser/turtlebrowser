@@ -54,7 +54,7 @@ mkdir -p ~/Code
 cd ~/Code
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH="$PATH:${HOME}/Code/depot_tools"
-mkdir ~/chromium && cd ~/chromium
+mkdir chromium && cd chromium
 fetch --nohooks chromium
 cd src
 ./build/install-build-deps.sh
