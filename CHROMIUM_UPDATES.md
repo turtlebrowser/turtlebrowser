@@ -17,7 +17,7 @@ These steps will have to be performed in reverse
 * Qt Chromium repo: https://code.qt.io/cgit/qt/qtwebengine-chromium.git/
 * What an Qt Chromium update looks like: https://code.qt.io/cgit/qt/qtwebengine.git/commit/?h=5.12
 * Linux build instructions: https://chromium.googlesource.com/chromium/src/+/master/docs/linux/build_instructions.md
-* Gn args: https://www.chromium.org/developers/gn-build-configuration#TOC-Goma
+* Gn args: https://www.chromium.org/developers/gn-build-configuration
 
 ## Plan for figuring out the Chromium patch set (Step 3)
 
