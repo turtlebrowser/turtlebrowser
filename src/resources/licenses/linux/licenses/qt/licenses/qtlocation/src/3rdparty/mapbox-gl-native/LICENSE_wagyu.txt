@@ -1,29 +1,18 @@
-Use, modification & distribution is subject to Boost Software License Ver 1.
-http://www.boost.org/LICENSE_1_0.txt
+Parts of the code in the Wagyu Library are derived from the version of the
+Clipper Library by Angus Johnson listed below.
 
-Attributions:
-The code in this library is an extension of Bala Vatti's clipping algorithm:
-"A generic solution to polygon clipping"
-Communications of the ACM, Vol 35, Issue 7 (July 1992) pp 56-63.
-http://portal.acm.org/citation.cfm?id=129906
+Author    :  Angus Johnson
+Version   :  6.4.0
+Date      :  2 July 2015
+Website   :  http://www.angusj.com
 
-Computer graphics and geometric modeling: implementation and algorithms
-By Max K. Agoston
-Springer; 1 edition (January 4, 2005)
-http://books.google.com/books?q=vatti+clipping+agoston
+Copyright for portions of the derived code in the Wagyu library are held
+by Angus Johnson, 2010-2015. All other copyright for the Wagyu Library are held by
+Mapbox, 2016. This code is published in accordance with, and retains the same license
+as the Clipper Library by Angus Johnson.
 
-See also:
-"Polygon Offsetting by Computing Winding Numbers"
-Paper no. DETC2005-85513 pp. 565-575
-ASME 2005 International Design Engineering Technical Conferences
-and Computers and Information in Engineering Conference (IDETC/CIE2005)
-September 24-28, 2005 , Long Beach, California, USA
-http://www.me.berkeley.edu/~mcmains/pubs/DAC05OffsetPolygon.pdf
-
-
-
-Boost Software License - Version 1.0 - August 17th, 2003
-http://www.boost.org/LICENSE_1_0.txt
+Copyright (c) 2010-2015, Angus Johnson
+Copyright (c) 2016, Mapbox
 
 Permission is hereby granted, free of charge, to any person or organization
 obtaining a copy of the software and accompanying documentation covered by
