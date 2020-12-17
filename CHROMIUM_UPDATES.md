@@ -15,6 +15,7 @@ These steps will have to be performed in reverse
 * Chromium Schedule: https://www.chromium.org/developers/calendar
 * Chromlium Schedule: https://chromiumdash.appspot.com/schedule
 * Qt Chromium repo: https://code.qt.io/cgit/qt/qtwebengine-chromium.git/
+* Qt update process: https://wiki.qt.io/QtWebEngine/Rebase_on_New_Chromium
 * What an Qt Chromium update looks like: https://code.qt.io/cgit/qt/qtwebengine.git/commit/?h=5.12
 * Linux build instructions: https://chromium.googlesource.com/chromium/src/+/master/docs/linux/build_instructions.md
 * Get and build gn: https://gn.googlesource.com/gn/
