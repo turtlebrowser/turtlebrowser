@@ -18,13 +18,14 @@ jobs:
       CONAN_MAKE_PROGRAM: "gmake"
       CC: clang
       CXX: clang++
+      CONAN_SYSREQUIRES_MODE: enabled
     steps:
     - uses: actions/checkout@v2
     - name: Test building TurtleBrowser in FreeBSD
       id: test
       uses: vmactions/freebsd-vm@v0.0.9
       with:
-        envs: 'MYTOKEN CONAN_MAKE_PROGRAM CC CXX'
+        envs: 'MYTOKEN CONAN_MAKE_PROGRAM CC CXX CONAN_SYSREQUIRES_MODE'
         usesh: true
-        prepare: pkg install -y cmake conan python2 sudo gmake perl5 pkgconf libunwind mesa-libs
-        run: python=python2 && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ && cmake --build . --config Release
+        prepare: pkg install -y cmake python2 python3 py37-pip py37-sqlite3 sudo gmake perl5 pkgconf libunwind bash
+        run: python=python2 && pip install conan && cmake -E make_directory ${{runner.workspace}}/build && cd ${{runner.workspace}}/build && cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ && cmake --build . --config Release
