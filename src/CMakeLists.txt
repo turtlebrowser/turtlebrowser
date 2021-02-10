@@ -103,21 +103,20 @@ install(TARGETS ${PROJECT_NAME}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         BUNDLE DESTINATION .)
 
+# Get the Qt bin directory
+get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
+get_filename_component(qtBinDir "${mocExe}" DIRECTORY)
+get_filename_component(qtBaseDir "${qtBinDir}" DIRECTORY)
+
 # Need to figure out how to do this on Mac
 if (MSVC OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
     # Configure the qt.conf
+    set(qtConfPrefix ${qtBaseDir})
+    set(qtConfEffectiveSourcePaths ${QTBASE_SOURCE})
     if (MSVC)
-        set(qtConfPrefix ${QTBASE_BUILD})
-        set(qtConfEffectiveSourcePaths ${QTBASE_SOURCE})
-        set(qtConfQml2Imports qml)
-        set(qtConfLibraryExecutables bin)
         set(qtConfTargetSpec win32-clang-msvc)
         set(qtConfHostSpec win32-clang-msvc)
     elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-        set(qtConfPrefix ${QTBASE_BUILD})
-        set(qtConfEffectiveSourcePaths ${QTBASE_SOURCE})
-        set(qtConfQml2Imports qml)
-        set(qtConfLibraryExecutables libexec)
         set(qtConfTargetSpec linux-clang-libc++)
         set(qtConfHostSpec linux-clang-libc++)
     endif ()
@@ -153,10 +152,6 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
             DESTINATION ${CMAKE_INSTALL_BINDIR}/libexec
             PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_READ WORLD_EXECUTE)
 endif ()
-
-# Get the Qt bin directory
-get_target_property(mocExe Qt5::moc IMPORTED_LOCATION)
-get_filename_component(qtBinDir "${mocExe}" DIRECTORY)
 
 if (APPLE)
     # Merge language files
