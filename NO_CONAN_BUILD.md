@@ -12,7 +12,7 @@ The scripts in chromium_update might be useful for figuring out how to build.
 
 ## CMake options
 ```
--DUSE_CONAN=OFF -DCMAKE_INSTALL_PREFIX="C:\Code\turtle_install"
+-DUSE_CONAN=OFF -DCMAKE_INSTALL_PREFIX="C:\Code\turtle_install" -DQTBASE_BUILD="C:/Code/qt5-build/qtbase" -DQTBASE_SOURCE="C:/Code/qt-everywhere-src-5.15.2/qtbase"
 ```
 
 ## Environment
