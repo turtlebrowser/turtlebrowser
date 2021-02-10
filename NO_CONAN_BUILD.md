@@ -44,7 +44,7 @@ The scripts in chromium_update might be useful for figuring out how to build.
 
 ## CMake options
 ```
--DUSE_CONAN=OFF -DCMAKE_INSTALL_PREFIX="/Code/turtle_install" -DQTBASE_BUILD="/Code/qt5-build/qtbase" -DQTBASE_SOURCE="/Code/qt-everywhere-src-5.15.2/qtbase"
+-DUSE_CONAN=OFF -DCMAKE_INSTALL_PREFIX="/Code/turtle_install" -DQTBASE_SOURCE="/Code/qt-everywhere-src-5.15.2/qtbase"
 ```
 
 ## Environment
