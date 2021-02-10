@@ -1,4 +1,15 @@
+[EffectivePaths]
+Prefix=..
+[DevicePaths]
+Prefix=@qtConfPrefix@
 [Paths]
-Prefix = @qtConfPrefix@
+Prefix=@qtConfPrefix@
 Qml2Imports = @qtConfQml2Imports@
 LibraryExecutables = @qtConfLibraryExecutables@
+HostPrefix=@qtConfPrefix@
+Sysroot=
+SysrootifyPrefix=false
+TargetSpec=@qtConfTargetSpec@
+HostSpec=@qtConfHostSpec@
+[EffectiveSourcePaths]
+Prefix=@qtConfEffectiveSourcePaths@
