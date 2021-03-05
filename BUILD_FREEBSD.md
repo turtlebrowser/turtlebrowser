@@ -12,19 +12,21 @@ mkdir ~/Code
 cd ~/Code
 pkg install -y git
 git clone https://github.com/turtlebrowser/turtlebrowser.git
-pkg install -y cmake conan python2 sudo gmake perl5 pkgconf libunwind
+pkg install -y cmake python2 python3 py37-pip py37-sqlite3 sudo gmake perl5 pkgconf libunwind bash
 ~~~
 
 
 # Build locally
 
 ~~~ bash
+pip install conan
 alias python=python2
+
 export CONAN_MAKE_PROGRAM="gmake"
 cd ~/Code/turtlebrowser
 mkdir build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 cmake --build . --config Release
 ~~~
 
