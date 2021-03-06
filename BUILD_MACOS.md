@@ -25,4 +25,6 @@ Install Conan
 pip3 install conan  
 ~~~
 
+Install Java https://www.oracle.com/java/technologies/javase-jdk15-downloads.html
+
 Install XCode (App Store)
