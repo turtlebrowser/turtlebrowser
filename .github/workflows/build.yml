@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_CPU_COUNT: 6
+      #CONAN_CPU_COUNT: 6
       CONAN_SYSREQUIRES_MODE: enabled
       CONAN_USER_HOME: "${{ github.workspace }}/release"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
