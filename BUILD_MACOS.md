@@ -13,7 +13,7 @@ git clone git@github.com:turtlebrowser/turtlebrowser.git
 
 Install brew: https://brew.sh
 
-Install VSCode (good for handling patches and conflicts - not reaaly needed)
+Install VSCode (good for handling patches and conflicts - not realy needed)
 ~~~ bash
 brew install visual-studio-code
 ~~~
@@ -25,6 +25,8 @@ Install Conan
 pip3 install conan  
 ~~~
 
-Install Java https://www.oracle.com/java/technologies/javase-jdk15-downloads.html
+Install Java (probably not needed if not building chromium tests) https://www.oracle.com/java/technologies/javase-jdk15-downloads.html
 
 Install XCode (App Store)
+
+Open the CMakeLists.txt file in the root folder of the turtlebrowser project in CLion.
