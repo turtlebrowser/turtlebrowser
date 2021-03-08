@@ -13,7 +13,7 @@ git clone git@github.com:turtlebrowser/turtlebrowser.git
 
 Install brew: https://brew.sh
 
-Install VSCode (good for handling patches and conflicts - not realy needed)
+Install VSCode (good for handling patches and conflicts - not really needed)
 ~~~ bash
 brew install visual-studio-code
 ~~~
