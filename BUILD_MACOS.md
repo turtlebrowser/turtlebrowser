@@ -29,4 +29,6 @@ Install Java (probably not needed if not building chromium tests) https://www.or
 
 Install XCode (App Store)
 
+Install Node.js https://nodejs.org/en/download/
+
 Open the CMakeLists.txt file in the root folder of the turtlebrowser project in CLion.
