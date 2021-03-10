@@ -32,3 +32,12 @@ Install XCode (App Store)
 Install Node.js https://nodejs.org/en/download/
 
 Open the CMakeLists.txt file in the root folder of the turtlebrowser project in CLion.
+
+
+## Troubleshooting
+
+**Python**
+
+- Conan utilise Python3 but Chromium depends on Python2.7 to build. 
+  Therefore using Python3 can cause problems (i.e. Anaconda/Conda) 
+  the system include Python2.7 will allow both Conan to work and Chromium to build 
