@@ -38,7 +38,7 @@ Open the CMakeLists.txt file in the root folder of the turtlebrowser project in 
 **Conan**
 
 There seems to be a problem with Conan installed via Homebrew. 
-Therefore, install it via PIP `pip install conan` and your version `1.34.0` minimum. 
+Therefore, install it via PIP instead `pip install conan` and your version should be `1.34.0` minimum. 
 If you have an older version, it can be updated running `pip install -U conan`. 
 
 **Python**
