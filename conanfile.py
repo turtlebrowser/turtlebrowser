@@ -31,7 +31,8 @@ class ConanDependencies(ConanFile):
             self.output.info("CMAKE_PREFIX_PATH not set")
             self.output.info("To use the Qt from your system, set the CMAKE_PREFIX_PATH env var")
             self.output.info("Trying to get Qt from Conan")
-            self.requires("qt/5.15.2@bincrafters/stable")
+            #self.requires("qt/5.15.2@bincrafters/stable")
+            self.requires("qt/5.15.2@turtlebrowser/stable")
         else:
             self.output.info("Getting Qt from the system. CMAKE_PREFIX_PATH = " + platform_qt)
 

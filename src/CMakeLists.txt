@@ -25,7 +25,8 @@ if (USE_CONAN)
     endif ()
 
     include(${CMAKE_BINARY_DIR}/conan.cmake)
-    conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
+    #conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
+    conan_add_remote(NAME jfrog INDEX 1 URL https://turtlebrowser.jfrog.io/artifactory/api/conan/conan)
 
     if (UPDATE_CONAN)
         conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
