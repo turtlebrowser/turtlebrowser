@@ -42,10 +42,12 @@ jobs:
     - name: Add 16.04 dependency - Should be builtin in a future conan-qt release
       if: matrix.os == 'ubuntu-16.04'
       run: |
-        sudo apt-get install python3.6
         pip install --upgrade pip
         pip3 install --upgrade pip
-        sudo apt-get install libegl1-mesa-dev
+        git clone https://github.com/conan-io/conan.git conan_src
+        cd conan_src
+        python3 -m pip install -e .
+        conan --version
 
     - name: Python2 version
       run: python2 --version
@@ -54,10 +56,12 @@ jobs:
       run: python3 --version
 
     - name: Install Conan
+      if: matrix.os != 'ubuntu-16.04'
       id: conan
       uses: turtlebrowser/get-conan@main
 
     - name: Conan version
+      if: matrix.os != 'ubuntu-16.04'
       run: echo "${{ steps.conan.outputs.version }}"
 
     - name: Make build directory
