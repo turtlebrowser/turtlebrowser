@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11.0, windows-2019]
+        os: [ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11.0, windows-2019]
 
     runs-on: ${{ matrix.os }}
     
@@ -39,16 +39,6 @@ jobs:
       if: matrix.os == 'ubuntu-20.04'
       run: sudo apt install libxcb-dri3-dev
 
-    - name: Add 16.04 dependency - Should be builtin in a future conan-qt release
-      if: matrix.os == 'ubuntu-16.04'
-      run: |
-        pip install --upgrade pip
-        pip3 install --upgrade pip
-        git clone https://github.com/conan-io/conan.git conan_src
-        cd conan_src
-        python3 -m pip install -e .
-        conan --version
-
     - name: Python2 version
       run: python2 --version
 
@@ -56,26 +46,14 @@ jobs:
       run: python3 --version
 
     - name: Install Conan
-      if: matrix.os != 'ubuntu-16.04'
       id: conan
       uses: turtlebrowser/get-conan@main
 
     - name: Conan version
-      if: matrix.os != 'ubuntu-16.04'
       run: echo "${{ steps.conan.outputs.version }}"
 
     - name: Make build directory
       run: mkdir build
-
-#    - name: Get Conan
-#      run: |
-#        pip3 install wheel setuptools
-#        pip3 install conan --upgrade
-#        mkdir build
-#        
-#    - name: Fix Path on Ubuntu
-#      if: matrix.os == 'ubuntu-20.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-16.04'
-#      run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
 
 # Debian Dependencies
 # https://wiki.qt.io/Building_Qt_5_from_Git
