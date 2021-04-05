@@ -5,11 +5,17 @@
 <file>licenses/freetype/licenses/FTL.TXT</file>
 <file>licenses/freetype/licenses/GPLv2.TXT</file>
 <file>licenses/freetype/licenses/LICENSE.TXT</file>
+<file>licenses/glib/licenses/COPYING</file>
 <file>licenses/harfbuzz/licenses/COPYING</file>
+<file>licenses/libelf/licenses/COPYING.LIB</file>
+<file>licenses/libffi/licenses/LICENSE</file>
+<file>licenses/libgettext/licenses/COPYING</file>
+<file>licenses/libiconv/licenses/COPYING.LIB</file>
 <file>licenses/libjpeg/licenses/README</file>
 <file>licenses/libpng/licenses/LICENSE</file>
 <file>licenses/libpq/licenses/COPYRIGHT</file>
 <file>licenses/openssl/licenses/LICENSE</file>
+<file>licenses/pcre/licenses/LICENCE</file>
 <file>licenses/pcre2/licenses/LICENCE</file>
 <file>licenses/qt/licenses/.QT-ENTERPRISE-LICENSE-AGREEMENT</file>
 <file>licenses/qt/licenses/.QT-FOR-APPLICATION-DEVELOPMENT-LICENSE-AGREEMENT</file>
