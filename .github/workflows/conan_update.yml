@@ -1,6 +1,7 @@
 name: Update Conan
 
 on:
+  workflow_dispatch:
   schedule:
     # * is a special character in YAML so you have to quote this string
     - cron:  '10 18 * * 1'
