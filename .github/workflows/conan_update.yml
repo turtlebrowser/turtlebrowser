@@ -42,9 +42,10 @@ jobs:
     - name: Add 16.04 dependency - Should be builtin in a future conan-qt release
       if: matrix.os == 'ubuntu-16.04'
       run: |
+        sudo apt-get install python3.7
         pip install --upgrade pip
         pip3 install --upgrade pip
-        sudo apt install libegl1-mesa-dev
+        sudo apt-get install libegl1-mesa-dev
 
     - name: Python2 version
       run: python2 --version
